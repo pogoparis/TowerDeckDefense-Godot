@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bv7wk3sb5b3ch"]
+
+[ext_resource type="Texture2D" uid="uid://c55mqspdltq2d" path="res://assets/ennemies/enemy_fire_core.png" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scenes/path_follow_2d.gd" id="1_w7c3h"]
+
+[sub_resource type="Curve2D" id="Curve2D_5xgho"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -553, 47, -130.24, 80.96001, 130.24, -80.96001, -187, 147, -75.68001, -7.9200006, 75.68001, 7.9200006, 83, -75, -71.28001, -49.280003, 71.28001, 49.280003, 247, 70, 0, 0, 0, 0, 594, -30)
+}
+point_count = 5
+
+[node name="Level" type="Node2D" unique_id=995050660]
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1234754296]
+position = Vector2(-22, -42)
+curve = SubResource("Curve2D_5xgho")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1273408496]
+position = Vector2(-553, 47)
+rotation = 0.65464526
+loop = false
+script = ExtResource("1_w7c3h")
+
+[node name="EnemyPivot" type="Node2D" parent="Path2D/PathFollow2D" unique_id=1474861028]
+rotation = -0.7853982
+scale = Vector2(0.14, 0.14)
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/EnemyPivot" unique_id=1729007847]
+scale = Vector2(0.957, 1)
+texture = ExtResource("1_2q6dc")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1300751352]
