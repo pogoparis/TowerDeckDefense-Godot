@@ -15,6 +15,14 @@ run/main_scene="uid://bv7wk3sb5b3ch"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/resizable=false
+
+[layer_names]
+
+2d_physics/layer_1="Ennemi"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

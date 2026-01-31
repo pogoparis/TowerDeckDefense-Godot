@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c55mqspdltq2d"
-path="res://.godot/imported/enemy_fire_core.png-ebb3c1cd2b70288fe9d1f123a26444c9.ctex"
+uid="uid://dqb783mx4h777"
+path="res://.godot/imported/tour_de_feu_1_128_comp.png-f153192d7a53a25512e5e045880ecc81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ennemies/enemy_fire_core.png"
-dest_files=["res://.godot/imported/enemy_fire_core.png-ebb3c1cd2b70288fe9d1f123a26444c9.ctex"]
+source_file="res://assets/towers/tour_de_feu_1_128_comp.png"
+dest_files=["res://.godot/imported/tour_de_feu_1_128_comp.png-f153192d7a53a25512e5e045880ecc81.ctex"]
 
 [params]
 

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://hwku0ydalmpd"]
+
+[ext_resource type="Texture2D" uid="uid://dqb783mx4h777" path="res://assets/towers/tour_de_feu_1_128_comp.png" id="2_mog2a"]
+[ext_resource type="Script" uid="uid://dee4lcj5b8kys" path="res://scenes/tower_fire.gd" id="2_uud3v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mog2a"]
+
+[node name="TowerFire" type="Node2D" unique_id=676582971]
+script = ExtResource("2_uud3v")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1565025661]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2063912101]
+shape = SubResource("CircleShape2D_mog2a")
+
+[node name="Timer" type="Timer" parent="." unique_id=1496851190]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1611473854]
+z_index = 20
+texture = ExtResource("2_mog2a")
+centered = false
+offset = Vector2(0, -96)
