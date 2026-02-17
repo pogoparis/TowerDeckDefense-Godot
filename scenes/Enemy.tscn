@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://hkd5fv1g7726"]
+
+[ext_resource type="Texture2D" uid="uid://ccjioapxcx8rl" path="res://assets/ennemies/Bone_Orc/Bone_Torso.png" id="1_iwav8"]
+[ext_resource type="Texture2D" uid="uid://4guseflmcgba" path="res://assets/ennemies/Bone_Orc/Bone_Head.png" id="2_1i2q2"]
+[ext_resource type="Texture2D" uid="uid://dndt37rrtjwyf" path="res://assets/ennemies/Bone_Orc/Bone_Arm_L.png" id="3_ly5gv"]
+[ext_resource type="Texture2D" uid="uid://dteve0tdih1pr" path="res://assets/ennemies/Bone_Orc/Bone_Arm_R.png" id="4_82o86"]
+[ext_resource type="Texture2D" uid="uid://c7q04444xgm05" path="res://assets/ennemies/Bone_Orc/Bone_Pelvis.png" id="5_1gqeq"]
+[ext_resource type="Texture2D" uid="uid://bmxurrh348wn" path="res://assets/ennemies/Bone_Orc/Bone_Leg_L.png" id="6_isvm2"]
+[ext_resource type="Texture2D" uid="uid://mykoilpkntdh" path="res://assets/ennemies/Bone_Orc/Bone_Leg_R.png" id="7_gr8dl"]
+
+[sub_resource type="Animation" id="Animation_iwav8"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_1i2q2"]
+resource_name = "Walk"
+length = 0.7
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ly5gv"]
+_data = {
+&"RESET": SubResource("Animation_iwav8"),
+&"Walk": SubResource("Animation_1i2q2")
+}
+
+[node name="Enemy" type="Node2D" unique_id=483104280]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1494238645]
+
+[node name="Bone_Torso" type="Bone2D" parent="Skeleton2D" unique_id=2092539500]
+
+[node name="Sprite_Torso" type="Sprite2D" parent="Skeleton2D/Bone_Torso" unique_id=353377749]
+z_index = 1
+position = Vector2(14, -104)
+texture = ExtResource("1_iwav8")
+
+[node name="Bone_Head" type="Bone2D" parent="Skeleton2D/Bone_Torso" unique_id=1610120582]
+position = Vector2(-15, -256)
+
+[node name="Sprite_Head" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Head" unique_id=960688321]
+z_index = 2
+position = Vector2(10, 22)
+texture = ExtResource("2_1i2q2")
+
+[node name="Bone_Arm_L" type="Bone2D" parent="Skeleton2D/Bone_Torso" unique_id=1824438469]
+position = Vector2(104.000015, -133.99998)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Sprite_Arm_L" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Arm_L" unique_id=493587944]
+z_index = 3
+position = Vector2(4, 93)
+texture = ExtResource("3_ly5gv")
+
+[node name="Bone_Arm_R" type="Bone2D" parent="Skeleton2D/Bone_Torso" unique_id=2141324693]
+position = Vector2(-72, -55)
+
+[node name="Sprite_Arm_R" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Arm_R" unique_id=1035213105]
+z_index = 1
+position = Vector2(8, 0)
+texture = ExtResource("4_82o86")
+
+[node name="Bone_Pelvis" type="Bone2D" parent="Skeleton2D/Bone_Torso" unique_id=1804544813]
+position = Vector2(-28, 15)
+rotation = -0.3874631
+
+[node name="Sprite_Pelvis" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Pelvis" unique_id=9643425]
+position = Vector2(26.77795, 41.822784)
+rotation = 0.31415927
+texture = ExtResource("5_1gqeq")
+
+[node name="Bone_Leg_L" type="Bone2D" parent="Skeleton2D/Bone_Torso/Bone_Pelvis" unique_id=1723214808]
+position = Vector2(6.0657654, 8.955772)
+scale = Vector2(0.9999999, 0.9999999)
+editor_settings/show_bone_gizmo = false
+
+[node name="Sprite_Leg_Left" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Pelvis/Bone_Leg_L" unique_id=1888262748]
+z_index = -1
+position = Vector2(22.986237, 165.9899)
+rotation = 0.16929694
+texture = ExtResource("6_isvm2")
+
+[node name="Bone_Leg_R" type="Bone2D" parent="Skeleton2D/Bone_Torso/Bone_Pelvis" unique_id=1623108880]
+position = Vector2(-38.04953, 77.35782)
+rotation = 0.34906584
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Sprite_Leg_R" type="Sprite2D" parent="Skeleton2D/Bone_Torso/Bone_Pelvis/Bone_Leg_R" unique_id=244981968]
+z_index = -1
+position = Vector2(-30.74328, 70.87208)
+texture = ExtResource("7_gr8dl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=520335139]
+libraries/ = SubResource("AnimationLibrary_ly5gv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=473564640]

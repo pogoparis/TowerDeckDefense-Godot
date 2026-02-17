@@ -1,5 +1,6 @@
-res://scenes/TowerFire.tscn
-res://scenes/level.gd
+res://scenes/Enemy.tscn
 res://scenes/level.tscn
+res://scenes/level.gd
+res://scenes/TowerFire.tscn
 res://scenes/tower_fire.gd
-res://scenes/ui_tower_card_fire.gd
+res://scenes/world_draw.gd

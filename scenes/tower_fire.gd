@@ -1,30 +1,82 @@
-@tool
+class_name TowerFire
 extends Node2D
 
-# variable interne
-var _level: int = 1
+@export var fire_rate := 0.8
+@export var damage := 10
+@export var attack_range := 120.0
+@export var projectile_scene: PackedScene
 
-# variable visible dans l’inspecteur
-@export var level: int = 1:
-	set(value):
-		_level = clamp(value, 1, 3)
-		update_visual()
-	get:
-		return _level
+@onready var area: Area2D = $DetectionArea
+@onready var timer: Timer = $Timer
 
-@onready var sprite: Sprite2D = $Sprite2D
+var targets: Array = []
+
+func _draw():
+	# Pivot réel
+	draw_circle(Vector2.ZERO, 6, Color.RED)
+
+	# Petit repère croix
+	draw_line(Vector2(-10, 0), Vector2(10, 0), Color.RED, 2)
+	draw_line(Vector2(0, -10), Vector2(0, 10), Color.RED, 2)
 
 func _ready():
-	update_visual()
+	# Portée
+	var shape := CircleShape2D.new()
+	shape.radius = attack_range
+	$DetectionArea/CollisionShape2D.shape = shape
 
-func update_visual():
-	if sprite == null:
+	# Timer
+	timer.wait_time = fire_rate
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start()
+
+	# Détection
+	area.body_entered.connect(_on_body_entered)
+	area.body_exited.connect(_on_body_exited)
+	queue_redraw()
+
+
+func _on_body_entered(body):
+	if body.is_in_group("enemies"):
+		targets.append(body)
+		print("👀 Ennemi détecté :", body.name)
+
+
+func _on_body_exited(body):
+	targets.erase(body)
+
+
+func _on_timer_timeout():
+	# Si ghost ou mal initialisée
+	if projectile_scene == null:
 		return
 
-	match _level:
-		1:
-			sprite.texture = preload("res://assets/towers/tour_de_feu_1_128_comp.png")
-		2:
-			sprite.texture = preload("res://assets/towers/tour_de_feu_2_128.png")
-		3:
-			sprite.texture = preload("res://assets/towers/tour_de_feu_3_128.png")
+	if targets.is_empty():
+		return
+
+	var target = targets[0]
+
+	if not is_instance_valid(target):
+		return
+
+	var projectile = projectile_scene.instantiate()
+	projectile.global_position = global_position
+	projectile.target = target
+	projectile.damage = damage
+
+	get_parent().add_child(projectile)
+
+
+func disable_behaviors():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_process(false)
+	set_physics_process(false)
+
+	if area:
+		area.monitoring = false
+		area.monitorable = false
+
+	if timer:
+		timer.stop()
+
+	projectile_scene = null

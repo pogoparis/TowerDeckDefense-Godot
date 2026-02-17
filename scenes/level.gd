@@ -5,18 +5,25 @@ extends Node2D
 @onready var tilemap: TileMapLayer = $World/TileMapLayer
 @onready var path: Path2D = $World/Path2D
 @onready var tower_card := $UI/TowerCardFire
+@onready var path_follow_template: PathFollow2D = $World/Path2D/PathFollow2D
 
 # === STATE ===
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
-var unbuildable_cells := {} # dictionnaire utilisé comme Set
-
 
 # === READY ===
 func _ready():
-	compute_path_cells(1) # largeur du chemin (1 = 3 tiles)
 	tower_card.tower_selected.connect(_on_tower_selected)
-	queue_redraw()
+
+	if path_follow_template:
+		path_follow_template.process_mode = Node.PROCESS_MODE_DISABLED
+		path_follow_template.set_process(false)
+
+	spawn_wave(6, 3.2, 70.0)
+
+	# === DEBUG ===
+	print("map_to_local(0,0) = ", tilemap.map_to_local(Vector2i(0,0)))
+	print("tile_size = ", tilemap.tile_set.tile_size)
 
 
 # === TOWER SELECTION ===
@@ -25,11 +32,16 @@ func _on_tower_selected(scene: PackedScene):
 
 	if ghost_tower:
 		ghost_tower.queue_free()
+		ghost_tower = null
+
+	await get_tree().process_frame
 
 	ghost_tower = scene.instantiate()
 	ghost_tower.modulate.a = 0.5
 	world.add_child(ghost_tower)
 
+	await get_tree().process_frame
+	_disable_ghost_behaviors()
 	_update_ghost_position()
 
 
@@ -41,88 +53,123 @@ func _process(_delta):
 
 func _update_ghost_position():
 	var mouse_world: Vector2 = get_global_mouse_position()
-	var local_pos: Vector2 = tilemap.to_local(mouse_world)
-	var cell: Vector2i = tilemap.local_to_map(local_pos)
-	var snapped_local: Vector2 = tilemap.map_to_local(cell)
 
-	ghost_tower.global_position = tilemap.to_global(snapped_local)
+	# Conversion MONDE → LOCAL TileMap (robuste)
+	var mouse_local: Vector2 = tilemap.to_local(mouse_world)
+
+	var cell: Vector2i = tilemap.local_to_map(mouse_local)
+
+	var center_local: Vector2 = tilemap.map_to_local(cell)
+
+	ghost_tower.global_position = tilemap.to_global(center_local)
+	print("Cell:", cell)
+	print("Center local:", center_local)
+	print("Global:", tilemap.to_global(center_local))
+
+	if is_too_close_to_path(ghost_tower.global_position, 55.0):
+		ghost_tower.modulate = Color(1, 0, 0, 0.5)
+	else:
+		ghost_tower.modulate = Color(0, 1, 0, 0.5)
 
 
 # === INPUT ===
-func _input(event):
-	if not ghost_tower:
+func _unhandled_input(event):
+	if not ghost_tower or not selected_tower_scene:
 		return
 
-	# ESC = annuler
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		_cancel_ghost()
+		get_viewport().set_input_as_handled()
 		return
 
 	if event is InputEventMouseButton and event.pressed:
-
-		# clic droit = annuler
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			_cancel_ghost()
+			get_viewport().set_input_as_handled()
 			return
 
-		# clic gauche = tenter de poser
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			var mouse_world: Vector2 = get_global_mouse_position()
-			var cell: Vector2i = tilemap.local_to_map(tilemap.to_local(mouse_world))
-
-			# interdit sur le chemin
-			if unbuildable_cells.has(cell):
+			if is_too_close_to_path(ghost_tower.global_position, 55.0):
+				get_viewport().set_input_as_handled()
 				return
 
 			var final_tower = selected_tower_scene.instantiate()
 			final_tower.global_position = ghost_tower.global_position
 			world.add_child(final_tower)
 
-			_cancel_ghost()
+			if ghost_tower:
+				ghost_tower.queue_free()
+
+			ghost_tower = null
+			selected_tower_scene = null
+
+			get_viewport().set_input_as_handled()
+
+			await get_tree().create_timer(0.1).timeout
+			tower_card.reset()
 
 
 func _cancel_ghost():
 	if ghost_tower:
 		ghost_tower.queue_free()
+
 	ghost_tower = null
 	selected_tower_scene = null
+	tower_card.reset()
 
 
-# === PATH → UNBUILDABLE CELLS ===
-func compute_path_cells(path_width: int = 1) -> void:
-	unbuildable_cells.clear()
-
+# === DISTANCE AU PATH ===
+func is_too_close_to_path(tower_pos: Vector2, min_distance: float) -> bool:
 	if path == null or path.curve == null:
-		return
+		return false
 
-	var curve := path.curve
-	var length := curve.get_baked_length()
-	var tile_size: Vector2 = Vector2(tilemap.tile_set.tile_size)
-	var step := tile_size.x * 0.5
+	var curve = path.curve
+	var length = curve.get_baked_length()
+	var step = 25.0
 
-	var d := 0.0
-	while d < length:
-		var world_pos: Vector2 = path.to_global(curve.sample_baked(d))
-		var local_pos: Vector2 = tilemap.to_local(world_pos)
-		var center_cell: Vector2i = tilemap.local_to_map(local_pos)
+	var d = 0.0
+	while d <= length:
+		var path_local = curve.sample_baked(d)
+		var path_world = path.to_global(path_local)
 
-		for x in range(-path_width, path_width + 1):
-			for y in range(-path_width, path_width + 1):
-				unbuildable_cells[center_cell + Vector2i(x, y)] = true
+		if tower_pos.distance_to(path_world) < min_distance:
+			return true
 
 		d += step
 
+	return false
 
-# === DEBUG DRAW ===
-func _draw():
-	if unbuildable_cells.is_empty():
+
+# === GHOST CLEAN ===
+func _disable_ghost_behaviors():
+	if not ghost_tower:
 		return
 
-	var tile_size: Vector2 = Vector2(tilemap.tile_set.tile_size)
+	if ghost_tower is TowerFire:
+		ghost_tower.disable_behaviors()
 
-	for cell in unbuildable_cells.keys():
-		var local_pos: Vector2 = tilemap.map_to_local(cell)
-		draw_rect(
-			Rect2(local_pos - tile_size / 2, tile_size),
-			Color(1, 0, 1, 0.4)
-		)
+
+# === ENEMY SPAWN ===
+func _spawn_enemy_instance() -> PathFollow2D:
+	if not path_follow_template:
+		return null
+
+	var pf: PathFollow2D = path_follow_template.duplicate()
+	pf.process_mode = Node.PROCESS_MODE_INHERIT
+	pf.set_process(true)
+	return pf
+
+
+func spawn_wave(count: int, interval: float, speed_override: float = -1.0):
+	if not path:
+		return
+
+	for i in range(count):
+		var pf = _spawn_enemy_instance()
+		if pf:
+			if speed_override > 0:
+				pf.speed = speed_override
+			path.add_child(pf)
+			pf.progress = 0
+
+		await get_tree().create_timer(interval).timeout

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nfiboi2sd2ju"
-path="res://.godot/imported/tour_de_feu_1_128.png-41ff80c7f2d586eb0f117f8e5d7a87ec.ctex"
+uid="uid://dndt37rrtjwyf"
+path="res://.godot/imported/Bone_Arm_L.png-0cccd01919e06e3458e7e3a00302c17f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/towers/tour_de_feu_1_128.png"
-dest_files=["res://.godot/imported/tour_de_feu_1_128.png-41ff80c7f2d586eb0f117f8e5d7a87ec.ctex"]
+source_file="res://assets/ennemies/Bone_Orc/Bone_Arm_L.png"
+dest_files=["res://.godot/imported/Bone_Arm_L.png-0cccd01919e06e3458e7e3a00302c17f.ctex"]
 
 [params]
 
