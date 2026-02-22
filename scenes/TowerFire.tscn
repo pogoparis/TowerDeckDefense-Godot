@@ -7,10 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_mog2a"]
 
 [node name="TowerFire" type="Node2D" unique_id=676582971]
+z_index = 5
 script = ExtResource("2_uud3v")
-fire_rate = null
-damage = null
-attack_range = null
 projectile_scene = ExtResource("2_kex7c")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1565025661]

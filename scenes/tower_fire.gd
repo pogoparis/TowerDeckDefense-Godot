@@ -3,7 +3,7 @@ extends Node2D
 
 @export var fire_rate := 0.8
 @export var damage := 10
-@export var attack_range := 120.0
+@export var attack_range := 60.0
 @export var projectile_scene: PackedScene
 
 @onready var area: Area2D = $DetectionArea
