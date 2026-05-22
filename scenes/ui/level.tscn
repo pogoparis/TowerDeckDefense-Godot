@@ -52,6 +52,7 @@ z_index = 5
 position = Vector2(0, 40)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("3_lh6i8")
+max_hp = null
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1729007847 groups=["enemies", "level"]]
 z_index = 10
