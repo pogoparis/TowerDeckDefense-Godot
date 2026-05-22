@@ -65,21 +65,20 @@ func _draw():
 
 		var world_pos = ghost.global_position
 		var pos = to_local(world_pos)
-
-		var cell = level.world_to_cell(world_pos)
-
 		var fill_color
 		var border_color
+		var mouse_world = get_global_mouse_position()
+		var cell = level.grid.world_to_cell(mouse_world)
 
-		if level.blocked_path_cells.has(cell):
+		if level.grid.blocked_cells.has(cell):
 			fill_color = INVALID_FILL_COLOR
 			border_color = INVALID_BORDER_COLOR
 		else:
-			fill_color = INVALID_FILL_COLOR
-			border_color = INVALID_BORDER_COLOR
+			fill_color = RANGE_FILL_COLOR
+			border_color = RANGE_BORDER_COLOR
 
-		draw_circle(pos, attack_range, RANGE_FILL_COLOR)
-		draw_arc(pos, attack_range, 0, TAU, 64, RANGE_BORDER_COLOR, 2.0)
+		draw_circle(pos, attack_range, fill_color)
+		draw_arc(pos, attack_range, 0, TAU, 64, border_color, 2.0)
 
 
 	# =========================

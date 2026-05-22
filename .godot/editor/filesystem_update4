@@ -1,4 +1,4 @@
-res://scenes/towers/TowerFire.tscn
-res://scripts/core/level.gd
 res://scenes/ui/level.tscn
 res://scripts/core/world_draw.gd
+res://scripts/core/GridManager.gd
+res://scripts/core/level.gd

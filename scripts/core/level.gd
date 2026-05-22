@@ -11,20 +11,18 @@ extends Node2D
 @onready var upgrade_button = $UI/RootUI/UpgradeButton
 @onready var path_follow_template: PathFollow2D = $World/Path2D/PathFollow2D
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
+@onready var grid: GridManager = $GridManager
 
 # ==============================
 #            STATE
 # ==============================
 
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
-const CELL_SIZE := 64
 const TOWER_FIRE = preload("res://scenes/towers/TowerFire.tscn")
 const TOWER_CANNON = preload("res://scenes/towers/TowerCannon.tscn")
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
 var selected_tower: Node2D = null
-var blocked_path_cells := {}
-var occupied_cells := {}
 var prep_time := 2
 var wave_started := false
 
@@ -88,23 +86,6 @@ func _disable_ghost_behaviors():
 
 		ghost_tower.is_ghost = true
 		ghost_tower.disable_behaviors()
-		
-# ==============================
-#        GRID HELPERS
-# ==============================
-
-func world_to_cell(pos: Vector2) -> Vector2i:
-	return Vector2i(
-		floor(pos.x / CELL_SIZE),
-		floor(pos.y / CELL_SIZE)
-	)
-
-func cell_to_world_center(cell: Vector2i) -> Vector2:
-	return Vector2(
-		cell.x * CELL_SIZE + CELL_SIZE * 0.5,
-		cell.y * CELL_SIZE + CELL_SIZE * 0.5
-	)
-
 
 
 # ==============================
@@ -116,7 +97,7 @@ func block_path_cells():
 	if not path or not path.curve:
 		return
 
-	blocked_path_cells.clear()
+	grid.blocked_cells.clear()
 
 	var curve = path.curve
 	var length = curve.get_baked_length()
@@ -127,9 +108,9 @@ func block_path_cells():
 
 		var local_point = curve.sample_baked(d)
 		var world_point = path.to_global(local_point)
-		var cell = world_to_cell(world_point)
+		var cell = grid.world_to_cell(world_point)
 		
-		blocked_path_cells[cell] = true
+		grid.blocked_cells[cell] = true
 
 		d += step
 
@@ -143,11 +124,11 @@ func _process(_delta):
 		return
 
 	var mouse_world = get_global_mouse_position()
-	var cell = world_to_cell(mouse_world)
+	var cell = grid.world_to_cell(mouse_world)
 
-	ghost_tower.global_position = cell_to_world_center(cell)
+	ghost_tower.global_position = grid.cell_to_world(cell)
 
-	if blocked_path_cells.has(cell) or occupied_cells.has(cell):
+	if not grid.can_place(cell):
 		ghost_tower.modulate = Color(1, 0, 0, 0.5)
 	else:
 		ghost_tower.modulate = Color(0, 1, 0, 0.5)
@@ -212,45 +193,46 @@ func _input(event):
 				selected_tower = null
 
 			# ==============================
-			# PLACEMENT NOUVELLE TOUR
+			# TRY PLACE TOWER
 			# ==============================
 
-			if ghost_tower and selected_tower_scene:
+			try_place_tower(mouse_world)
 
-				print("TRY PLACE")
+func try_place_tower(mouse_world: Vector2):
 
-				var cell = world_to_cell(mouse_world)
+	if not ghost_tower or not selected_tower_scene:
+		return
 
-				if blocked_path_cells.has(cell):
-					return
+	print("TRY PLACE")
 
-				if occupied_cells.has(cell):
-					return
+	var cell = grid.world_to_cell(mouse_world)
 
-				var final_tower = selected_tower_scene.instantiate()
+	if not grid.can_place(cell):
+		return
 
-				print("TOWER CREATED")
+	var final_tower = selected_tower_scene.instantiate()
 
-				tower_container.add_child(final_tower)
+	print("TOWER CREATED")
 
-				print("TOWER ADDED")
+	tower_container.add_child(final_tower)
 
-				final_tower.global_position = cell_to_world_center(cell)
+	print("TOWER ADDED")
 
-				print(final_tower.global_position)
+	final_tower.global_position = grid.cell_to_world(cell)
 
-				final_tower.modulate = Color(1,1,1,1)
-				final_tower.z_index = 100
+	print(final_tower.global_position)
 
-				print("PLACED:", final_tower.global_position)
+	final_tower.modulate = Color(1,1,1,1)
+	final_tower.z_index = 100
 
-				occupied_cells[cell] = true
+	print("PLACED:", final_tower.global_position)
 
-				ghost_tower.queue_free()
-				ghost_tower = null
-				selected_tower_scene = null
-				
-				
+	grid.occupy_cell(cell, final_tower)
+
+	ghost_tower.queue_free()
+	ghost_tower = null
+	selected_tower_scene = null
+
 # ==============================
 #        ENEMY SPAWN
 # ==============================
