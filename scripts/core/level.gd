@@ -36,13 +36,6 @@ func _ready():
 
 	start_prep_phase()
 	
-	# Connexions
-	upgrade_button.pressed.connect(_on_upgrade_pressed)
-	if path_follow_template:
-		path_follow_template.visible = false
-		path_follow_template.set_physics_process(false)
-		path_follow_template.set_process(false)
-
 func start_prep_phase():
 
 	wave_started = false
@@ -78,7 +71,7 @@ func start_placing_tower(scene: PackedScene):
 
 	world.add_child(ghost_tower)
 	_disable_ghost_behaviors()
-
+	
 	# Désactive template enemy
 	if path_follow_template:
 		path_follow_template.process_mode = Node.PROCESS_MODE_DISABLED
@@ -86,6 +79,14 @@ func start_placing_tower(scene: PackedScene):
 
 	block_path_cells()
 
+
+func _disable_ghost_behaviors():
+
+	if ghost_tower and ghost_tower is BaseTower:
+
+		ghost_tower.is_ghost = true
+		ghost_tower.disable_behaviors()
+		
 # ==============================
 #        GRID HELPERS
 # ==============================
@@ -124,8 +125,10 @@ func block_path_cells():
 
 		var local_point = curve.sample_baked(d)
 		var world_point = path.to_global(local_point)
-
+		var occupied_cells := {}
+		var blocked_path_cells := {}
 		var cell = world_to_cell(world_point)
+		
 		blocked_cells[cell] = true
 
 		d += step
@@ -158,7 +161,6 @@ func _input(event):
 
 		# CLICK DROIT → Annule
 		if event.button_index == MOUSE_BUTTON_RIGHT:
-			_cancel_ghost()
 			return
 
 		# CLICK GAUCHE
@@ -169,9 +171,9 @@ func _input(event):
 			#     SELECT EXISTING TOWER
 			# ==============================
 
-			for tower in get_children():
+			for tower in tower_container.get_children():
 
-				if tower is base_tower:
+				if tower is BaseTower:
 
 					if mouse_world.distance_to(tower.global_position) < 48:
 
@@ -181,7 +183,6 @@ func _input(event):
 						selected_tower = tower
 						selected_tower.set_selected(true)
 
-						_show_upgrade_button()
 						return
 			# Placement nouvelle tour
 			if ghost_tower and selected_tower_scene:
@@ -193,7 +194,7 @@ func _input(event):
 
 				var final_tower = selected_tower_scene.instantiate()
 
-				add_child(final_tower)
+				tower_container.add_child(final_tower)
 
 				final_tower.global_position = cell_to_world_center(cell)
 				final_tower.modulate = Color(1,1,1,1)
@@ -207,72 +208,6 @@ func _input(event):
 				ghost_tower = null
 				selected_tower_scene = null
 
-
-# ==============================
-#        UPGRADE
-# ==============================
-
-func _on_upgrade_pressed():
-
-	if not selected_tower:
-		return
-
-	if selected_tower.upgrade():
-		_show_upgrade_button()
-	else:
-		upgrade_button.visible = false
-
-func _show_upgrade_button():
-
-	if not selected_tower:
-		return
-
-	if selected_tower.level >= selected_tower.max_level:
-		upgrade_button.visible = false
-		return
-
-	var next_level = selected_tower.level + 1
-	var data = selected_tower.upgrade_data.get(next_level)
-
-	if not data:
-		upgrade_button.visible = false
-		return
-
-	var cost = data.get("cost", 0)
-
-	if GameManager.gold < cost:
-		upgrade_button.visible = false
-		return
-
-	upgrade_button.text = "Upgrade (" + str(cost) + "g)"
-	upgrade_button.visible = true
-	upgrade_button.position = selected_tower.position + Vector2(40, -40)
-
-# ==============================
-#        GHOST CLEAN
-# ==============================
-
-func _cancel_ghost():
-
-	if ghost_tower:
-		ghost_tower.queue_free()
-
-	ghost_tower = null
-	selected_tower_scene = null
-
-	if selected_tower:
-		selected_tower.set_selected(false)
-
-	selected_tower = null
-
-	upgrade_button.visible = false
-
-func _disable_ghost_behaviors():
-
-	if ghost_tower and ghost_tower is base_tower:
-
-		ghost_tower.is_ghost = true
-		ghost_tower.disable_behaviors()
 
 # ==============================
 #        ENEMY SPAWN

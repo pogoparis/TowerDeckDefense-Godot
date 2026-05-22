@@ -1,4 +1,4 @@
-extends base_tower
+extends BaseTower
 class_name TowerCannon
 
 @export var projectile_scene: PackedScene
@@ -15,11 +15,6 @@ var level_textures := {
 }
 
 func _ready():
-
-	upgrade_data = {
-		2: { "damage": 15, "range": 20, "fire_rate_mult": 0.85, "cost": 75 },
-		3: { "damage": 30, "range": 40, "fire_rate_mult": 0.75, "cost": 150 }
-	}
 
 	super._ready()
 
@@ -68,9 +63,6 @@ func _on_timer_timeout():
 
 func apply_upgrade(data: Dictionary):
 	super.apply_upgrade(data)
-
-	if level_textures.has(level):
-		sprite.texture = level_textures[level]
 
 	update_range_visual()
 

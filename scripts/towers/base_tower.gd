@@ -1,5 +1,5 @@
 extends Node2D
-class_name base_tower
+class_name BaseTower
 
 # ==============================
 #          STATS BASE
@@ -16,20 +16,6 @@ var is_ghost := false
 var damage: int
 var fire_rate: float
 var attack_range: float
-
-# ==============================
-#          UPGRADE
-# ==============================
-
-var level: int = 1
-var max_level: int = 3
-
-# Format attendu :
-# {
-#   2: { "damage": 5, "range": 20, "fire_rate_mult": 0.9, "cost": 50 },
-#   3: { "damage": 10, "range": 40, "fire_rate_mult": 0.8, "cost": 100 }
-# }
-var upgrade_data: Dictionary = {}
 
 # ==============================
 #            NODES
@@ -49,33 +35,6 @@ func _ready():
 	if timer:
 		timer.wait_time = fire_rate
 	
-# ==============================
-#           UPGRADE
-# ==============================
-
-func upgrade() -> bool:
-	if level >= max_level:
-		print("Tour déjà au niveau max")
-		return false
-
-	var next_level := level + 1
-	var data: Dictionary = upgrade_data.get(next_level)
-
-	if data.is_empty():
-		print("Pas de données pour le niveau ", next_level)
-		return false
-
-	var cost: int = data.get("cost", 0)
-
-	if not GameManager.spend_gold(cost):
-		print("Pas assez d'or")
-		return false
-
-	level = next_level
-	apply_upgrade(data)
-
-	print("Upgrade réussi → niveau ", level)
-	return true
 
 # ==============================
 #       APPLY UPGRADE

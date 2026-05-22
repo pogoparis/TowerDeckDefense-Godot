@@ -1,4 +1,3 @@
 res://scenes/ui/level.tscn
-res://scripts/enemies/enemy_base.gd
-res://scripts/enemies/enemy_pivot.gd
-res://scripts/managers/economy_manager.gd
+res://scripts/towers/tower_cannon.gd
+res://scripts/core/level.gd

@@ -1,4 +1,4 @@
-extends base_tower
+extends BaseTower
 class_name TowerFire
 
 @export var projectile_scene: PackedScene
@@ -19,17 +19,6 @@ var targets: Array = []
 
 func _ready():
 	sprite.modulate = Color(1,1,1,1)
-	print("Sprite alpha:", sprite.modulate.a)
-	print("Visible:", sprite.visible)
-	print("Scale:", sprite.scale)
-	print("Z index:", sprite.z_index)
-	upgrade_data = {
-		2: { "damage": 5, "range": 15, "fire_rate_mult": 0.9, "cost": 50 },
-		3: { "damage": 10, "range": 25, "fire_rate_mult": 0.8, "cost": 100 }
-	}
-	print("Area pos:", $DetectionArea.position)
-	print("Shape pos:", $DetectionArea/CollisionShape2D.position)
-	
 	super._ready()
 	update_range_visual()
 
@@ -105,21 +94,6 @@ func _on_timer_timeout():
 	# ==============================
 	#    UPDATE VISUEL SI UPGRADE
 	# ==============================
-
-func apply_upgrade(data: Dictionary):
-		print("APPLY UPGRADE FIRE")
-		
-		super.apply_upgrade(data)
-		update_range_visual()
-
-		# Changement visuel selon niveau
-		if level_textures.has(level):
-			sprite.texture = level_textures[level]
-			print("LEVEL:", level)
-			print("Damage:", damage)
-			print("Range:", attack_range)
-			print("Fire rate:", fire_rate)
-
 	
 func disable_behaviors():
 	super.disable_behaviors()

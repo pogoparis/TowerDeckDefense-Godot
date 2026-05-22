@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Script" uid="uid://u1r1ocefleiw" path="res://scripts/enemies/enemy_pivot.gd" id="3_lh6i8"]
-[ext_resource type="Texture2D" uid="uid://dmritv1xcbrip" path="res://assets/ennemies/ennemy_fireball.png" id="4_mqloe"]
 [ext_resource type="PackedScene" uid="uid://hwku0ydalmpd" path="res://scenes/towers/TowerFire.tscn" id="5_p6g1u"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
@@ -18,8 +16,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -19, 350, 0, 0, 0, 0, 288, 354, 0, 0, 0, 0, 290, 228, 0, 0, 0, 0, 740, 223, 0, 0, 0, 0, 738, 359, 0, 0, 0, 0, 1583, 359)
 }
 point_count = 6
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_8c41q"]
 
 [node name="Level" type="Node2D" unique_id=995050660 groups=["level"]]
 script = ExtResource("1_4br2k")
@@ -46,40 +42,6 @@ rotation = 0.013028579
 rotates = false
 loop = false
 script = ExtResource("2_wxwm4")
-
-[node name="EnemyPivot" type="CharacterBody2D" parent="World/Path2D/PathFollow2D" unique_id=417138091 groups=["enemies"]]
-z_index = 5
-position = Vector2(0, 40)
-scale = Vector2(0.5, 0.5)
-script = ExtResource("3_lh6i8")
-max_hp = null
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1729007847 groups=["enemies", "level"]]
-z_index = 10
-texture = ExtResource("4_mqloe")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=979414820]
-visible = false
-shape = SubResource("CircleShape2D_8c41q")
-one_way_collision = true
-one_way_collision_margin = 47.1
-debug_color = Color(0, 0.6, 0.69803923, 0)
-
-[node name="HPBarContainer" type="Node2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1489645719]
-z_index = 10
-position = Vector2(0, -40)
-
-[node name="HPBackground" type="ColorRect" parent="World/Path2D/PathFollow2D/EnemyPivot/HPBarContainer" unique_id=1016954550]
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 6.0
-color = Color(0, 0, 0, 0.5019608)
-
-[node name="HPFill" type="ColorRect" parent="World/Path2D/PathFollow2D/EnemyPivot/HPBarContainer" unique_id=98892940]
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 6.0
-color = Color(0.7772812, 6.750338e-05, 0.03591449, 1)
 
 [node name="PathLine" type="Line2D" parent="World/Path2D" unique_id=926539895]
 z_index = 3
