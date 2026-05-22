@@ -2,3 +2,4 @@ res://scenes/ui/level.tscn
 res://scripts/core/world_draw.gd
 res://scripts/core/GridManager.gd
 res://scripts/core/level.gd
+res://scripts/managers/game_manager.gd

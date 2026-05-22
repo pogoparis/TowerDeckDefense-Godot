@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
 [ext_resource type="Texture2D" uid="uid://cyk8om4505r8m" path="res://assets/towers/FireTower128.png" id="6_7wsx7"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
-[ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/core/GridManager.gd" id="6_lwybd"]
+[ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
