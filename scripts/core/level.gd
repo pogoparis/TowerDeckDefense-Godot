@@ -8,7 +8,6 @@ extends Node2D
 @onready var path: Path2D = $World/Path2D
 @onready var tower_container: Node2D = $World/TowerContainer
 @onready var tower_card_fire = $UI/RootUI/TowerCards/PanelFire/TowerCardFire
-@onready var tower_card_cannon = $UI/RootUI/TowerCards/PanelCannon/TowerCardCannon
 @onready var upgrade_button = $UI/RootUI/UpgradeButton
 @onready var path_follow_template: PathFollow2D = $World/Path2D/PathFollow2D
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
@@ -62,21 +61,23 @@ func start_wave():
 
 func start_placing_tower(scene: PackedScene):
 
+	print("START PLACING")
+
 	selected_tower_scene = scene
 
 	if ghost_tower:
 		ghost_tower.queue_free()
 
 	ghost_tower = scene.instantiate()
-	ghost_tower.modulate = Color(1,1,1,0.5)
 
-	world.add_child(ghost_tower)
+	print(ghost_tower)
+
+	tower_container.add_child(ghost_tower)
+
+	ghost_tower.z_index = 999
+	ghost_tower.modulate = Color(0, 1, 0, 0.5)
+
 	_disable_ghost_behaviors()
-	
-	# Désactive template enemy
-	if path_follow_template:
-		path_follow_template.process_mode = Node.PROCESS_MODE_DISABLED
-		path_follow_template.set_process(false)
 
 	block_path_cells()
 
@@ -126,8 +127,6 @@ func block_path_cells():
 
 		var local_point = curve.sample_baked(d)
 		var world_point = path.to_global(local_point)
-		var occupied_cells := {}
-		var blocked_path_cells := {}
 		var cell = world_to_cell(world_point)
 		
 		blocked_path_cells[cell] = true
@@ -140,15 +139,18 @@ func block_path_cells():
 
 func _process(_delta):
 
-	if ghost_tower:
-		var mouse_world = get_global_mouse_position()
-		var cell = world_to_cell(mouse_world)
+	if ghost_tower == null:
+		return
 
-		ghost_tower.global_position = cell_to_world_center(cell)
-		if blocked_path_cells.has(cell) or occupied_cells.has(cell):
-			ghost_tower.modulate = Color(1, 0, 0, 0.5)
-		else:
-			ghost_tower.modulate = Color(0, 1, 0, 0.5)
+	var mouse_world = get_global_mouse_position()
+	var cell = world_to_cell(mouse_world)
+
+	ghost_tower.global_position = cell_to_world_center(cell)
+
+	if blocked_path_cells.has(cell) or occupied_cells.has(cell):
+		ghost_tower.modulate = Color(1, 0, 0, 0.5)
+	else:
+		ghost_tower.modulate = Color(0, 1, 0, 0.5)
 
 # ==============================
 #         INPUT HANDLING
@@ -158,33 +160,64 @@ func _input(event):
 
 	if event is InputEventMouseButton and event.pressed:
 
-		# CLICK DROIT → Annule
+		var mouse_world = get_global_mouse_position()
+
+		# ==============================
+		# CLICK DROIT = DESELECT
+		# ==============================
+
 		if event.button_index == MOUSE_BUTTON_RIGHT:
+
+			if selected_tower:
+				selected_tower.set_selected(false)
+				selected_tower = null
+
 			return
 
+		# ==============================
 		# CLICK GAUCHE
+		# ==============================
+
 		if event.button_index == MOUSE_BUTTON_LEFT:
 
-			var mouse_world = get_global_mouse_position()
 			# ==============================
-			#     SELECT EXISTING TOWER
+			# SELECT EXISTING TOWER
 			# ==============================
 
 			for tower in tower_container.get_children():
 
 				if tower is BaseTower:
 
+					if tower.is_ghost:
+						continue
+
 					if mouse_world.distance_to(tower.global_position) < 48:
 
+						# deselect ancienne
 						if selected_tower:
 							selected_tower.set_selected(false)
 
+						# nouvelle sélection
 						selected_tower = tower
 						selected_tower.set_selected(true)
 
 						return
-			# Placement nouvelle tour
+
+			# ==============================
+			# CLICK VIDE = DESELECT
+			# ==============================
+
+			if selected_tower:
+				selected_tower.set_selected(false)
+				selected_tower = null
+
+			# ==============================
+			# PLACEMENT NOUVELLE TOUR
+			# ==============================
+
 			if ghost_tower and selected_tower_scene:
+
+				print("TRY PLACE")
 
 				var cell = world_to_cell(mouse_world)
 
@@ -196,9 +229,16 @@ func _input(event):
 
 				var final_tower = selected_tower_scene.instantiate()
 
+				print("TOWER CREATED")
+
 				tower_container.add_child(final_tower)
 
+				print("TOWER ADDED")
+
 				final_tower.global_position = cell_to_world_center(cell)
+
+				print(final_tower.global_position)
+
 				final_tower.modulate = Color(1,1,1,1)
 				final_tower.z_index = 100
 
@@ -209,8 +249,8 @@ func _input(event):
 				ghost_tower.queue_free()
 				ghost_tower = null
 				selected_tower_scene = null
-
-
+				
+				
 # ==============================
 #        ENEMY SPAWN
 # ==============================
@@ -253,3 +293,10 @@ func spawn_wave(count: int, interval: float, speed_override: float = -1.0):
 			pf.progress = 0
 
 		await get_tree().create_timer(interval).timeout
+
+
+func _on_tower_card_fire_pressed():
+
+	print("CARD FIRE CLICKED")
+
+	start_placing_tower(TOWER_FIRE)

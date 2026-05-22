@@ -72,9 +72,6 @@ func update_visual_feedback():
 	pass
 
 func disable_behaviors():
-	process_mode = Node.PROCESS_MODE_DISABLED
-	set_process(false)
-	set_physics_process(false)
 
 	if timer:
 		timer.stop()

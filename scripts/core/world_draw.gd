@@ -3,6 +3,11 @@ extends Node2D
 @onready var path: Path2D = $"../Path2D"
 @onready var level = get_parent().get_parent()
 
+const RANGE_FILL_COLOR = Color(1, 0.6, 0, 0.15)
+const RANGE_BORDER_COLOR = Color(1, 0.6, 0, 0.8)
+const INVALID_FILL_COLOR = Color(1, 0, 0, 0.2)
+const INVALID_BORDER_COLOR = Color(1, 0, 0, 0.8)
+
 func _process(_delta):
 	queue_redraw()
 
@@ -56,7 +61,7 @@ func _draw():
 	if level.ghost_tower and level.ghost_tower is TowerFire:
 
 		var ghost = level.ghost_tower
-		var range = ghost.attack_range
+		var attack_range = ghost.attack_range
 
 		var world_pos = ghost.global_position
 		var pos = to_local(world_pos)
@@ -66,15 +71,15 @@ func _draw():
 		var fill_color
 		var border_color
 
-		if level.blocked_cells.has(cell):
-			fill_color = Color(1, 0, 0, 0.2)
-			border_color = Color(1, 0, 0, 0.8)
+		if level.blocked_path_cells.has(cell):
+			fill_color = INVALID_FILL_COLOR
+			border_color = INVALID_BORDER_COLOR
 		else:
-			fill_color = Color(1, 0.6, 0, 0.15)
-			border_color = Color(1, 0.6, 0, 0.8)
+			fill_color = INVALID_FILL_COLOR
+			border_color = INVALID_BORDER_COLOR
 
-		draw_circle(pos, range, fill_color)
-		draw_arc(pos, range, 0, TAU, 64, border_color, 2.0)
+		draw_circle(pos, attack_range, RANGE_FILL_COLOR)
+		draw_arc(pos, attack_range, 0, TAU, 64, RANGE_BORDER_COLOR, 2.0)
 
 
 	# =========================
@@ -83,10 +88,10 @@ func _draw():
 	if level.selected_tower and level.selected_tower is TowerFire:
 
 		var tower = level.selected_tower
-		var range = tower.attack_range
+		var attack_range = tower.attack_range
 
 		var world_pos = tower.global_position
 		var pos = to_local(world_pos)
 
-		draw_circle(pos, range, Color(0, 0.8, 1, 0.15))
-		draw_arc(pos, range, 0, TAU, 64, Color(0, 0.8, 1, 0.9), 2.0)
+		draw_circle(pos, attack_range, Color(1, 0.6, 0, 0.15))
+		draw_arc(pos, attack_range, 0, TAU, 64, Color(1, 0.6, 0, 0.8), 2.0)

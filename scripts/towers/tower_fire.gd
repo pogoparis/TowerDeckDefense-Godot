@@ -18,6 +18,8 @@ var targets: Array = []
 # ==============================
 
 func _ready():
+	if is_ghost:
+		return
 	sprite.modulate = Color(1,1,1,1)
 	super._ready()
 	update_range_visual()
@@ -48,11 +50,6 @@ func _on_body_exited(body):
 	targets.erase(body)
 
 var show_range := false
-
-func _draw():
-
-	if is_selected:
-		draw_circle(Vector2.ZERO, attack_range, Color(0,1,0,0.25))
 
 func _refresh_targets():
 	targets.clear()
@@ -91,18 +88,6 @@ func _on_timer_timeout():
 	projectile.damage = damage
 	get_parent().add_child(projectile)
 
-	# ==============================
-	#    UPDATE VISUEL SI UPGRADE
-	# ==============================
-	
-func disable_behaviors():
-	super.disable_behaviors()
-
-	if area:
-		area.monitoring = false
-		area.monitorable = false
-
-	projectile_scene = null
 
 func update_range_visual():
 	var shape = $DetectionArea/CollisionShape2D.shape as CircleShape2D

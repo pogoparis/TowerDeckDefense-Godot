@@ -2,14 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="PackedScene" uid="uid://hwku0ydalmpd" path="res://scenes/towers/TowerFire.tscn" id="5_p6g1u"]
+[ext_resource type="Texture2D" uid="uid://cyk8om4505r8m" path="res://assets/towers/FireTower128.png" id="6_7wsx7"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
-[ext_resource type="PackedScene" uid="uid://crj2bmetv7a1i" path="res://scenes/towers/TowerCannon.tscn" id="8_mqloe"]
-[ext_resource type="Texture2D" uid="uid://8dmu4al6xqfg" path="res://assets/towers/tour_de_feu_1_card_128.png" id="9_wxwm4"]
-[ext_resource type="Script" uid="uid://dtsx4rvpcixbv" path="res://scenes/ui/tower_card_fire.gd" id="10_lh6i8"]
-[ext_resource type="Texture2D" uid="uid://beg0rf6htphm6" path="res://assets/towers/canon_lvl_1_card_128.png" id="10_wxwm4"]
-[ext_resource type="Script" uid="uid://dgrtkwfaf2yll" path="res://scenes/ui/tower_card_cannon.gd" id="12_mqloe"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -46,16 +41,11 @@ script = ExtResource("2_wxwm4")
 [node name="PathLine" type="Line2D" parent="World/Path2D" unique_id=926539895]
 z_index = 3
 
-[node name="TowerFire" parent="World" unique_id=676582971 instance=ExtResource("5_p6g1u")]
-visible = false
-z_index = 5
-position = Vector2(0, -128)
-
 [node name="BuildGrid" type="Node2D" parent="World" unique_id=2128860896]
 
 [node name="TowerContainer" type="Node2D" parent="World" unique_id=1044129839]
-visible = false
-z_index = 20
+z_index = 200
+position = Vector2(0, -50)
 
 [node name="EnemyContainer" type="Node2D" parent="World" unique_id=820611676]
 z_index = 30
@@ -64,14 +54,6 @@ scale = Vector2(0.9, 0.9)
 [node name="WorldDraw" type="Node2D" parent="World" unique_id=1813535843]
 z_index = 10
 script = ExtResource("7_kv7s7")
-
-[node name="TowerCannon" parent="World" unique_id=421857515 instance=ExtResource("8_mqloe")]
-visible = false
-z_index = 5
-projectile_scene = null
-base_damage = 15
-base_fire_rate = 1.2
-base_range = 150.0
 
 [node name="Background" type="Sprite2D" parent="World" unique_id=2103578611]
 position = Vector2(640, 360)
@@ -103,12 +85,14 @@ offset_bottom = 40.0
 theme_override_constants/separation = 16
 
 [node name="PanelFire" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
+z_index = 200
 custom_minimum_size = Vector2(128, 171)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="TowerCardFire" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFire" unique_id=386525683]
+z_index = 200
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 1
 anchors_preset = 2
@@ -117,30 +101,8 @@ anchor_bottom = 1.0
 offset_top = -171.0
 offset_right = 128.0
 grow_vertical = 0
-texture_normal = ExtResource("9_wxwm4")
+texture_normal = ExtResource("6_7wsx7")
 stretch_mode = 5
-script = ExtResource("10_lh6i8")
-tower_scene = ExtResource("5_p6g1u")
-
-[node name="PanelCannon" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1086481728]
-custom_minimum_size = Vector2(128, 171)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="TowerCardCannon" type="TextureButton" parent="UI/RootUI/TowerCards/PanelCannon" unique_id=319888999]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -142.0
-offset_right = 128.0
-grow_vertical = 0
-texture_normal = ExtResource("10_wxwm4")
-stretch_mode = 5
-script = ExtResource("12_mqloe")
-tower_scene = ExtResource("8_mqloe")
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
 layout_mode = 0
@@ -150,3 +112,5 @@ offset_right = 905.0
 offset_bottom = 87.0
 theme_override_font_sizes/font_size = 48
 text = "20"
+
+[connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]

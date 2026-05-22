@@ -2,9 +2,6 @@ extends EnemyBase
 
 @onready var hp_fill = $HPBarContainer/HPFill
 
-func _process(delta):
-	update_hp_bar()
-
 func update_hp_bar():
 
 	var ratio = float(hp) / float(max_hp)
