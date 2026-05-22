@@ -24,7 +24,8 @@ const TOWER_CANNON = preload("res://scenes/towers/TowerCannon.tscn")
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
 var selected_tower: Node2D = null
-var blocked_cells := {}
+var blocked_path_cells := {}
+var occupied_cells := {}
 var prep_time := 2
 var wave_started := false
 
@@ -114,7 +115,7 @@ func block_path_cells():
 	if not path or not path.curve:
 		return
 
-	blocked_cells.clear()
+	blocked_path_cells.clear()
 
 	var curve = path.curve
 	var length = curve.get_baked_length()
@@ -129,7 +130,7 @@ func block_path_cells():
 		var blocked_path_cells := {}
 		var cell = world_to_cell(world_point)
 		
-		blocked_cells[cell] = true
+		blocked_path_cells[cell] = true
 
 		d += step
 
@@ -144,9 +145,7 @@ func _process(_delta):
 		var cell = world_to_cell(mouse_world)
 
 		ghost_tower.global_position = cell_to_world_center(cell)
-		print("CELL:", cell)
-		print("BLOCKED:", blocked_cells.has(cell))
-		if blocked_cells.has(cell):
+		if blocked_path_cells.has(cell) or occupied_cells.has(cell):
 			ghost_tower.modulate = Color(1, 0, 0, 0.5)
 		else:
 			ghost_tower.modulate = Color(0, 1, 0, 0.5)
@@ -189,7 +188,10 @@ func _input(event):
 
 				var cell = world_to_cell(mouse_world)
 
-				if blocked_cells.has(cell):
+				if blocked_path_cells.has(cell):
+					return
+
+				if occupied_cells.has(cell):
 					return
 
 				var final_tower = selected_tower_scene.instantiate()
@@ -202,7 +204,7 @@ func _input(event):
 
 				print("PLACED:", final_tower.global_position)
 
-				blocked_cells[cell] = true
+				occupied_cells[cell] = true
 
 				ghost_tower.queue_free()
 				ghost_tower = null
