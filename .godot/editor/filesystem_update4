@@ -1,4 +1,4 @@
-res://scenes/level.tscn
-res://scenes/world_draw.gd
-res://scenes/level.gd
-res://scenes/TowerFire.tscn
+res://scenes/enemies/SpeedScrapEnemy.tscn
+res://scenes/enemies/SimpleMob.tscn
+res://scenes/ui/level.tscn
+res://scripts/core/level.gd

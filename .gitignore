@@ -1,15 +1,12 @@
-# Godot
 .import/
-.export/
-*.translation
-*.tmp
+.godot/
 
-# Exports
-export/
 export_presets.cfg
 
-# OS / IDE
-.vscode/
-.idea/
+*.tmp
+*.import
+
+mono_crash.*
+
 .DS_Store
 Thumbs.db

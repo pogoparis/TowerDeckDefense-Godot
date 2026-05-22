@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://bv7wk3sb5b3ch"]
+
+[ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
+[ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
+[ext_resource type="Script" uid="uid://u1r1ocefleiw" path="res://scripts/enemies/enemy_pivot.gd" id="3_lh6i8"]
+[ext_resource type="Texture2D" uid="uid://dmritv1xcbrip" path="res://assets/ennemies/ennemy_fireball.png" id="4_mqloe"]
+[ext_resource type="PackedScene" uid="uid://hwku0ydalmpd" path="res://scenes/towers/TowerFire.tscn" id="5_p6g1u"]
+[ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
+[ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
+[ext_resource type="PackedScene" uid="uid://crj2bmetv7a1i" path="res://scenes/towers/TowerCannon.tscn" id="8_mqloe"]
+[ext_resource type="Texture2D" uid="uid://8dmu4al6xqfg" path="res://assets/towers/tour_de_feu_1_card_128.png" id="9_wxwm4"]
+[ext_resource type="Script" uid="uid://dtsx4rvpcixbv" path="res://scenes/ui/tower_card_fire.gd" id="10_lh6i8"]
+[ext_resource type="Texture2D" uid="uid://beg0rf6htphm6" path="res://assets/towers/canon_lvl_1_card_128.png" id="10_wxwm4"]
+[ext_resource type="Script" uid="uid://dgrtkwfaf2yll" path="res://scenes/ui/tower_card_cannon.gd" id="12_mqloe"]
+
+[sub_resource type="Curve2D" id="Curve2D_5xgho"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -19, 350, 0, 0, 0, 0, 288, 354, 0, 0, 0, 0, 290, 228, 0, 0, 0, 0, 740, 223, 0, 0, 0, 0, 738, 359, 0, 0, 0, 0, 1583, 359)
+}
+point_count = 6
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8c41q"]
+
+[node name="Level" type="Node2D" unique_id=995050660 groups=["level"]]
+script = ExtResource("1_4br2k")
+metadata/_edit_vertical_guides_ = [-1100.0]
+
+[node name="World" type="Node2D" parent="." unique_id=93436023]
+z_index = 1
+
+[node name="GroundTileMap" type="TileMapLayer" parent="World" unique_id=141763206]
+z_index = 1
+
+[node name="PathTileMap" type="TileMapLayer" parent="World" unique_id=1644371080]
+z_index = 2
+
+[node name="Path2D" type="Path2D" parent="World" unique_id=1234754296]
+z_index = 3
+position = Vector2(-106, 56)
+curve = SubResource("Curve2D_5xgho")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="World/Path2D" unique_id=1273408496]
+z_index = 2
+position = Vector2(-19, 350)
+rotation = 0.013028579
+rotates = false
+loop = false
+script = ExtResource("2_wxwm4")
+
+[node name="EnemyPivot" type="CharacterBody2D" parent="World/Path2D/PathFollow2D" unique_id=417138091 groups=["enemies"]]
+z_index = 5
+position = Vector2(0, 40)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("3_lh6i8")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1729007847 groups=["enemies", "level"]]
+z_index = 10
+texture = ExtResource("4_mqloe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=979414820]
+visible = false
+shape = SubResource("CircleShape2D_8c41q")
+one_way_collision = true
+one_way_collision_margin = 47.1
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="HPBarContainer" type="Node2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1489645719]
+z_index = 10
+position = Vector2(0, -40)
+
+[node name="HPBackground" type="ColorRect" parent="World/Path2D/PathFollow2D/EnemyPivot/HPBarContainer" unique_id=1016954550]
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 6.0
+color = Color(0, 0, 0, 0.5019608)
+
+[node name="HPFill" type="ColorRect" parent="World/Path2D/PathFollow2D/EnemyPivot/HPBarContainer" unique_id=98892940]
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 6.0
+color = Color(0.7772812, 6.750338e-05, 0.03591449, 1)
+
+[node name="PathLine" type="Line2D" parent="World/Path2D" unique_id=926539895]
+z_index = 3
+
+[node name="TowerFire" parent="World" unique_id=676582971 instance=ExtResource("5_p6g1u")]
+visible = false
+z_index = 5
+position = Vector2(0, -128)
+
+[node name="BuildGrid" type="Node2D" parent="World" unique_id=2128860896]
+
+[node name="TowerContainer" type="Node2D" parent="World" unique_id=1044129839]
+visible = false
+z_index = 20
+
+[node name="EnemyContainer" type="Node2D" parent="World" unique_id=820611676]
+z_index = 30
+scale = Vector2(0.9, 0.9)
+
+[node name="WorldDraw" type="Node2D" parent="World" unique_id=1813535843]
+z_index = 10
+script = ExtResource("7_kv7s7")
+
+[node name="TowerCannon" parent="World" unique_id=421857515 instance=ExtResource("8_mqloe")]
+visible = false
+z_index = 5
+projectile_scene = null
+base_damage = 15
+base_fire_rate = 1.2
+base_range = 150.0
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=2103578611]
+position = Vector2(640, 360)
+texture = ExtResource("6_lh6i8")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=624921131]
+
+[node name="RootUI" type="Control" parent="UI" unique_id=1893101717]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeButton" type="Button" parent="UI/RootUI" unique_id=397624862]
+visible = false
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 31.0
+text = "Upgrade"
+
+[node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
+z_index = 100
+z_as_relative = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 16
+
+[node name="PanelFire" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
+custom_minimum_size = Vector2(128, 171)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TowerCardFire" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFire" unique_id=386525683]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -171.0
+offset_right = 128.0
+grow_vertical = 0
+texture_normal = ExtResource("9_wxwm4")
+stretch_mode = 5
+script = ExtResource("10_lh6i8")
+tower_scene = ExtResource("5_p6g1u")
+
+[node name="PanelCannon" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1086481728]
+custom_minimum_size = Vector2(128, 171)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TowerCardCannon" type="TextureButton" parent="UI/RootUI/TowerCards/PanelCannon" unique_id=319888999]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -142.0
+offset_right = 128.0
+grow_vertical = 0
+texture_normal = ExtResource("10_wxwm4")
+stretch_mode = 5
+script = ExtResource("12_mqloe")
+tower_scene = ExtResource("8_mqloe")
+
+[node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
+layout_mode = 0
+offset_left = 850.0
+offset_top = 20.0
+offset_right = 905.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 48
+text = "20"
