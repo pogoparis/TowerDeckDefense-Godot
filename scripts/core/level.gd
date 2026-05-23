@@ -99,25 +99,10 @@ func block_path_cells():
 		grid.blocked_cells[cell] = true
 
 		d += step
-
-# ==============================
-#            PROCESS
-# ==============================
-
+		
 func _process(_delta):
 
-	if placement.ghost_tower == null:
-		return
-
-	var mouse_world = get_global_mouse_position()
-	var cell = grid.world_to_cell(mouse_world)
-
-	placement.ghost_tower.global_position = grid.cell_to_world(cell)
-
-	if not grid.can_place(cell):
-		placement.ghost_tower.modulate = Color(1, 0, 0, 0.5)
-	else:
-		placement.ghost_tower.modulate = Color(0, 1, 0, 0.5)
+	placement.update_ghost(grid, get_global_mouse_position())
 
 # ==============================
 #         INPUT HANDLING
