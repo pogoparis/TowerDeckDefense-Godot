@@ -215,9 +215,7 @@ func try_place_tower(mouse_world: Vector2):
 
 	grid.occupy_cell(cell, final_tower)
 
-	placement.ghost_tower.queue_free()
-	placement.ghost_tower = null
-	placement.selected_tower_scene = null
+	placement.clear_placement()
 
 # ==============================
 #        ENEMY SPAWN

@@ -8,7 +8,15 @@ func start_placing_tower(scene: PackedScene):
 
 	selected_tower_scene = scene
 	
-	
+
+func clear_placement():
+
+	if ghost_tower:
+		ghost_tower.queue_free()
+
+	ghost_tower = null
+	selected_tower_scene = null
+
 func create_ghost(scene: PackedScene, parent: Node):
 
 	if ghost_tower:
