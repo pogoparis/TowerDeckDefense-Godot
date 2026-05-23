@@ -59,18 +59,7 @@ func start_wave():
 func start_placing_tower(scene: PackedScene):
 	
 	placement.start_placing_tower(scene)
-
-	if placement.ghost_tower:
-		placement.ghost_tower.queue_free()
-
-	placement.ghost_tower = scene.instantiate()
-
-	print(placement.ghost_tower)
-
-	tower_container.add_child(placement.ghost_tower)
-
-	placement.ghost_tower.z_index = 999
-	placement.ghost_tower.modulate = Color(0, 1, 0, 0.5)
+	placement.create_ghost(scene, tower_container)
 
 	_disable_ghost_behaviors()
 
