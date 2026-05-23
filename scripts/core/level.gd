@@ -57,10 +57,8 @@ func start_wave():
 	spawn_wave(20, 1.5, 70.0)
 
 func start_placing_tower(scene: PackedScene):
-
-	print("START PLACING")
-
-	placement.selected_tower_scene
+	
+	placement.start_placing_tower(scene)
 
 	if placement.ghost_tower:
 		placement.ghost_tower.queue_free()
