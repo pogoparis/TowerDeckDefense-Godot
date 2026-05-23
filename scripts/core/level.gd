@@ -12,6 +12,7 @@ extends Node2D
 @onready var path_follow_template: PathFollow2D = $World/Path2D/PathFollow2D
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
 @onready var grid: GridManager = $GridManager
+@onready var placement: PlacementManager = $PlacementManager
 
 # ==============================
 #            STATE
@@ -20,8 +21,6 @@ extends Node2D
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE = preload("res://scenes/towers/TowerFire.tscn")
 const TOWER_CANNON = preload("res://scenes/towers/TowerCannon.tscn")
-var selected_tower_scene: PackedScene = null
-var ghost_tower: Node2D = null
 var selected_tower: Node2D = null
 var prep_time := 2
 var wave_started := false
@@ -61,19 +60,19 @@ func start_placing_tower(scene: PackedScene):
 
 	print("START PLACING")
 
-	selected_tower_scene = scene
+	placement.selected_tower_scene
 
-	if ghost_tower:
-		ghost_tower.queue_free()
+	if placement.ghost_tower:
+		placement.ghost_tower.queue_free()
 
-	ghost_tower = scene.instantiate()
+	placement.ghost_tower = scene.instantiate()
 
-	print(ghost_tower)
+	print(placement.ghost_tower)
 
-	tower_container.add_child(ghost_tower)
+	tower_container.add_child(placement.ghost_tower)
 
-	ghost_tower.z_index = 999
-	ghost_tower.modulate = Color(0, 1, 0, 0.5)
+	placement.ghost_tower.z_index = 999
+	placement.ghost_tower.modulate = Color(0, 1, 0, 0.5)
 
 	_disable_ghost_behaviors()
 
@@ -82,10 +81,10 @@ func start_placing_tower(scene: PackedScene):
 
 func _disable_ghost_behaviors():
 
-	if ghost_tower and ghost_tower is BaseTower:
+	if placement.ghost_tower and placement.ghost_tower is BaseTower:
 
-		ghost_tower.is_ghost = true
-		ghost_tower.disable_behaviors()
+		placement.ghost_tower.is_ghost = true
+		placement.ghost_tower.disable_behaviors()
 
 
 # ==============================
@@ -120,18 +119,18 @@ func block_path_cells():
 
 func _process(_delta):
 
-	if ghost_tower == null:
+	if placement.ghost_tower == null:
 		return
 
 	var mouse_world = get_global_mouse_position()
 	var cell = grid.world_to_cell(mouse_world)
 
-	ghost_tower.global_position = grid.cell_to_world(cell)
+	placement.ghost_tower.global_position = grid.cell_to_world(cell)
 
 	if not grid.can_place(cell):
-		ghost_tower.modulate = Color(1, 0, 0, 0.5)
+		placement.ghost_tower.modulate = Color(1, 0, 0, 0.5)
 	else:
-		ghost_tower.modulate = Color(0, 1, 0, 0.5)
+		placement.ghost_tower.modulate = Color(0, 1, 0, 0.5)
 
 # ==============================
 #         INPUT HANDLING
@@ -200,7 +199,7 @@ func _input(event):
 
 func try_place_tower(mouse_world: Vector2):
 
-	if not ghost_tower or not selected_tower_scene:
+	if not placement.ghost_tower or not placement.selected_tower_scene:
 		return
 
 	print("TRY PLACE")
@@ -210,7 +209,7 @@ func try_place_tower(mouse_world: Vector2):
 	if not grid.can_place(cell):
 		return
 
-	var final_tower = selected_tower_scene.instantiate()
+	var final_tower = placement.selected_tower_scene.instantiate()
 
 	print("TOWER CREATED")
 
@@ -229,9 +228,9 @@ func try_place_tower(mouse_world: Vector2):
 
 	grid.occupy_cell(cell, final_tower)
 
-	ghost_tower.queue_free()
-	ghost_tower = null
-	selected_tower_scene = null
+	placement.ghost_tower.queue_free()
+	placement.ghost_tower = null
+	placement.selected_tower_scene = null
 
 # ==============================
 #        ENEMY SPAWN

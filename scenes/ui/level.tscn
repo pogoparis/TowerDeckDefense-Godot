@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
+[ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -116,5 +117,8 @@ text = "20"
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
+
+[node name="PlacementManager" type="Node2D" parent="." unique_id=1788239862]
+script = ExtResource("7_lwybd")
 
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]

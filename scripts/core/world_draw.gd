@@ -58,9 +58,9 @@ func _draw():
 	# =========================
 	# PORTEE DU GHOST
 	# =========================
-	if level.ghost_tower and level.ghost_tower is TowerFire:
+	if level.placement.ghost_tower and level.placement.ghost_tower is TowerFire:
 
-		var ghost = level.ghost_tower
+		var ghost = level.placement.ghost_tower
 		var attack_range = ghost.attack_range
 
 		var world_pos = ghost.global_position
