@@ -145,11 +145,9 @@ func _input(event):
 
 					if mouse_world.distance_to(tower.global_position) < 48:
 
-						# deselect ancienne
 						if selected_tower:
 							selected_tower.set_selected(false)
 
-						# nouvelle sélection
 						selected_tower = tower
 						selected_tower.set_selected(true)
 
@@ -167,41 +165,11 @@ func _input(event):
 			# TRY PLACE TOWER
 			# ==============================
 
-			try_place_tower(mouse_world)
-
-func try_place_tower(mouse_world: Vector2):
-
-	if not placement.ghost_tower or not placement.selected_tower_scene:
-		return
-
-	print("TRY PLACE")
-
-	var cell = grid.world_to_cell(mouse_world)
-
-	if not grid.can_place(cell):
-		return
-
-	var final_tower = placement.selected_tower_scene.instantiate()
-
-	print("TOWER CREATED")
-
-	tower_container.add_child(final_tower)
-
-	print("TOWER ADDED")
-
-	final_tower.global_position = grid.cell_to_world(cell)
-
-	print(final_tower.global_position)
-
-	final_tower.modulate = Color(1,1,1,1)
-	final_tower.z_index = 100
-
-	print("PLACED:", final_tower.global_position)
-
-	grid.occupy_cell(cell, final_tower)
-
-	placement.clear_placement()
-
+			placement.try_place_tower(
+				grid,
+				tower_container,
+				mouse_world
+			)
 # ==============================
 #        ENEMY SPAWN
 # ==============================

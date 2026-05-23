@@ -6,6 +6,33 @@ var ghost_tower: Node2D = null
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
 
+func try_place_tower(
+	grid: GridManager,
+	tower_container: Node2D,
+	mouse_world: Vector2
+):
+
+	if not ghost_tower or not selected_tower_scene:
+		return
+
+	var cell = grid.world_to_cell(mouse_world)
+
+	if not grid.can_place(cell):
+		return
+
+	var final_tower = selected_tower_scene.instantiate()
+
+	tower_container.add_child(final_tower)
+
+	final_tower.global_position = grid.cell_to_world(cell)
+
+	final_tower.modulate = Color(1,1,1,1)
+	final_tower.z_index = 100
+
+	grid.occupy_cell(cell, final_tower)
+
+	clear_placement()
+
 func update_ghost(grid: GridManager, mouse_world: Vector2):
 
 	if ghost_tower == null:

@@ -50,7 +50,7 @@ z_index = 200
 position = Vector2(0, -50)
 
 [node name="EnemyContainer" type="Node2D" parent="World" unique_id=820611676]
-z_index = 30
+z_index = 10
 scale = Vector2(0.9, 0.9)
 
 [node name="WorldDraw" type="Node2D" parent="World" unique_id=1813535843]
@@ -79,7 +79,7 @@ offset_bottom = 31.0
 text = "Upgrade"
 
 [node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
-z_index = 100
+z_index = 12
 z_as_relative = false
 layout_mode = 0
 offset_right = 40.0
@@ -118,7 +118,7 @@ text = "20"
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
 
-[node name="PlacementManager" type="Node2D" parent="." unique_id=1788239862]
+[node name="PlacementManager" type="Node2D" parent="." unique_id=1318624488]
 script = ExtResource("7_lwybd")
 
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]
