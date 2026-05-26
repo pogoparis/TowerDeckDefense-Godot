@@ -9,7 +9,7 @@ class_name EnemyBase
 @export var death_explosion_scene: PackedScene
 
 var hp := 0
-var enemy_manager: EnemyManager
+@onready var enemy_manager: EnemyManager = get_tree().get_first_node_in_group("enemy_manager")
 
 func _ready():
 
@@ -20,6 +20,10 @@ func _ready():
 	hp = max_hp
 
 	update_hp_bar()
+
+	if enemy_manager:
+		enemy_manager.register_enemy(self)
+	
 
 func take_damage(amount: int):
 

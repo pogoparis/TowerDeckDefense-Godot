@@ -2,3 +2,4 @@ res://scenes/ui/level.tscn
 res://scripts/managers/tower_manager.gd
 res://scripts/managers/placement_manager.gd
 res://scripts/core/level.gd
+res://scripts/enemies/enemy_base.gd
