@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://h5us2ebt0mms"]
 
-[ext_resource type="PackedScene" uid="uid://bhkuis4dgbj4h" path="res://scenes/enemies/rayman_poison.tscn" id="1_a1cx8"]
+[ext_resource type="PackedScene" uid="uid://cdk4dk7llwlp1" path="res://scenes/enemies/TankMob.tscn" id="1_a1cx8"]
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="1_wau5l"]
 
 [resource]
