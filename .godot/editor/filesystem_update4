@@ -8,3 +8,4 @@ res://scenes/ui/level.tscn
 res://scripts/projectiles/fire_projectile.gd
 res://scenes/projectiles/FireProjectile.tscn
 res://scripts/resources/tower_data.gd
+res://scripts/managers/wave_manager.gd

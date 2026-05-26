@@ -123,4 +123,10 @@ script = ExtResource("6_lwybd")
 [node name="PlacementManager" type="Node2D" parent="." unique_id=1318624488]
 script = ExtResource("7_lwybd")
 
+[node name="WaveManager" type="Node2D" parent="." unique_id=1847154296]
+
+[node name="EnemyManager" type="Node2D" parent="." unique_id=1116086763]
+
+[node name="TowerManager" type="Node2D" parent="." unique_id=1146295277]
+
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]
