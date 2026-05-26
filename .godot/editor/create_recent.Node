@@ -1,8 +1,9 @@
+Area2D
 Node2D
-Node
-ColorRect
 CollisionShape2D
 Sprite2D
+Node
+ColorRect
 CharacterBody2D
 Label
 Panel

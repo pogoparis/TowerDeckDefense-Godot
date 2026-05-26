@@ -9,7 +9,6 @@ extends Node2D
 @onready var tower_container: Node2D = $World/TowerContainer
 @onready var tower_card_fire = $UI/RootUI/TowerCards/PanelFire/TowerCardFire
 @onready var upgrade_button = $UI/RootUI/UpgradeButton
-@onready var path_follow_template: PathFollow2D = $World/Path2D/PathFollow2D
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
 @onready var grid: GridManager = $GridManager
 @onready var placement: PlacementManager = $PlacementManager
@@ -17,10 +16,9 @@ extends Node2D
 # ==============================
 #            STATE
 # ==============================
-
+const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
-const TOWER_FIRE = preload("res://scenes/towers/TowerFire.tscn")
-const TOWER_CANNON = preload("res://scenes/towers/TowerCannon.tscn")
+const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
 var selected_tower: Node2D = null
 var prep_time := 2
 var wave_started := false
@@ -173,24 +171,18 @@ func _input(event):
 # ==============================
 #        ENEMY SPAWN
 # ==============================
-
 func _spawn_enemy_instance() -> PathFollow2D:
 
-	if not path_follow_template:
-		return null
+	var pf := PathFollow2D.new()
 
-	var pf: PathFollow2D = path_follow_template.duplicate()
+	pf.set_script(PATH_FOLLOW_SCRIPT)
 
+	pf.rotates = false
+	pf.loop = false
 	pf.visible = true
-	pf.set_process(true)
-	pf.set_physics_process(true)
 
-	# Supprime ancien ennemi
-	for child in pf.get_children():
-		child.queue_free()
-
-	# Nouveau monstre
 	var enemy = ENEMY_SCENE.instantiate()
+
 	pf.add_child(enemy)
 
 	return pf
@@ -216,6 +208,4 @@ func spawn_wave(count: int, interval: float, speed_override: float = -1.0):
 
 func _on_tower_card_fire_pressed():
 
-	print("CARD FIRE CLICKED")
-
-	start_placing_tower(TOWER_FIRE)
+	start_placing_tower(TOWER_FIRE_SCENE)

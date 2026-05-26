@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_1rxqv"]
 [ext_resource type="Texture2D" uid="uid://dwgqonjhm66vv" path="res://assets/ennemies/SimpleMob256.png" id="2_1rxqv"]
 
-[node name="SpeedScrapEnemy" type="CharacterBody2D" unique_id=1262043704 groups=["enemies", "level"]]
+[node name="SimpleMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
+z_index = 8
 script = ExtResource("1_1rxqv")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
@@ -27,5 +28,3 @@ color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(0.09009846, 0.09009849, 0.09009848, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1631667341]

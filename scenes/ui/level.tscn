@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://cyk8om4505r8m" path="res://assets/towers/FireTower128.png" id="6_7wsx7"]
+[ext_resource type="Texture2D" uid="uid://bxdtnop1ujeb0" path="res://assets/towers/FireTower256.png" id="5_lwybd"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
@@ -100,10 +100,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -171.0
-offset_right = 128.0
+offset_top = -156.0
+offset_right = 202.0
+offset_bottom = 100.0
 grow_vertical = 0
-texture_normal = ExtResource("6_7wsx7")
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("5_lwybd")
 stretch_mode = 5
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]

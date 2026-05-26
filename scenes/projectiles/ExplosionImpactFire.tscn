@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://doblf2bixo4oo"]
+
+[ext_resource type="Texture2D" uid="uid://djg1aviohxc6h" path="res://assets/projectiles/MiniExplose.png" id="1_af8cn"]
+[ext_resource type="Script" uid="uid://meoy4vhmvqmx" path="res://scripts/projectiles/explosion_fire.gd" id="1_pox3w"]
+
+[node name="ExplosionImpactFire" type="Node2D" unique_id=1080931226]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1287260712]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_af8cn")
+script = ExtResource("1_pox3w")

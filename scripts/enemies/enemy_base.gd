@@ -1,15 +1,20 @@
-extends CharacterBody2D
+extends Node2D
 class_name EnemyBase
 
 @export var max_hp := 30
 @export var speed := 120.0
 @export var scrap_reward := 5
+@export var death_explosion_scene: PackedScene
 
 var hp := 0
 
-@onready var hp_fill = $HPBarContainer/HPFill
+@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
 
 func _ready():
+
+	if not hp_fill:
+		push_error("HPFill introuvable dans " + str(name))
+		return
 
 	hp = max_hp
 
@@ -29,6 +34,9 @@ func take_damage(amount: int):
 
 func update_hp_bar():
 
+	if not hp_fill:
+		return
+
 	var ratio = float(hp) / float(max_hp)
 
 	hp_fill.size.x = 40 * ratio
@@ -41,6 +49,14 @@ func update_hp_bar():
 		hp_fill.color = Color(1, 0.2, 0.2)
 
 func die():
+
+	if death_explosion_scene:
+
+		var explosion = death_explosion_scene.instantiate() as Node2D
+
+		explosion.global_position = global_position
+
+		get_parent().add_child(explosion)
 
 	EconomyManager.add_scrap(scrap_reward)
 

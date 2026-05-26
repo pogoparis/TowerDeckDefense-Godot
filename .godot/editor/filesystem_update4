@@ -1,7 +1,10 @@
-res://scenes/towers/TowerFire.tscn
-res://scripts/managers/placement_manager.gd
-res://scripts/towers/tower_fire.gd
 res://scenes/enemies/SimpleMob.tscn
+res://scripts/towers/tower_fire.gd
+res://scripts/towers/tower_cannon.gd
 res://scripts/enemies/enemy_base.gd
-res://scripts/enemies/enemy_pivot.gd
-res://scenes/enemies/SpeedScrapEnemy.tscn
+res://scripts/core/level.gd
+res://scenes/towers/TowerFire.tscn
+res://scenes/ui/level.tscn
+res://scripts/projectiles/fire_projectile.gd
+res://scenes/projectiles/FireProjectile.tscn
+res://scripts/resources/tower_data.gd

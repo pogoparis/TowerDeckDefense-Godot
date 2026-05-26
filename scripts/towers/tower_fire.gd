@@ -6,11 +6,6 @@ class_name TowerFire
 @onready var area: Area2D = $DetectionArea
 @onready var sprite: Sprite2D = $Sprite2D
 
-var level_textures := {
-	2: preload("res://assets/towers/tour_de_feu_2_128_min2.png"),
-	3: preload("res://assets/towers/tour_de_feu_3_128_min3.png")
-}
-
 var targets: Array = []
 
 # ==============================
@@ -18,10 +13,6 @@ var targets: Array = []
 # ==============================
 
 func _ready():
-	print("Tower ready")
-
-	print("Monitoring =", area.monitoring)
-	print("Mask =", area.collision_mask)
 
 	if is_ghost:
 		return
@@ -80,11 +71,5 @@ func _on_timer_timeout():
 func update_range_visual():
 	
 	var shape = $DetectionArea/CollisionShape2D.shape as CircleShape2D
-	print(shape)
-	print(shape.radius)
 	shape.radius = attack_range
 	queue_redraw()
-
-func _process(_delta):
-
-	print(area.get_overlapping_bodies().size())

@@ -9,11 +9,6 @@ class_name TowerCannon
 
 var targets: Array = []
 
-var level_textures := {
-	2: preload("res://assets/towers/canon_lvl_2.png"),
-	3: preload("res://assets/towers/canon_lvl_3.png")
-}
-
 func _ready():
 
 	super._ready()

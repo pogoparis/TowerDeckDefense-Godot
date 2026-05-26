@@ -1,3 +1,5 @@
+res://scripts/enemies/
+res://scenes/projectiles/
 res://scenes/ui/
 res://scripts/managers/
 res://scenes/enemies/
@@ -6,5 +8,3 @@ res://assets/ennemies/Rayman_poison/
 res://scenes/towers/
 res://scenes/
 res://assets/towers/
-res://assets/tiles/
-res://addons/sprout_lands_tilemap/assets/Tilesets/
