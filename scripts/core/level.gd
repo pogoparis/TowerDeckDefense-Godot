@@ -32,7 +32,8 @@ func _ready():
 	wave_manager.wave_timer_label = wave_timer_label
 	wave_manager.enemy_manager = enemy_manager
 	placement.enemy_manager = enemy_manager
-
+	placement.level = self
+	
 	wave_manager.start_prep_phase()
 
 # ==============================

@@ -6,6 +6,7 @@ var ghost_tower: Node2D = null
 var enemy_manager: EnemyManager
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
+var level: Node2D
 
 func try_place_tower(
 	grid: GridManager,
@@ -55,8 +56,10 @@ func start_tower_placement(scene: PackedScene, tower_container: Node2D):
 	selected_tower_scene = scene
 
 	create_ghost(scene, tower_container)
-
-	_disable_ghost_behaviors()
+	
+	if level:
+		level.block_path_cells()
+		_disable_ghost_behaviors()
 
 func _disable_ghost_behaviors():
 
