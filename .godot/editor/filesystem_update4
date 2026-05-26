@@ -14,3 +14,5 @@ res://scripts/managers/placement_manager.gd
 res://scripts/towers/base_tower.gd
 res://scripts/managers/tower_manager.gd
 res://scripts/core/world_draw.gd
+res://scripts/resources/wave_data.gd
+res://scripts/resources/waves/wave_01.tres

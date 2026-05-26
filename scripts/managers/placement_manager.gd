@@ -85,11 +85,7 @@ func handle_right_click() -> bool:
 	return false
 	
 	
-func try_place_tower(
-	grid: GridManager,
-	tower_container: Node2D,
-	mouse_world: Vector2
-):
+func try_place_tower(mouse_world: Vector2):
 
 	if not ghost_tower or not selected_tower_scene:
 		return
@@ -160,22 +156,14 @@ func handle_left_click(mouse_world: Vector2) -> bool:
 
 	if ghost_tower:
 
-		try_place_tower(
-			grid,
-			tower_container,
-			mouse_world
-		)
+		try_place_tower(mouse_world)
 
 		return true
 
 	return false
 
 	if ghost_tower:
-		try_place_tower(
-			grid,
-			tower_container,
-			mouse_world
-		)
+		try_place_tower(mouse_world)
 
 func create_ghost(scene: PackedScene, parent: Node):
 
