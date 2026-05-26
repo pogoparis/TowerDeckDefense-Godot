@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dyxrkd3aa4ba0"]
 
-[ext_resource type="Script" uid="uid://u1r1ocefleiw" path="res://scripts/enemies/enemy_pivot.gd" id="1_d6bof"]
+[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_d6bof"]
 [ext_resource type="Texture2D" uid="uid://dpxttkoneu2sj" path="res://assets/ennemies/speed_scrap_256.png" id="2_d6bof"]
 
 [node name="SpeedScrapEnemy" type="CharacterBody2D" unique_id=1262043704 groups=["enemies", "level"]]

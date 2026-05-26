@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ugub6d0kpt13"]
 
-[ext_resource type="Script" uid="uid://u1r1ocefleiw" path="res://scripts/enemies/enemy_pivot.gd" id="1_1rxqv"]
+[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_1rxqv"]
 [ext_resource type="Texture2D" uid="uid://dwgqonjhm66vv" path="res://assets/ennemies/SimpleMob256.png" id="2_1rxqv"]
 
 [node name="SpeedScrapEnemy" type="CharacterBody2D" unique_id=1262043704 groups=["enemies", "level"]]
@@ -15,7 +15,7 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_1rxqv")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
-position = Vector2(-20, -60)
+position = Vector2(-20, -55)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
 z_index = 7

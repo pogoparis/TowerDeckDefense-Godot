@@ -3,3 +3,5 @@ res://scripts/managers/placement_manager.gd
 res://scripts/towers/tower_fire.gd
 res://scenes/enemies/SimpleMob.tscn
 res://scripts/enemies/enemy_base.gd
+res://scripts/enemies/enemy_pivot.gd
+res://scenes/enemies/SpeedScrapEnemy.tscn
