@@ -9,6 +9,14 @@ const INVALID_COLOR = Color(1, 0, 0, 0.5)
 var level: Node2D
 var grid: GridManager
 var tower_container: Node2D
+var current_mouse_world := Vector2.ZERO
+
+func _process(_delta):
+
+	if not grid:
+		return
+
+	update_ghost(grid, current_mouse_world)
 
 func try_place_tower(
 	grid: GridManager,

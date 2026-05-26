@@ -66,16 +66,15 @@ func block_path_cells():
 
 		d += step
 		
-func _process(_delta):
-
-	placement.update_ghost(grid, get_global_mouse_position())
 
 # ==============================
 #         INPUT HANDLING
 # ==============================
 
 func _input(event):
-
+	
+	placement.current_mouse_world = get_global_mouse_position()
+	
 	if event is InputEventMouseButton and event.pressed:
 
 		var mouse_world = get_global_mouse_position()
@@ -116,6 +115,9 @@ func _input(event):
 
 			placement.handle_left_click(mouse_world)
 
+func _physics_process(_delta):
+
+	placement.current_mouse_world = get_global_mouse_position()
 
 func _on_tower_card_fire_pressed():
 
