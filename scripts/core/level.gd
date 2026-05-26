@@ -33,39 +33,12 @@ func _ready():
 	wave_manager.wave_timer_label = wave_timer_label
 	wave_manager.enemy_manager = enemy_manager
 	placement.enemy_manager = enemy_manager
-	placement.level = self
 	placement.grid = grid
 	placement.tower_container = tower_container
+	placement.path = path
 	tower_manager.tower_container = tower_container
 	
 	wave_manager.start_prep_phase()
-
-# ==============================
-#       BLOCK PATH CELLS
-# ==============================
-
-func block_path_cells():
-
-	if not path or not path.curve:
-		return
-
-	grid.blocked_cells.clear()
-
-	var curve = path.curve
-	var length = curve.get_baked_length()
-	var step = 4.0
-	var d := 0.0
-
-	while d <= length:
-
-		var local_point = curve.sample_baked(d)
-		var world_point = path.to_global(local_point)
-		var cell = grid.world_to_cell(world_point)
-		
-		grid.blocked_cells[cell] = true
-
-		d += step
-		
 
 # ==============================
 #         INPUT HANDLING

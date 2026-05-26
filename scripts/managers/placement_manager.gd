@@ -6,10 +6,10 @@ var ghost_tower: Node2D = null
 var enemy_manager: EnemyManager
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
-var level: Node2D
 var grid: GridManager
 var tower_container: Node2D
 var current_mouse_world := Vector2.ZERO
+var path: Path2D
 
 func _process(_delta):
 
@@ -22,7 +22,32 @@ func _process(_delta):
 func is_placing() -> bool:
 
 	return ghost_tower != null
-	
+
+func block_path_cells():
+
+	if not path or not path.curve:
+		return
+
+	grid.blocked_cells.clear()
+
+	var curve = path.curve
+	var length = curve.get_baked_length()
+
+	var step = 4.0
+	var d := 0.0
+
+	while d <= length:
+
+		var local_point = curve.sample_baked(d)
+
+		var world_point = path.to_global(local_point)
+
+		var cell = grid.world_to_cell(world_point)
+
+		grid.blocked_cells[cell] = true
+
+		d += step
+
 func handle_right_click() -> bool:
 
 	if ghost_tower:
@@ -83,9 +108,8 @@ func start_tower_placement(scene: PackedScene, tower_container: Node2D):
 
 	create_ghost(scene, tower_container)
 		
-	if level:
-		level.block_path_cells()
-		_disable_ghost_behaviors()
+	block_path_cells()
+	_disable_ghost_behaviors()
 
 func _disable_ghost_behaviors():
 
