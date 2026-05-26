@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cdk4dk7llwlp1"]
+
+[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_yasrm"]
+[ext_resource type="Texture2D" uid="uid://dwgqonjhm66vv" path="res://assets/ennemies/SimpleMob256.png" id="2_ceoxr"]
+
+[node name="TankMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
+z_index = 10
+script = ExtResource("1_yasrm")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
+position = Vector2(0, -20)
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
+z_index = 6
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_ceoxr")
+
+[node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
+position = Vector2(-20, -55)
+
+[node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
+z_index = 7
+offset_right = 40.0
+offset_bottom = 5.0
+color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)
+
+[node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=131817910]
+offset_right = 40.0
+offset_bottom = 5.0
+color = Color(0.09009846, 0.09009849, 0.09009848, 1)

@@ -97,6 +97,11 @@ func spawn_wave(
 
 func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 
+	if not enemy_scene:
+
+		push_error("enemy_scene est null")
+		return null
+
 	var pf := PathFollow2D.new()
 
 	pf.set_script(PATH_FOLLOW_SCRIPT)
@@ -105,16 +110,17 @@ func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 	pf.loop = false
 	pf.visible = true
 
-	var enemy = enemy_scene.instantiate()
+	var enemy := enemy_scene.instantiate() as EnemyBase
 
-	enemy_manager.register_enemy(enemy)
+	if not enemy:
 
-	enemy.enemy_manager = enemy_manager
+		push_error("Impossible d'instancier enemy_scene")
+		return null
 
 	pf.add_child(enemy)
 
 	return pf
-
+	
 func wait_for_wave_clear():
 
 	while enemy_manager.get_all_enemies().size() > 0:

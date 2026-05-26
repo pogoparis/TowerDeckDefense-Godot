@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://cx08iuoryrq5u" path="res://scripts/resources/waves/wave_01.tres" id="9_lh6i8"]
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="9_mqloe"]
 [ext_resource type="Script" uid="uid://c111ayw6tnlxj" path="res://scripts/managers/tower_manager.gd" id="10_wxwm4"]
+[ext_resource type="Resource" uid="uid://h5us2ebt0mms" path="res://scripts/resources/waves/wave_02.tres" id="11_p6g1u"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -130,7 +131,7 @@ script = ExtResource("7_lwybd")
 
 [node name="WaveManager" type="Node2D" parent="." unique_id=1847154296]
 script = ExtResource("8_x7jdx")
-waves = Array[ExtResource("9_mqloe")]([ExtResource("9_lh6i8")])
+waves = Array[ExtResource("9_mqloe")]([ExtResource("9_lh6i8"), ExtResource("11_p6g1u")])
 
 [node name="EnemyManager" type="Node2D" parent="." unique_id=1116086763 groups=["enemy_manager"]]
 script = ExtResource("9_4br2k")

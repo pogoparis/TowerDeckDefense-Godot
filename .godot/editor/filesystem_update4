@@ -7,3 +7,5 @@ res://scripts/towers/tower_fire.gd
 res://scenes/enemies/SimpleMob.tscn
 res://scripts/towers/base_tower.gd
 res://scripts/managers/wave_manager.gd
+res://scripts/resources/waves/wave_02.tres
+res://scenes/enemies/TankMob.tscn
