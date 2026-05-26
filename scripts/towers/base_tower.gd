@@ -54,6 +54,29 @@ func apply_upgrade(data: Dictionary):
 		timer.start()
 		update_visual_feedback()
 
+
+func find_target() -> Node2D:
+
+	if not enemy_manager:
+		return null
+
+	var enemies = enemy_manager.get_all_enemies()
+
+	var valid_target: Node2D = null
+
+	for enemy in enemies:
+
+		if not is_instance_valid(enemy):
+			continue
+
+		var dist = global_position.distance_to(enemy.global_position)
+
+		if dist <= attack_range:
+			valid_target = enemy
+			break
+
+	return valid_target
+	
 # ==============================
 #          SELECTION
 # ==============================

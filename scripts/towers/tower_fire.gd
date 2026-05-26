@@ -32,23 +32,8 @@ func _on_timer_timeout():
 
 	if projectile_scene == null:
 		return
-		
-	if not enemy_manager:
-		return
-	var enemies = enemy_manager.get_all_enemies()
-
-	var valid_target: Node2D = null
-
-	for enemy in enemies:
-
-		if not is_instance_valid(enemy):
-			continue
-
-		var dist = global_position.distance_to(enemy.global_position)
-
-		if dist <= attack_range:
-			valid_target = enemy
-			break
+	
+	var valid_target = find_target()
 
 	if valid_target == null:
 		return
