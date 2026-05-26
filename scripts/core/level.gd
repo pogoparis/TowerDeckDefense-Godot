@@ -43,54 +43,15 @@ func _ready():
 # ==============================
 #         INPUT HANDLING
 # ==============================
-
 func _input(event):
-	
-	placement.current_mouse_world = get_global_mouse_position()
-	
-	if event is InputEventMouseButton and event.pressed:
 
-		var mouse_world = get_global_mouse_position()
+	var mouse_world = get_global_mouse_position()
 
-		# ==============================
-		# CLICK DROIT = DESELECT
-		# ==============================
+	if placement.handle_input(event, mouse_world):
+		return
 
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-
-			if placement.handle_right_click():
-				return
-
-			tower_manager.handle_right_click()
-
-			return
-
-		# ==============================
-		# CLICK GAUCHE
-		# ==============================
-
-		if event.button_index == MOUSE_BUTTON_LEFT:
-
-			if placement.handle_left_click(mouse_world):
-				return
-
-			if tower_manager.handle_left_click(mouse_world):
-				return
-
-			if tower_manager.try_select_tower(mouse_world):
-				return
-
-			# ==============================
-			# CLICK VIDE = DESELECT
-			# ==============================
-
-			tower_manager.deselect_current_tower()
-
-			# ==============================
-			# TRY PLACE TOWER
-			# ==============================
-
-			placement.handle_left_click(mouse_world)
+	if tower_manager.handle_input(event, mouse_world):
+		return
 
 func _physics_process(_delta):
 

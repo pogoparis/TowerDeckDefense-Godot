@@ -23,6 +23,20 @@ func is_placing() -> bool:
 
 	return ghost_tower != null
 
+func handle_input(event, mouse_world: Vector2) -> bool:
+
+	if event is InputEventMouseButton and event.pressed:
+
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+
+			return handle_right_click()
+
+		if event.button_index == MOUSE_BUTTON_LEFT:
+
+			return handle_left_click(mouse_world)
+
+	return false
+
 func block_path_cells():
 
 	if not path or not path.curve:

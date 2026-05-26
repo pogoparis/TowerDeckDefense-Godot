@@ -44,6 +44,24 @@ func select_tower(tower: BaseTower):
 	if selected_tower:
 		selected_tower.set_selected(true)
 		
+		
+		
+func handle_input(event, mouse_world: Vector2) -> bool:
+
+	if event is InputEventMouseButton and event.pressed:
+
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+
+			handle_right_click()
+
+			return true
+
+		if event.button_index == MOUSE_BUTTON_LEFT:
+
+			return handle_left_click(mouse_world)
+
+	return false
+	
 func deselect_current_tower():
 
 	if selected_tower:
