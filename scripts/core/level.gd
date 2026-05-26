@@ -20,17 +20,16 @@ const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
 var selected_tower: Node2D = null
-var prep_time := 2
-var wave_started := false
 
 # ==============================
 #            READY
 # ==============================
 
 func _ready():
+	wave_manager.path = path
+	wave_manager.wave_timer_label = wave_timer_label
 
 	wave_manager.start_prep_phase()
-	
 
 
 func start_placing_tower(scene: PackedScene):
