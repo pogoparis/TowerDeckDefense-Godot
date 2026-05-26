@@ -3,6 +3,7 @@ extends Node
 
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
+var enemy_manager: EnemyManager
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
 
@@ -22,6 +23,8 @@ func try_place_tower(
 
 	var final_tower = selected_tower_scene.instantiate()
 	final_tower.is_ghost = false
+	
+	final_tower.enemy_manager = enemy_manager
 	tower_container.add_child(final_tower)
 
 	final_tower.global_position = grid.cell_to_world(cell)
@@ -47,10 +50,20 @@ func update_ghost(grid: GridManager, mouse_world: Vector2):
 	else:
 		ghost_tower.modulate = INVALID_COLOR
 
-func start_placing_tower(scene: PackedScene):
+func start_tower_placement(scene: PackedScene, tower_container: Node2D):
 
 	selected_tower_scene = scene
-	
+
+	create_ghost(scene, tower_container)
+
+	_disable_ghost_behaviors()
+
+func _disable_ghost_behaviors():
+
+	if ghost_tower and ghost_tower is BaseTower:
+
+		ghost_tower.is_ghost = true
+		ghost_tower.disable_behaviors()
 
 func clear_placement():
 

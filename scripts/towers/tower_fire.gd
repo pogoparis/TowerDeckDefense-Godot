@@ -40,8 +40,10 @@ func _on_timer_timeout():
 
 	if projectile_scene == null:
 		return
-
-	var enemies = get_tree().get_nodes_in_group("enemies")
+		
+	if not enemy_manager:
+		return
+	var enemies = enemy_manager.get_all_enemies()
 
 	var valid_target: Node2D = null
 

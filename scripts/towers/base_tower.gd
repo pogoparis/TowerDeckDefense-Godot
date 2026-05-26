@@ -16,6 +16,7 @@ var is_ghost := false
 var damage: int
 var fire_rate: float
 var attack_range: float
+var enemy_manager: EnemyManager
 
 # ==============================
 #            NODES

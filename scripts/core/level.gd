@@ -31,26 +31,9 @@ func _ready():
 	wave_manager.path = path
 	wave_manager.wave_timer_label = wave_timer_label
 	wave_manager.enemy_manager = enemy_manager
+	placement.enemy_manager = enemy_manager
+
 	wave_manager.start_prep_phase()
-
-
-func start_placing_tower(scene: PackedScene):
-	
-	placement.start_placing_tower(scene)
-	placement.create_ghost(scene, tower_container)
-
-	_disable_ghost_behaviors()
-
-	block_path_cells()
-
-
-func _disable_ghost_behaviors():
-
-	if placement.ghost_tower and placement.ghost_tower is BaseTower:
-
-		placement.ghost_tower.is_ghost = true
-		placement.ghost_tower.disable_behaviors()
-
 
 # ==============================
 #       BLOCK PATH CELLS
@@ -152,4 +135,7 @@ func _input(event):
 
 func _on_tower_card_fire_pressed():
 
-	start_placing_tower(TOWER_FIRE_SCENE)
+	placement.start_tower_placement(
+	TOWER_FIRE_SCENE,
+	tower_container
+)
