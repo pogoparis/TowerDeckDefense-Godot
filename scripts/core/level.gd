@@ -34,6 +34,8 @@ func _ready():
 	wave_manager.enemy_manager = enemy_manager
 	placement.enemy_manager = enemy_manager
 	placement.level = self
+	placement.grid = grid
+	placement.tower_container = tower_container
 	tower_manager.tower_container = tower_container
 	
 	wave_manager.start_prep_phase()
@@ -112,11 +114,7 @@ func _input(event):
 			# TRY PLACE TOWER
 			# ==============================
 
-			placement.try_place_tower(
-				grid,
-				tower_container,
-				mouse_world
-			)
+			placement.handle_left_click(mouse_world)
 
 
 func _on_tower_card_fire_pressed():

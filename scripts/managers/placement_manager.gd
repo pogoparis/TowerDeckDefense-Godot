@@ -7,6 +7,8 @@ var enemy_manager: EnemyManager
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
 var level: Node2D
+var grid: GridManager
+var tower_container: Node2D
 
 func try_place_tower(
 	grid: GridManager,
@@ -79,6 +81,20 @@ func clear_placement():
 
 	ghost_tower = null
 	selected_tower_scene = null
+
+func handle_left_click(mouse_world: Vector2):
+	try_place_tower(
+	grid,
+	tower_container,
+	mouse_world
+)
+
+	if ghost_tower:
+		try_place_tower(
+			grid,
+			tower_container,
+			mouse_world
+		)
 
 func create_ghost(scene: PackedScene, parent: Node):
 
