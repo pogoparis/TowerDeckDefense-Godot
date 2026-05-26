@@ -1,5 +1,5 @@
-Area2D
 Node2D
+Area2D
 CollisionShape2D
 Sprite2D
 Node
@@ -12,4 +12,3 @@ HBoxContainer
 Control
 CanvasLayer
 TileMapLayer
-TextureRect
