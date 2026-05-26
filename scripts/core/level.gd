@@ -29,15 +29,24 @@ const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
 # ==============================
 
 func _ready():
-	wave_manager.path = path
-	wave_manager.wave_timer_label = wave_timer_label
-	wave_manager.enemy_manager = enemy_manager
-	placement.enemy_manager = enemy_manager
-	placement.grid = grid
-	placement.tower_container = tower_container
-	placement.path = path
-	tower_manager.tower_container = tower_container
-	
+
+	wave_manager.setup(
+		path,
+		wave_timer_label,
+		enemy_manager
+	)
+
+	placement.setup(
+		grid,
+		tower_container,
+		path,
+		enemy_manager
+	)
+
+	tower_manager.setup(
+		tower_container
+	)
+
 	wave_manager.start_prep_phase()
 
 # ==============================

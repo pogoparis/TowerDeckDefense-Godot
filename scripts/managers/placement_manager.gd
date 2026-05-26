@@ -37,6 +37,18 @@ func handle_input(event, mouse_world: Vector2) -> bool:
 
 	return false
 
+func setup(
+	new_grid: GridManager,
+	new_tower_container: Node2D,
+	new_path: Path2D,
+	new_enemy_manager: EnemyManager
+):
+
+	grid = new_grid
+	tower_container = new_tower_container
+	path = new_path
+	enemy_manager = new_enemy_manager
+
 func block_path_cells():
 
 	if not path or not path.curve:

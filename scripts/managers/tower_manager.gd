@@ -45,7 +45,11 @@ func select_tower(tower: BaseTower):
 		selected_tower.set_selected(true)
 		
 		
-		
+
+func setup(new_tower_container: Node2D):
+
+	tower_container = new_tower_container
+
 func handle_input(event, mouse_world: Vector2) -> bool:
 
 	if event is InputEventMouseButton and event.pressed:

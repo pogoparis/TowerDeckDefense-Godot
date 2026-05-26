@@ -48,6 +48,16 @@ func _spawn_enemy_instance() -> PathFollow2D:
 
 	return pf
 
+func setup(
+	new_path: Path2D,
+	new_wave_timer_label: Label,
+	new_enemy_manager: EnemyManager
+):
+
+	path = new_path
+	wave_timer_label = new_wave_timer_label
+	enemy_manager = new_enemy_manager
+
 func spawn_wave(count: int, interval: float, speed_override: float = -1.0):
 
 	if not path:
