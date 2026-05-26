@@ -25,6 +25,14 @@ func try_select_tower(mouse_world: Vector2) -> bool:
 	deselect_current_tower()
 
 	return false
+	
+func handle_left_click(mouse_world: Vector2) -> bool:
+
+	return try_select_tower(mouse_world)
+	
+func handle_right_click():
+
+	deselect_current_tower()
 
 func select_tower(tower: BaseTower):
 

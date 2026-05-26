@@ -84,13 +84,11 @@ func _input(event):
 		# ==============================
 
 		if event.button_index == MOUSE_BUTTON_RIGHT:
-			if placement.ghost_tower:
 
-				placement.cancel_placement()
-
+			if placement.handle_right_click():
 				return
-				
-			tower_manager.deselect_current_tower()
+
+			tower_manager.handle_right_click()
 
 			return
 
@@ -99,6 +97,12 @@ func _input(event):
 		# ==============================
 
 		if event.button_index == MOUSE_BUTTON_LEFT:
+
+			if placement.handle_left_click(mouse_world):
+				return
+
+			if tower_manager.handle_left_click(mouse_world):
+				return
 
 			if tower_manager.try_select_tower(mouse_world):
 				return

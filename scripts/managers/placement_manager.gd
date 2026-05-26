@@ -18,6 +18,22 @@ func _process(_delta):
 
 	update_ghost(grid, current_mouse_world)
 
+
+func is_placing() -> bool:
+
+	return ghost_tower != null
+	
+func handle_right_click() -> bool:
+
+	if ghost_tower:
+
+		cancel_placement()
+
+		return true
+
+	return false
+	
+	
 func try_place_tower(
 	grid: GridManager,
 	tower_container: Node2D,
@@ -90,12 +106,19 @@ func clear_placement():
 	ghost_tower = null
 	selected_tower_scene = null
 
-func handle_left_click(mouse_world: Vector2):
-	try_place_tower(
-	grid,
-	tower_container,
-	mouse_world
-)
+func handle_left_click(mouse_world: Vector2) -> bool:
+
+	if ghost_tower:
+
+		try_place_tower(
+			grid,
+			tower_container,
+			mouse_world
+		)
+
+		return true
+
+	return false
 
 	if ghost_tower:
 		try_place_tower(
