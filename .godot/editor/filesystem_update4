@@ -9,3 +9,4 @@ res://scripts/projectiles/fire_projectile.gd
 res://scenes/projectiles/FireProjectile.tscn
 res://scripts/resources/tower_data.gd
 res://scripts/managers/wave_manager.gd
+res://scripts/managers/enemy_manager.gd

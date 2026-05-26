@@ -3,6 +3,8 @@ extends Node2D
 # ==============================
 #            NODES
 # ==============================
+
+@onready var enemy_manager = $EnemyManager
 @onready var wave_manager = $WaveManager
 @onready var world = $World
 @onready var path: Path2D = $World/Path2D
@@ -28,7 +30,7 @@ var selected_tower: Node2D = null
 func _ready():
 	wave_manager.path = path
 	wave_manager.wave_timer_label = wave_timer_label
-
+	wave_manager.enemy_manager = enemy_manager
 	wave_manager.start_prep_phase()
 
 

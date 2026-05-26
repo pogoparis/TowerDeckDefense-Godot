@@ -7,6 +7,7 @@ var wave_started := false
 
 var path: Path2D
 var wave_timer_label: Label
+var enemy_manager: EnemyManager
 
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
@@ -40,7 +41,9 @@ func _spawn_enemy_instance() -> PathFollow2D:
 	pf.visible = true
 
 	var enemy = ENEMY_SCENE.instantiate()
-
+	enemy_manager.register_enemy(enemy)
+	enemy.enemy_manager = enemy_manager
+	
 	pf.add_child(enemy)
 
 	return pf

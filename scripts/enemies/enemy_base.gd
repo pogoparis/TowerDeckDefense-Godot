@@ -1,14 +1,15 @@
 extends Node2D
 class_name EnemyBase
 
+@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
+
 @export var max_hp := 30
 @export var speed := 120.0
 @export var scrap_reward := 5
 @export var death_explosion_scene: PackedScene
 
 var hp := 0
-
-@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
+var enemy_manager: EnemyManager
 
 func _ready():
 
@@ -59,5 +60,7 @@ func die():
 		get_parent().add_child(explosion)
 
 	EconomyManager.add_scrap(scrap_reward)
-
+	if enemy_manager:
+		enemy_manager.unregister_enemy(self)
+	
 	queue_free()
