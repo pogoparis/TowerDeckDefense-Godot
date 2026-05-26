@@ -56,7 +56,7 @@ func start_tower_placement(scene: PackedScene, tower_container: Node2D):
 	selected_tower_scene = scene
 
 	create_ghost(scene, tower_container)
-	
+		
 	if level:
 		level.block_path_cells()
 		_disable_ghost_behaviors()

@@ -12,3 +12,4 @@ res://scripts/managers/wave_manager.gd
 res://scripts/managers/enemy_manager.gd
 res://scripts/managers/placement_manager.gd
 res://scripts/towers/base_tower.gd
+res://scripts/managers/tower_manager.gd

@@ -14,6 +14,7 @@ extends Node2D
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
 @onready var grid: GridManager = $GridManager
 @onready var placement: PlacementManager = $PlacementManager
+@onready var tower_manager = $TowerManager
 
 # ==============================
 #            STATE
@@ -21,7 +22,7 @@ extends Node2D
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
-var selected_tower: Node2D = null
+
 
 # ==============================
 #            READY
@@ -82,9 +83,7 @@ func _input(event):
 
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 
-			if selected_tower:
-				selected_tower.set_selected(false)
-				selected_tower = null
+			tower_manager.deselect_current_tower()
 
 			return
 
@@ -107,11 +106,9 @@ func _input(event):
 
 					if mouse_world.distance_to(tower.global_position) < 48:
 
-						if selected_tower:
-							selected_tower.set_selected(false)
-
-						selected_tower = tower
-						selected_tower.set_selected(true)
+						tower_manager.deselect_current_tower()
+						
+						tower_manager.select_tower(tower)
 
 						return
 
@@ -119,9 +116,7 @@ func _input(event):
 			# CLICK VIDE = DESELECT
 			# ==============================
 
-			if selected_tower:
-				selected_tower.set_selected(false)
-				selected_tower = null
+			tower_manager.deselect_current_tower()
 
 			# ==============================
 			# TRY PLACE TOWER

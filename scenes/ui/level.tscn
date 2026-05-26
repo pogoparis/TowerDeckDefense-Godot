@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
 [ext_resource type="Script" uid="uid://cmvfd187lmtgk" path="res://scripts/managers/wave_manager.gd" id="8_x7jdx"]
 [ext_resource type="Script" uid="uid://bks0ildaa61ts" path="res://scripts/managers/enemy_manager.gd" id="9_4br2k"]
+[ext_resource type="Script" uid="uid://c111ayw6tnlxj" path="res://scripts/managers/tower_manager.gd" id="10_wxwm4"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -132,5 +133,6 @@ script = ExtResource("8_x7jdx")
 script = ExtResource("9_4br2k")
 
 [node name="TowerManager" type="Node2D" parent="." unique_id=1146295277]
+script = ExtResource("10_wxwm4")
 
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]
