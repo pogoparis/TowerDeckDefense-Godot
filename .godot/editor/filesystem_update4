@@ -6,3 +6,4 @@ res://scripts/enemies/enemy_base.gd
 res://scripts/towers/tower_fire.gd
 res://scenes/enemies/SimpleMob.tscn
 res://scripts/towers/base_tower.gd
+res://scripts/managers/wave_manager.gd

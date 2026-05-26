@@ -5,6 +5,7 @@ class_name WaveManager
 @export var waves: Array[WaveData]
 
 var wave_started := false
+var current_wave_index := 0
 
 var path: Path2D
 var wave_timer_label: Label
@@ -43,12 +44,18 @@ func start_wave():
 		push_error("Aucune wave configurée")
 		return
 
-	var wave_data = waves[0]
+	if current_wave_index >= waves.size():
 
-	spawn_wave_data(wave_data)
+		wave_timer_label.text = "ALL WAVES CLEARED"
+		return
 
+	var wave_data = waves[current_wave_index]
 
-func spawn_wave_data(wave_data: WaveData):
+	await spawn_wave_data(wave_data)
+
+	await wait_for_wave_clear()
+
+func spawn_wave_data(wave_data: WaveData) -> void:
 
 	spawn_wave(
 		wave_data.enemy_count,
@@ -107,3 +114,12 @@ func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 	pf.add_child(enemy)
 
 	return pf
+
+func wait_for_wave_clear():
+
+	while enemy_manager.get_all_enemies().size() > 0:
+		await get_tree().process_frame
+
+	current_wave_index += 1
+
+	start_prep_phase()
