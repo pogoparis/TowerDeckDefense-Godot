@@ -68,6 +68,10 @@ func _disable_ghost_behaviors():
 		ghost_tower.is_ghost = true
 		ghost_tower.disable_behaviors()
 
+func cancel_placement():
+
+	clear_placement()
+
 func clear_placement():
 
 	if ghost_tower:

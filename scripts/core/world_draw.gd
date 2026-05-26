@@ -84,9 +84,9 @@ func _draw():
 	# =========================
 	# PORTEE TOUR SELECTIONNEE
 	# =========================
-	if level.selected_tower and level.selected_tower is TowerFire:
-
-		var tower = level.selected_tower
+	if level.tower_manager.selected_tower and level.tower_manager.selected_tower is TowerFire:
+		
+		var tower = level.tower_manager.selected_tower
 		var attack_range = tower.attack_range
 
 		var world_pos = tower.global_position

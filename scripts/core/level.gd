@@ -34,6 +34,7 @@ func _ready():
 	wave_manager.enemy_manager = enemy_manager
 	placement.enemy_manager = enemy_manager
 	placement.level = self
+	tower_manager.tower_container = tower_container
 	
 	wave_manager.start_prep_phase()
 
@@ -82,7 +83,12 @@ func _input(event):
 		# ==============================
 
 		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if placement.ghost_tower:
 
+				placement.cancel_placement()
+
+				return
+				
 			tower_manager.deselect_current_tower()
 
 			return
@@ -93,24 +99,8 @@ func _input(event):
 
 		if event.button_index == MOUSE_BUTTON_LEFT:
 
-			# ==============================
-			# SELECT EXISTING TOWER
-			# ==============================
-
-			for tower in tower_container.get_children():
-
-				if tower is BaseTower:
-
-					if tower.is_ghost:
-						continue
-
-					if mouse_world.distance_to(tower.global_position) < 48:
-
-						tower_manager.deselect_current_tower()
-						
-						tower_manager.select_tower(tower)
-
-						return
+			if tower_manager.try_select_tower(mouse_world):
+				return
 
 			# ==============================
 			# CLICK VIDE = DESELECT
