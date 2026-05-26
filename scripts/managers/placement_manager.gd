@@ -21,7 +21,7 @@ func try_place_tower(
 		return
 
 	var final_tower = selected_tower_scene.instantiate()
-
+	final_tower.is_ghost = false
 	tower_container.add_child(final_tower)
 
 	final_tower.global_position = grid.cell_to_world(cell)

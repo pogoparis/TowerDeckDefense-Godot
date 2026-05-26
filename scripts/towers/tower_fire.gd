@@ -18,6 +18,11 @@ var targets: Array = []
 # ==============================
 
 func _ready():
+	print("Tower ready")
+
+	print("Monitoring =", area.monitoring)
+	print("Mask =", area.collision_mask)
+
 	if is_ghost:
 		return
 	sprite.modulate = Color(1,1,1,1)
@@ -30,29 +35,7 @@ func _ready():
 		timer.timeout.connect(_on_timer_timeout)
 		timer.start()
 
-	# --- Détection ---
-	area.body_entered.connect(_on_body_entered)
-	area.body_exited.connect(_on_body_exited)
-
 	queue_redraw()
-
-# ==============================
-#         DETECTION
-# ==============================
-
-func _on_body_entered(body):
-	if body.is_in_group("enemies"):
-		print("Distance entrée :", global_position.distance_to(body.global_position))
-		print("Radius shape :", $DetectionArea/CollisionShape2D.shape.radius)
-		targets.append(body)
-
-func _on_body_exited(body):
-	targets.erase(body)
-
-var show_range := false
-
-func _refresh_targets():
-	targets.clear()
 
 	for body in area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
@@ -63,33 +46,45 @@ func _refresh_targets():
 # ==============================
 
 func _on_timer_timeout():
+
 	if projectile_scene == null:
 		return
 
-	targets = targets.filter(func(t): return is_instance_valid(t))
-
-	if targets.is_empty():
-		return
+	var enemies = get_tree().get_nodes_in_group("enemies")
 
 	var valid_target: Node2D = null
 
-	for t in targets:
-		var dist = global_position.distance_to(t.global_position)
+	for enemy in enemies:
+
+		if not is_instance_valid(enemy):
+			continue
+
+		var dist = global_position.distance_to(enemy.global_position)
+
 		if dist <= attack_range:
-			valid_target = t
+			valid_target = enemy
 			break
 
 	if valid_target == null:
 		return
 
 	var projectile = projectile_scene.instantiate()
+
 	projectile.global_position = global_position
 	projectile.target = valid_target
 	projectile.damage = damage
+
 	get_parent().add_child(projectile)
 
 
 func update_range_visual():
+	
 	var shape = $DetectionArea/CollisionShape2D.shape as CircleShape2D
+	print(shape)
+	print(shape.radius)
 	shape.radius = attack_range
 	queue_redraw()
+
+func _process(_delta):
+
+	print(area.get_overlapping_bodies().size())
