@@ -3,6 +3,84 @@ class_name TowerManager
 
 var selected_tower: BaseTower = null
 var tower_container: Node2D
+var towers: Array[BaseTower] = []
+
+func setup(new_tower_container: Node2D):
+
+	tower_container = new_tower_container
+
+# ==============================
+#        TOWER REGISTRY
+# ==============================
+
+func register_tower(tower: BaseTower):
+
+	if tower not in towers:
+		towers.append(tower)
+
+func unregister_tower(tower: BaseTower):
+
+	towers.erase(tower)
+
+func get_all_towers() -> Array[BaseTower]:
+
+	return towers
+
+# ==============================
+#        TOWER CREATION
+# ==============================
+
+func create_tower(
+	tower_scene: PackedScene,
+	world_position: Vector2,
+	enemy_manager: EnemyManager
+) -> BaseTower:
+
+	if not tower_container:
+		return null
+
+	var tower = tower_scene.instantiate() as BaseTower
+
+	tower.is_ghost = false
+	tower.enemy_manager = enemy_manager
+
+	tower.position = tower_container.to_local(world_position)
+	tower.modulate = Color(1,1,1,1)
+	tower.z_index = 100
+
+	tower_container.add_child(tower)
+
+	register_tower(tower)
+
+	return tower
+
+# ==============================
+#        INPUT
+# ==============================
+
+func handle_input(event, mouse_world: Vector2) -> bool:
+
+	if event is InputEventMouseButton and event.pressed:
+
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+
+			handle_right_click()
+
+			return true
+
+		if event.button_index == MOUSE_BUTTON_LEFT:
+
+			return handle_left_click(mouse_world)
+
+	return false
+
+func handle_left_click(mouse_world: Vector2) -> bool:
+
+	return try_select_tower(mouse_world)
+
+func handle_right_click():
+
+	deselect_current_tower()
 
 func try_select_tower(mouse_world: Vector2) -> bool:
 
@@ -25,14 +103,6 @@ func try_select_tower(mouse_world: Vector2) -> bool:
 	deselect_current_tower()
 
 	return false
-	
-func handle_left_click(mouse_world: Vector2) -> bool:
-
-	return try_select_tower(mouse_world)
-	
-func handle_right_click():
-
-	deselect_current_tower()
 
 func select_tower(tower: BaseTower):
 
@@ -43,33 +113,10 @@ func select_tower(tower: BaseTower):
 
 	if selected_tower:
 		selected_tower.set_selected(true)
-		
-		
 
-func setup(new_tower_container: Node2D):
-
-	tower_container = new_tower_container
-
-func handle_input(event, mouse_world: Vector2) -> bool:
-
-	if event is InputEventMouseButton and event.pressed:
-
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-
-			handle_right_click()
-
-			return true
-
-		if event.button_index == MOUSE_BUTTON_LEFT:
-
-			return handle_left_click(mouse_world)
-
-	return false
-	
 func deselect_current_tower():
 
 	if selected_tower:
 		selected_tower.set_selected(false)
 
 	selected_tower = null
-	

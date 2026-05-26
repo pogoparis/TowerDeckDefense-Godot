@@ -37,11 +37,12 @@ func _ready():
 	)
 
 	placement.setup(
-		grid,
-		tower_container,
-		path,
-		enemy_manager
-	)
+	grid,
+	tower_container,
+	path,
+	enemy_manager,
+	tower_manager
+)
 
 	tower_manager.setup(
 		tower_container

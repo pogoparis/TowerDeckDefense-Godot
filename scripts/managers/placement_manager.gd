@@ -4,6 +4,7 @@ extends Node
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
 var enemy_manager: EnemyManager
+var tower_manager: TowerManager
 const VALID_COLOR = Color(0, 1, 0, 0.5)
 const INVALID_COLOR = Color(1, 0, 0, 0.5)
 var grid: GridManager
@@ -41,9 +42,12 @@ func setup(
 	new_grid: GridManager,
 	new_tower_container: Node2D,
 	new_path: Path2D,
-	new_enemy_manager: EnemyManager
+	new_enemy_manager: EnemyManager,
+	new_tower_manager: TowerManager
+	
 ):
-
+	
+	tower_manager = new_tower_manager
 	grid = new_grid
 	tower_container = new_tower_container
 	path = new_path
@@ -87,7 +91,7 @@ func handle_right_click() -> bool:
 	
 func try_place_tower(mouse_world: Vector2):
 
-	if not ghost_tower or not selected_tower_scene:
+	if not selected_tower_scene:
 		return
 
 	var cell = grid.world_to_cell(mouse_world)
@@ -95,16 +99,11 @@ func try_place_tower(mouse_world: Vector2):
 	if not grid.can_place(cell):
 		return
 
-	var final_tower = selected_tower_scene.instantiate()
-	final_tower.is_ghost = false
-	
-	final_tower.enemy_manager = enemy_manager
-	tower_container.add_child(final_tower)
-
-	final_tower.global_position = grid.cell_to_world(cell)
-
-	final_tower.modulate = Color(1,1,1,1)
-	final_tower.z_index = 100
+	var final_tower = tower_manager.create_tower(
+		selected_tower_scene,
+		grid.cell_to_world(cell),
+		enemy_manager
+	)
 
 	grid.occupy_cell(cell, final_tower)
 
