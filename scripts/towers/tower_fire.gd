@@ -2,11 +2,7 @@ extends BaseTower
 class_name TowerFire
 
 @export var projectile_scene: PackedScene
-@onready var collision_shape: CollisionShape2D = $DetectionArea/CollisionShape2D
-@onready var area: Area2D = $DetectionArea
 @onready var sprite: Sprite2D = $Sprite2D
-
-var targets: Array = []
 
 # ==============================
 #            READY
@@ -27,10 +23,6 @@ func _ready():
 		timer.start()
 
 	queue_redraw()
-
-	for body in area.get_overlapping_bodies():
-		if body.is_in_group("enemies"):
-			targets.append(body)
 
 # ==============================
 #            TIR
@@ -72,6 +64,4 @@ func _on_timer_timeout():
 
 func update_range_visual():
 	
-	var shape = $DetectionArea/CollisionShape2D.shape as CircleShape2D
-	shape.radius = attack_range
 	queue_redraw()
