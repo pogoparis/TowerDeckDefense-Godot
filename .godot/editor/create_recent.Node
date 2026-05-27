@@ -1,3 +1,4 @@
+Marker2D
 ResourcePreloader
 Node2D
 Area2D
@@ -11,5 +12,3 @@ Panel
 TextureButton
 HBoxContainer
 Control
-CanvasLayer
-TileMapLayer

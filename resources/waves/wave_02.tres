@@ -6,4 +6,7 @@
 [resource]
 script = ExtResource("1_wau5l")
 enemy_scene = ExtResource("1_a1cx8")
+enemy_count = 5
+spawn_interval = 2.5
+enemy_speed = 40.0
 metadata/_custom_type_script = "uid://c2spfgpqk8kgx"

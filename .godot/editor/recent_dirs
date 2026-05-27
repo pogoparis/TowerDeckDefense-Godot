@@ -1,4 +1,6 @@
-res://scripts/resources/waves/
+res://resources/bonuses/
+res://resources/cards/
+res://scripts/core/
 res://scripts/enemies/
 res://scenes/projectiles/
 res://scenes/ui/

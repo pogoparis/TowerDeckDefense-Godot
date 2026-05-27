@@ -120,3 +120,16 @@ func deselect_current_tower():
 		selected_tower.set_selected(false)
 
 	selected_tower = null
+
+func apply_bonus_to_all_towers(bonus: BonusData):
+
+	for tower in towers:
+
+		if not is_instance_valid(tower):
+			continue
+		print("BUFFING TOWER: ", tower.damage)
+		tower.apply_upgrade({
+			"damage": bonus.damage_bonus,
+			"range": bonus.range_bonus,
+			"fire_rate_mult": bonus.fire_rate_mult
+		})

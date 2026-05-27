@@ -3,6 +3,7 @@ class_name TowerFire
 
 @export var projectile_scene: PackedScene
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var shoot_point: Marker2D = $ShootPoint
 
 # ==============================
 #            READY
@@ -40,7 +41,7 @@ func _on_timer_timeout():
 
 	var projectile = projectile_scene.instantiate()
 
-	projectile.global_position = global_position
+	projectile.global_position = shoot_point.global_position
 	projectile.target = valid_target
 	projectile.damage = damage
 

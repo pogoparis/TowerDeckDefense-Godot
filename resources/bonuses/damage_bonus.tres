@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://c7qaxhj17o2wd"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_jgqyw"]
+
+[resource]
+script = ExtResource("1_jgqyw")
+title = "Sharper Bullets"
+damage_bonus = 2
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

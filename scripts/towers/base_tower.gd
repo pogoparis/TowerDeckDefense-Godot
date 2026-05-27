@@ -18,6 +18,7 @@ var fire_rate: float
 var attack_range: float
 var enemy_manager: EnemyManager
 
+
 # ==============================
 #            NODES
 # ==============================
@@ -32,7 +33,8 @@ func _ready():
 	damage = base_damage
 	fire_rate = base_fire_rate
 	attack_range = base_range
-
+	apply_run_bonuses()
+	
 	if timer:
 		timer.wait_time = fire_rate
 	
@@ -53,7 +55,8 @@ func apply_upgrade(data: Dictionary):
 		timer.stop()
 		timer.start()
 		update_visual_feedback()
-
+	
+	print("NEW DAMAGE: ", damage)
 
 func find_target() -> Node2D:
 
@@ -99,3 +102,16 @@ func disable_behaviors():
 
 	if timer:
 		timer.stop()
+
+func apply_run_bonuses():
+
+	for bonus in RunBonuses.owned_bonuses:
+		damage += bonus.damage_bonus
+		attack_range += bonus.range_bonus
+		fire_rate *= bonus.fire_rate_mult
+
+	if timer:
+		timer.wait_time = fire_rate
+	
+	print("Tower damage after bonuses: ", damage)
+	print(RunBonuses.owned_bonuses.size())

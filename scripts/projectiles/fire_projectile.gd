@@ -14,7 +14,7 @@ func _process(delta):
 		return
 
 	var dir = global_position.direction_to(target.global_position)
-
+	rotation = dir.angle()
 	global_position += dir * speed * delta
 
 	if global_position.distance_to(target.global_position) <= hit_distance:

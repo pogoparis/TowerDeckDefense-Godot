@@ -10,6 +10,7 @@ var current_wave_index := 0
 var path: Path2D
 var wave_timer_label: Label
 var enemy_manager: EnemyManager
+var tower_manager: TowerManager
 
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
@@ -22,13 +23,15 @@ func start_prep_phase():
 		await get_tree().create_timer(1.0).timeout
 	wave_timer_label.text = "WAVE !"
 	start_wave()
-	
+
 func setup(
 	new_path: Path2D,
 	new_wave_timer_label: Label,
-	new_enemy_manager: EnemyManager
+	new_enemy_manager: EnemyManager,
+	new_tower_manager: TowerManager
 ):
-
+	
+	tower_manager = new_tower_manager
 	path = new_path
 	wave_timer_label = new_wave_timer_label
 	enemy_manager = new_enemy_manager
@@ -54,6 +57,14 @@ func start_wave():
 	await spawn_wave_data(wave_data)
 
 	await wait_for_wave_clear()
+
+	var bonus = preload("res://resources/bonuses/damage_bonus.tres")
+
+	RunBonuses.add_bonus(bonus)
+
+	tower_manager.apply_bonus_to_all_towers(bonus)
+
+	start_prep_phase()
 
 func spawn_wave_data(wave_data: WaveData) -> void:
 
@@ -127,5 +138,3 @@ func wait_for_wave_clear():
 		await get_tree().process_frame
 
 	current_wave_index += 1
-
-	start_prep_phase()

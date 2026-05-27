@@ -33,7 +33,8 @@ func _ready():
 	wave_manager.setup(
 		path,
 		wave_timer_label,
-		enemy_manager
+		enemy_manager,
+		tower_manager
 	)
 
 	placement.setup(

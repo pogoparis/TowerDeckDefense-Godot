@@ -13,6 +13,7 @@ script = ExtResource("1_gwvy7")
 impact_scene = ExtResource("2_gwvy7")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703668900]
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_46ged")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=971283323]
