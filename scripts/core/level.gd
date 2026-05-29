@@ -91,7 +91,4 @@ func _physics_process(_delta):
 
 func _on_tower_card_fire_pressed():
 
-	placement.start_tower_placement(
-	TOWER_FIRE_SCENE,
-	tower_container
-)
+	card_manager.play_card(GRUMBOLT_CARD)
