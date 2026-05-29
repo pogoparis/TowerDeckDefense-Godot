@@ -20,3 +20,6 @@ res://resources/cards/grumbolt_card.tres
 res://resources/cards/frostwick_card.tres
 res://scripts/cards/card_manager.gd
 res://scripts/managers/placement_manager.gd
+res://scripts/projectiles/projectile_tower.gd
+res://scripts/towers/tower_fire.gd
+res://scripts/core/world_draw.gd

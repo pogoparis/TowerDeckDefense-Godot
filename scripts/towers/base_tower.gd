@@ -41,40 +41,11 @@ func _ready():
 	damage = base_damage
 	fire_rate = base_fire_rate
 	attack_range = base_range
-	queue_redraw()
 	apply_run_bonuses()
 	
 	if timer:
 		timer.wait_time = fire_rate
 	
-
-func _draw():
-
-	if is_ghost:
-
-		draw_arc(
-			Vector2.ZERO,
-			attack_range,
-			0,
-			TAU,
-			64,
-			Color.GREEN,
-			2.0
-		)
-
-		return
-
-	if is_selected:
-
-		draw_arc(
-			Vector2.ZERO,
-			attack_range,
-			0,
-			TAU,
-			64,
-			Color.CYAN,
-			2.0
-		)
 
 # ==============================
 #       APPLY UPGRADE
@@ -91,7 +62,6 @@ func apply_upgrade(data: Dictionary):
 		timer.stop()
 		timer.start()
 		update_visual_feedback()
-		queue_redraw()
 
 
 func find_target() -> Node2D:
@@ -148,4 +118,3 @@ func apply_run_bonuses():
 
 	if timer:
 		timer.wait_time = fire_rate
-	queue_redraw()

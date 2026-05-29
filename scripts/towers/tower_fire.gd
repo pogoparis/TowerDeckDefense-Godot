@@ -10,7 +10,7 @@ class_name TowerFire
 # ==============================
 
 func _ready():
-
+	print(name, " ghost=", is_ghost)
 	if is_ghost:
 		return
 	sprite.modulate = Color(1,1,1,1)
@@ -31,10 +31,10 @@ func _ready():
 
 func _on_timer_timeout():
 
+	var valid_target = find_target()
+
 	if projectile_scene == null:
 		return
-	
-	var valid_target = find_target()
 
 	if valid_target == null:
 		return

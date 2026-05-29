@@ -124,9 +124,8 @@ func update_ghost(grid: GridManager, mouse_world: Vector2):
 		ghost_tower.modulate = INVALID_COLOR
 
 func start_tower_placement(scene: PackedScene, tower_container: Node2D):
-	print("PLACEMENT :", scene)
+	
 	selected_tower_scene = scene
-	print("CREATE GHOST")
 	create_ghost(scene, tower_container)
 		
 	block_path_cells()
@@ -165,12 +164,12 @@ func handle_left_click(mouse_world: Vector2) -> bool:
 		try_place_tower(mouse_world)
 
 func create_ghost(scene: PackedScene, parent: Node):
-	print("GHOST SCENE :", scene)
+	
 	if ghost_tower:
 		ghost_tower.queue_free()
 
 	ghost_tower = scene.instantiate()
-	print("GHOST CREATED :", ghost_tower)
+	
 	parent.add_child(ghost_tower)
 
 	ghost_tower.z_index = 999

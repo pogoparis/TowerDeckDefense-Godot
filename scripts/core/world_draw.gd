@@ -58,7 +58,7 @@ func _draw():
 	# =========================
 	# PORTEE DU GHOST
 	# =========================
-	if level.placement.ghost_tower and level.placement.ghost_tower is TowerFire:
+	if level.placement.ghost_tower and level.placement.ghost_tower is BaseTower:
 
 		var ghost = level.placement.ghost_tower
 		var attack_range = ghost.attack_range
@@ -84,7 +84,7 @@ func _draw():
 	# =========================
 	# PORTEE TOUR SELECTIONNEE
 	# =========================
-	if level.tower_manager.selected_tower and level.tower_manager.selected_tower is TowerFire:
+	if level.tower_manager.selected_tower and level.tower_manager.selected_tower is BaseTower:
 		
 		var tower = level.tower_manager.selected_tower
 		var attack_range = tower.attack_range

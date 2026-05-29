@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://bor8wbjduq2b7"]
 
 [ext_resource type="Script" uid="uid://bhicy76pra0oe" path="res://scripts/towers/tower_grumbolt.gd" id="1_24xho"]
+[ext_resource type="PackedScene" uid="uid://8vvvb284ury7" path="res://scenes/projectiles/FireProjectile.tscn" id="2_smwi7"]
 [ext_resource type="Texture2D" uid="uid://bxdtnop1ujeb0" path="res://assets/towers/FireTower256.png" id="3_ip7sv"]
 
 [node name="TowerGrumbolt" type="Node2D" unique_id=676582971]
 z_index = 8
 scale = Vector2(0.65, 0.65)
 script = ExtResource("1_24xho")
+projectile_scene = ExtResource("2_smwi7")
 tower_tags = Array[String](["ironclad", "projectile"])
 
 [node name="Timer" type="Timer" parent="." unique_id=1496851190]
