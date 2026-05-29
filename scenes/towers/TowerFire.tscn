@@ -19,4 +19,4 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_hyu7i")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]
-position = Vector2(-43.076927, -21.538464)
+position = Vector2(-40.000004, 49.230774)

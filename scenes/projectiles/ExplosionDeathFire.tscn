@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://b43efdcblpth" path="res://assets/projectiles/ExplosionImpactFire_256.png" id="2_phk6o"]
 
 [node name="ExplosionDeathFire" type="Node2D" unique_id=854327873]
+z_index = 11
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1570502852]
-z_index = 10
-scale = Vector2(0.6, 0.6)
+z_index = 11
+position = Vector2(0, -25)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_phk6o")
 script = ExtResource("1_rxqtb")

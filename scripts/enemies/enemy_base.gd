@@ -58,13 +58,18 @@ func die():
 	if death_explosion_scene:
 
 		var explosion = death_explosion_scene.instantiate() as Node2D
+		var effects = get_tree().current_scene.get_node("World/EffectsContainer")
+
+		effects.add_child(explosion)
+
+		explosion.global_position = global_position
+		explosion.z_index = 100
 
 		explosion.global_position = global_position
 
-		get_parent().add_child(explosion)
-
 	EconomyManager.add_scrap(scrap_reward)
+
 	if enemy_manager:
 		enemy_manager.unregister_enemy(self)
-	
+
 	queue_free()

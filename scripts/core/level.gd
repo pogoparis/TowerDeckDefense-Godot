@@ -15,6 +15,7 @@ extends Node2D
 @onready var grid: GridManager = $GridManager
 @onready var placement: PlacementManager = $PlacementManager
 @onready var tower_manager = $TowerManager
+@onready var effects_container = $World/EffectsContainer
 
 # ==============================
 #            STATE

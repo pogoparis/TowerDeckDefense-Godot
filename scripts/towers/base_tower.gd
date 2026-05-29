@@ -55,8 +55,7 @@ func apply_upgrade(data: Dictionary):
 		timer.stop()
 		timer.start()
 		update_visual_feedback()
-	
-	print("NEW DAMAGE: ", damage)
+
 
 func find_target() -> Node2D:
 
@@ -113,5 +112,3 @@ func apply_run_bonuses():
 	if timer:
 		timer.wait_time = fire_rate
 	
-	print("Tower damage after bonuses: ", damage)
-	print(RunBonuses.owned_bonuses.size())

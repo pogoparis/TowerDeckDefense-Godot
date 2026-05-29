@@ -46,7 +46,6 @@ func create_tower(
 
 	tower.position = tower_container.to_local(world_position)
 	tower.modulate = Color(1,1,1,1)
-	tower.z_index = 100
 
 	tower_container.add_child(tower)
 

@@ -12,23 +12,26 @@ speed = 100.0
 death_explosion_scene = ExtResource("2_ceoxr")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
+z_index = 10
 position = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
-z_index = 6
+z_index = 10
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_yasrm")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
-position = Vector2(-20, -55)
+z_index = 10
+position = Vector2(-20, -65)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
-z_index = 7
+z_index = 10
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)
 
 [node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=131817910]
+z_index = 10
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(0.09009846, 0.09009849, 0.09009848, 1)

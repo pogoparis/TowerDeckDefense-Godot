@@ -2,20 +2,24 @@
 
 [ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_1rxqv"]
 [ext_resource type="Texture2D" uid="uid://dwgqonjhm66vv" path="res://assets/ennemies/SimpleMob256.png" id="2_1rxqv"]
+[ext_resource type="PackedScene" uid="uid://k7ob07va7jxb" path="res://scenes/projectiles/ExplosionDeathFire.tscn" id="2_ayvqy"]
 
 [node name="SimpleMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
 z_index = 10
 script = ExtResource("1_1rxqv")
+death_explosion_scene = ExtResource("2_ayvqy")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
+z_index = 10
 position = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
-z_index = 6
+z_index = 10
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_1rxqv")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
+z_index = 10
 position = Vector2(-20, -55)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
