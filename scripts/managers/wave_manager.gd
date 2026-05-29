@@ -4,6 +4,8 @@ class_name WaveManager
 @export var prep_time := 2
 @export var waves: Array[WaveData]
 
+@onready var card_reward_manager = $CardRewardManager
+
 var wave_started := false
 var current_wave_index := 0
 
@@ -58,11 +60,7 @@ func start_wave():
 
 	await wait_for_wave_clear()
 
-	var bonus = preload("res://resources/bonuses/damage_bonus.tres")
-
-	RunBonuses.add_bonus(bonus)
-
-	tower_manager.apply_bonus_to_all_towers(bonus)
+	RewardManager.show_rewards()
 
 	start_prep_phase()
 

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 EconomyManager="*uid://r3cdktae487x"
 RunBonuses="*uid://b1u65qfmje85t"
+RewardManager="*uid://dah8ytkok5nlg"
 
 [display]
 
