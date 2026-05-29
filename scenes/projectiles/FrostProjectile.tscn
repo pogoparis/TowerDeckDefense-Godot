@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bxjsygbigk5qg"]
+
+[ext_resource type="Script" uid="uid://c1nta73hjuk1h" path="res://scripts/projectiles/frost_projectile.gd" id="1_xbrgk"]
+[ext_resource type="PackedScene" uid="uid://doblf2bixo4oo" path="res://scenes/projectiles/ExplosionImpactFire.tscn" id="2_brqkt"]
+[ext_resource type="Texture2D" uid="uid://bv57rdc5ogcmj" path="res://assets/projectiles/FireProjectile_256.png" id="3_77ejf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_46ged"]
+
+[node name="FrostProjectile" type="Node2D" unique_id=1917700489]
+z_index = 40
+scale = Vector2(0.18, 0.18)
+script = ExtResource("1_xbrgk")
+impact_scene = ExtResource("2_brqkt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703668900]
+z_index = 40
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_77ejf")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=971283323]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1913564430]
+scale = Vector2(1.0000001, 1.0000001)
+shape = SubResource("CircleShape2D_46ged")

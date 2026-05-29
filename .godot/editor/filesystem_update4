@@ -11,3 +11,7 @@ res://scripts/projectiles/projectile_tower.gd
 res://scripts/towers/tower_grumbolt.gd
 res://scripts/towers/tower_fire.gd
 res://scripts/towers/base_tower.gd
+res://scripts/enemies/enemy_base.gd
+res://scripts/projectiles/frost_projectile.gd
+res://scenes/projectiles/FrostProjectile.tscn
+res://scripts/core/path_follow_2d.gd

@@ -9,6 +9,8 @@ class_name EnemyBase
 @export var death_explosion_scene: PackedScene
 
 var hp := 0
+var slow_multiplier := 1.0
+var slow_timer := 0.0
 @onready var enemy_manager: EnemyManager = get_tree().get_first_node_in_group("enemy_manager")
 
 func _ready():
@@ -52,6 +54,21 @@ func update_hp_bar():
 		hp_fill.color = Color(1, 0.7, 0.2)
 	else:
 		hp_fill.color = Color(1, 0.2, 0.2)
+
+func apply_slow(multiplier: float, duration: float):
+
+	slow_multiplier = multiplier
+	slow_timer = duration
+
+func _process(delta):
+
+	if slow_timer > 0:
+
+		slow_timer -= delta
+
+		if slow_timer <= 0:
+
+			slow_multiplier = 1.0
 
 func die():
 
