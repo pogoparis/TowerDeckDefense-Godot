@@ -41,7 +41,9 @@ func _ready():
 	damage = base_damage
 	fire_rate = base_fire_rate
 	attack_range = base_range
+	add_to_group("towers")
 	apply_run_bonuses()
+	
 	
 	if timer:
 		timer.wait_time = fire_rate

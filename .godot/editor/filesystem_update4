@@ -10,3 +10,4 @@ res://scripts/towers/tower_mama_cog.gd
 res://scripts/projectiles/projectile_tower.gd
 res://scripts/towers/tower_grumbolt.gd
 res://scripts/towers/tower_fire.gd
+res://scripts/towers/base_tower.gd

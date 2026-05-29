@@ -22,7 +22,7 @@ func _on_timer_timeout():
 
 	if projectile_scene == null:
 		return
-
+	print(name, " damage=", damage)
 	var valid_target = find_target()
 
 	if valid_target == null:
