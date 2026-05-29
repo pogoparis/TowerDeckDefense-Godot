@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://ugub6d0kpt13" path="res://scenes/enemies/SimpleMob.tscn" id="10_p6g1u"]
 [ext_resource type="Script" uid="uid://c111ayw6tnlxj" path="res://scripts/managers/tower_manager.gd" id="10_wxwm4"]
 [ext_resource type="Resource" uid="uid://h5us2ebt0mms" path="res://resources/waves/wave_02.tres" id="11_p6g1u"]
+[ext_resource type="Script" uid="uid://27bcwwylqh2d" path="res://scripts/cards/card_manager.gd" id="14_88h5y"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -149,5 +150,8 @@ script = ExtResource("9_4br2k")
 script = ExtResource("10_wxwm4")
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="." unique_id=1137569271]
+
+[node name="CardManager" type="Node2D" parent="." unique_id=393382404]
+script = ExtResource("14_88h5y")
 
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]
