@@ -13,13 +13,10 @@ func setup(
 	tower_container = new_tower_container
 
 func play_card(card: CardData):
-	print("PLAY CARD :", card.card_name)
-	print(card.card_name)
-	print(card.tower_scene.resource_path)
+	
 	match card.card_type:
 
 		CardData.CardType.TOWER:
-			print("START PLACEMENT")
 			placement_manager.start_tower_placement(
 				card.tower_scene,
 				tower_container

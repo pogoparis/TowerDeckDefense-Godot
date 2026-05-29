@@ -17,3 +17,4 @@ res://scenes/projectiles/FrostProjectile.tscn
 res://scripts/core/path_follow_2d.gd
 res://scripts/managers/wave_manager.gd
 res://scripts/cards/card_reward_manager.gd
+res://scripts/cards/run_deck.gd

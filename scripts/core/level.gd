@@ -110,3 +110,10 @@ func _on_tower_card_mama_cog_pressed() -> void:
 
 func _on_tower_card_grumbolt_pressed() -> void:
 	card_manager.play_card(GRUMBOLT_CARD)
+
+func _on_reward_card_1_pressed() -> void:
+
+	print("REWARD 1")
+
+	RewardManager.select_reward(0)
+	
