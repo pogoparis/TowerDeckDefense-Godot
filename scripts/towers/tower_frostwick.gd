@@ -1,0 +1,2 @@
+extends BaseTower
+class_name TowerFrostwick

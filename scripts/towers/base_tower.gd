@@ -1,6 +1,12 @@
 extends Node2D
 class_name BaseTower
 
+enum TowerFamily {
+	IRONCLAD,
+	SPARK,
+	GHOST
+}
+
 # ==============================
 #          STATS BASE
 # ==============================
@@ -8,6 +14,8 @@ class_name BaseTower
 @export var base_damage: int = 10
 @export var base_fire_rate: float = 0.8
 @export var base_range: float = 120.0
+@export var family: TowerFamily
+@export var tower_tags: Array[String] = []
 
 # ==============================
 #        STATS ACTUELLES

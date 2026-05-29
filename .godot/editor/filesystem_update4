@@ -9,3 +9,9 @@ res://scripts/towers/base_tower.gd
 res://scenes/ui/level.tscn
 res://scripts/core/level.gd
 res://scripts/projectiles/fire_projectile.gd
+res://scripts/towers/tower_grumbolt.gd
+res://scripts/towers/tower_frostwick.gd
+res://scenes/towers/TowerFrostwick.tscn
+res://scripts/towers/tower_mama_cog.gd
+res://scenes/towers/TowerGrumbolt.tscn
+res://scenes/towers/TowerMamaCog.tscn
