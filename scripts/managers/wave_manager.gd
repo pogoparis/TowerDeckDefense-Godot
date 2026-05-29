@@ -60,6 +60,9 @@ func start_wave():
 
 	RewardManager.show_rewards()
 
+	while not RewardManager.reward_selected:
+		await get_tree().process_frame
+
 	start_prep_phase()
 
 func spawn_wave_data(wave_data: WaveData) -> void:
