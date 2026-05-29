@@ -16,6 +16,7 @@ extends Node2D
 @onready var placement: PlacementManager = $PlacementManager
 @onready var tower_manager = $TowerManager
 @onready var effects_container = $World/EffectsContainer
+@onready var card_manager: CardManager = $CardManager
 
 # ==============================
 #            STATE
@@ -23,7 +24,9 @@ extends Node2D
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
-
+const GRUMBOLT_CARD = preload("res://resources/cards/grumbolt_card.tres")
+const FROSTWICK_CARD = preload("res://resources/cards/frostwick_card.tres")
+const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
 
 # ==============================
 #            READY
@@ -36,6 +39,11 @@ func _ready():
 		wave_timer_label,
 		enemy_manager,
 		tower_manager
+	)
+
+	card_manager.setup(
+	placement,
+	tower_container
 	)
 
 	placement.setup(
@@ -51,6 +59,18 @@ func _ready():
 	)
 
 	wave_manager.start_prep_phase()
+
+func _on_grumbolt_pressed():
+
+	card_manager.play_card(GRUMBOLT_CARD)
+	
+func _on_frostwick_pressed():
+
+	card_manager.play_card(FROSTWICK_CARD)
+
+func _on_mama_cog_pressed():
+
+	card_manager.play_card(MAMA_COG_CARD)
 
 # ==============================
 #         INPUT HANDLING

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b5d4ilpmbyndc"]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_cwtb4"]
+[ext_resource type="Texture2D" uid="uid://d11q3sbw20n5x" path="res://assets/towers/FrostWick256.png" id="1_okjl3"]
+[ext_resource type="PackedScene" uid="uid://7d0spyyowrme" path="res://scenes/towers/TowerFrostwick.tscn" id="3_m1hbc"]
+
+[resource]
+script = ExtResource("1_cwtb4")
+card_name = "Frostwick"
+description = "Dépose de la glace ralentissant les ennemis."
+mana_cost = 2
+icon = ExtResource("1_okjl3")
+tower_scene = ExtResource("3_m1hbc")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

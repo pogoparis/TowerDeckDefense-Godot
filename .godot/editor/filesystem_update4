@@ -15,3 +15,7 @@ res://scenes/towers/TowerFrostwick.tscn
 res://scripts/towers/tower_mama_cog.gd
 res://scenes/towers/TowerGrumbolt.tscn
 res://scenes/towers/TowerMamaCog.tscn
+res://resources/cards/mama_cog_card.tres
+res://resources/cards/grumbolt_card.tres
+res://resources/cards/frostwick_card.tres
+res://scripts/cards/card_manager.gd

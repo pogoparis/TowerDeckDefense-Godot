@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_06af7"]
+[ext_resource type="Texture2D" uid="uid://rtvoygwhil8i" path="res://assets/towers/NainCanon256.png" id="1_gxssf"]
+[ext_resource type="PackedScene" uid="uid://bor8wbjduq2b7" path="res://scenes/towers/TowerGrumbolt.tscn" id="3_pq1rj"]
+
+[resource]
+script = ExtResource("1_06af7")
+card_name = "Grumbolt"
+description = "Tire un obus lent mais dévastateur."
+mana_cost = 2
+icon = ExtResource("1_gxssf")
+tower_scene = ExtResource("3_pq1rj")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"
