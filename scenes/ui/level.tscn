@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://bxdtnop1ujeb0" path="res://assets/towers/FireTower256.png" id="5_lwybd"]
+[ext_resource type="Texture2D" uid="uid://rtvoygwhil8i" path="res://assets/towers/NainCanon256.png" id="5_28yk4"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
+[ext_resource type="Texture2D" uid="uid://d11q3sbw20n5x" path="res://assets/towers/FrostWick256.png" id="6_qswml"]
+[ext_resource type="Texture2D" uid="uid://dstbqbiyif1a7" path="res://assets/towers/GranMamaRepair256.png" id="7_03itj"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
 [ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
 [ext_resource type="Script" uid="uid://cmvfd187lmtgk" path="res://scripts/managers/wave_manager.gd" id="8_x7jdx"]
@@ -87,13 +89,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="UpgradeButton" type="Button" parent="UI/RootUI" unique_id=397624862]
-visible = false
-layout_mode = 0
-offset_right = 75.0
-offset_bottom = 31.0
-text = "Upgrade"
-
 [node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
 z_index = 12
 z_as_relative = false
@@ -102,14 +97,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/separation = 16
 
-[node name="PanelFire" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
+[node name="PanelGrumbolt" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
 z_index = 200
 custom_minimum_size = Vector2(128, 171)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="TowerCardFire" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFire" unique_id=386525683]
+[node name="TowerCardGrumbolt" type="TextureButton" parent="UI/RootUI/TowerCards/PanelGrumbolt" unique_id=386525683]
 z_index = 200
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 1
@@ -121,7 +116,54 @@ offset_right = 202.0
 offset_bottom = 100.0
 grow_vertical = 0
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("5_lwybd")
+texture_normal = ExtResource("5_28yk4")
+texture_pressed = ExtResource("5_28yk4")
+stretch_mode = 5
+
+[node name="PanelFrostwick" type="Panel" parent="UI/RootUI/TowerCards" unique_id=693564071]
+z_index = 200
+custom_minimum_size = Vector2(128, 171)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TowerCardFrostwick" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFrostwick" unique_id=21185287]
+z_index = 200
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -156.0
+offset_right = 202.0
+offset_bottom = 100.0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("6_qswml")
+texture_pressed = ExtResource("6_qswml")
+stretch_mode = 5
+
+[node name="PanelMamaCog" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1825887646]
+z_index = 200
+custom_minimum_size = Vector2(128, 171)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TowerCardMamaCog" type="TextureButton" parent="UI/RootUI/TowerCards/PanelMamaCog" unique_id=275915761]
+z_index = 200
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -156.0
+offset_right = 202.0
+offset_bottom = 100.0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("7_03itj")
+texture_pressed = ExtResource("7_03itj")
 stretch_mode = 5
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
@@ -154,4 +196,6 @@ script = ExtResource("10_wxwm4")
 [node name="CardManager" type="Node2D" parent="." unique_id=393382404]
 script = ExtResource("14_88h5y")
 
-[connection signal="pressed" from="UI/RootUI/TowerCards/PanelFire/TowerCardFire" to="." method="_on_tower_card_fire_pressed"]
+[connection signal="pressed" from="UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt" to="." method="_on_tower_card_grumbolt_pressed"]
+[connection signal="pressed" from="UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick" to="." method="_on_tower_card_frostwick_pressed"]
+[connection signal="pressed" from="UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog" to="." method="_on_tower_card_mama_cog_pressed"]

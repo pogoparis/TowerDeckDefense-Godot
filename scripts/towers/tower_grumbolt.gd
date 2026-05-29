@@ -1,2 +1,2 @@
-extends TowerFire
+extends ProjectileTower
 class_name TowerGrumbolt

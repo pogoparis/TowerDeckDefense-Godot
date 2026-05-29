@@ -1,2 +1,2 @@
-extends BaseTower
+extends ProjectileTower
 class_name TowerFrostwick

@@ -9,14 +9,15 @@ extends Node2D
 @onready var world = $World
 @onready var path: Path2D = $World/Path2D
 @onready var tower_container: Node2D = $World/TowerContainer
-@onready var tower_card_fire = $UI/RootUI/TowerCards/PanelFire/TowerCardFire
-@onready var upgrade_button = $UI/RootUI/UpgradeButton
 @onready var wave_timer_label = $UI/RootUI/WaveTimerLabel
 @onready var grid: GridManager = $GridManager
 @onready var placement: PlacementManager = $PlacementManager
 @onready var tower_manager = $TowerManager
 @onready var effects_container = $World/EffectsContainer
 @onready var card_manager: CardManager = $CardManager
+@onready var tower_card_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt
+@onready var tower_card_frostwick = $UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick
+@onready var tower_card_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog
 
 # ==============================
 #            STATE
@@ -89,6 +90,13 @@ func _physics_process(_delta):
 
 	placement.current_mouse_world = get_global_mouse_position()
 
-func _on_tower_card_fire_pressed():
+func _on_tower_card_frostwick_pressed() -> void:
+	card_manager.play_card(FROSTWICK_CARD)
 
+
+func _on_tower_card_mama_cog_pressed() -> void:
+	card_manager.play_card(MAMA_COG_CARD)
+
+
+func _on_tower_card_grumbolt_pressed() -> void:
 	card_manager.play_card(GRUMBOLT_CARD)

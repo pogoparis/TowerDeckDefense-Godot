@@ -1,3 +1,4 @@
+HBoxContainer
 Node2D
 Marker2D
 ResourcePreloader
@@ -10,5 +11,4 @@ CharacterBody2D
 Label
 Panel
 TextureButton
-HBoxContainer
 Control

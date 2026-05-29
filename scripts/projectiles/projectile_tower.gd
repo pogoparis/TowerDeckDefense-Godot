@@ -3,27 +3,39 @@ class_name ProjectileTower
 
 @export var projectile_scene: PackedScene
 
+@onready var sprite: Sprite2D = $Sprite2D
 @onready var shoot_point: Marker2D = $ShootPoint
 
 func _ready():
 
-	super._ready()
-
 	if is_ghost:
 		return
 
+	super._ready()
+
 	if timer:
+		timer.wait_time = fire_rate
 		timer.timeout.connect(_on_timer_timeout)
 		timer.start()
 
 func _on_timer_timeout():
 
-	var target = find_target()
-
-	if target == null:
+	if projectile_scene == null:
 		return
 
-	fire_projectile(target)
+	var valid_target = find_target()
 
-func fire_projectile(target):
-	pass
+	if valid_target == null:
+		return
+
+	fire_projectile(valid_target)
+
+func fire_projectile(target: Node2D):
+
+	var projectile = projectile_scene.instantiate()
+
+	projectile.global_position = shoot_point.global_position
+	projectile.target = target
+	projectile.damage = damage
+
+	get_parent().add_child(projectile)

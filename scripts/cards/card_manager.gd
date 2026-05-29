@@ -14,6 +14,8 @@ func setup(
 
 func play_card(card: CardData):
 	print("PLAY CARD :", card.card_name)
+	print(card.card_name)
+	print(card.tower_scene.resource_path)
 	match card.card_type:
 
 		CardData.CardType.TOWER:
