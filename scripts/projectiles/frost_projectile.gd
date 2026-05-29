@@ -20,6 +20,9 @@ func _process(delta):
 	if global_position.distance_to(target.global_position) <= hit_distance:
 
 		if target.has_method("take_damage"):
+			target.take_damage(damage)
+
+		if target.has_method("apply_slow"):
 			target.apply_slow(0.5, 3.0)
 
 		spawn_impact()
