@@ -18,6 +18,10 @@ extends Node2D
 @onready var tower_card_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt
 @onready var tower_card_frostwick = $UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick
 @onready var tower_card_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog
+@onready var reward_panel = $UI/RootUI/RewardPanel
+@onready var reward_card_1 = $UI/RootUI/RewardPanel/VBoxContainer/RewardCard1
+@onready var reward_card_2 = $UI/RootUI/RewardPanel/VBoxContainer/RewardCard2
+@onready var reward_card_3 = $UI/RootUI/RewardPanel/VBoxContainer/RewardCard3
 
 # ==============================
 #            STATE
@@ -35,31 +39,37 @@ const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
 
 func _ready():
 
-	wave_manager.setup(
+		RewardManager.reward_panel = reward_panel
+
+		RewardManager.reward_card_1 = reward_card_1
+		RewardManager.reward_card_2 = reward_card_2
+		RewardManager.reward_card_3 = reward_card_3
+			
+		wave_manager.setup(
+			path,
+			wave_timer_label,
+			enemy_manager,
+			tower_manager
+		)
+
+		card_manager.setup(
+		placement,
+		tower_container
+		)
+
+		placement.setup(
+		grid,
+		tower_container,
 		path,
-		wave_timer_label,
 		enemy_manager,
 		tower_manager
 	)
 
-	card_manager.setup(
-	placement,
-	tower_container
-	)
+		tower_manager.setup(
+			tower_container
+		)
 
-	placement.setup(
-	grid,
-	tower_container,
-	path,
-	enemy_manager,
-	tower_manager
-)
-
-	tower_manager.setup(
-		tower_container
-	)
-
-	wave_manager.start_prep_phase()
+		wave_manager.start_prep_phase()
 
 func _on_grumbolt_pressed():
 
