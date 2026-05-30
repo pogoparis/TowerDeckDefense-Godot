@@ -24,3 +24,4 @@ res://resources/bonuses/turbo_loader.tres
 res://resources/bonuses/greased_mechanism.tres
 res://resources/bonuses/overclocked_core.tres
 res://scripts/data/bonus_data.gd
+res://scripts/ui/reward_card.gd

@@ -2,10 +2,13 @@ extends Node
 class_name CardRewardManager
 
 var reward_panel: Control
+var reward_container: VBoxContainer
+
+@export var reward_card_scene: PackedScene
+
 var reward_card_1: Button
 var reward_card_2: Button
 var reward_card_3: Button
-
 var reward_selected := false
 var reward_cards: Array[RewardData] = []
 

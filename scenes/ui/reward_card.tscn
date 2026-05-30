@@ -1,3 +1,26 @@
 [gd_scene format=3 uid="uid://dm36prcv6ujae"]
 
-[node name="RewardCard" type="Node2D" unique_id=599982598]
+[ext_resource type="Script" uid="uid://b5b3au3yk4r6f" path="res://scripts/ui/reward_card.gd" id="1_sj6m1"]
+
+[node name="RewardCard" type="Button" unique_id=1700675093]
+script = ExtResource("1_sj6m1")
+
+[node name="MarginContainer" type="CenterContainer" parent="." unique_id=398687851]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2023771084]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=41258492]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1837556881]
+layout_mode = 2
+text = "TITLE"
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=123074757]
+layout_mode = 2
+text = "DESCRIPTION"
+autowrap_mode = 2
