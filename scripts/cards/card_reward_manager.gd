@@ -2,26 +2,21 @@ extends Node
 class_name CardRewardManager
 
 var reward_panel: Control
-var reward_container: VBoxContainer
+var reward_container
 
-@export var reward_card_scene: PackedScene
+var reward_card_scene := preload(
+	"res://scenes/ui/reward_card.tscn"
+)
 
-var reward_card_1: Button
-var reward_card_2: Button
-var reward_card_3: Button
 var reward_selected := false
 var reward_cards: Array[RewardData] = []
-
-
-func _ready():
-
-	print("CARD REWARD READY")
-
 
 func show_rewards():
 
 	reward_selected = false
 	reward_panel.visible = true
+
+	clear_rewards()
 
 	reward_cards = RewardDB.get_random_rewards(3)
 
@@ -29,24 +24,16 @@ func show_rewards():
 		push_error("Not enough rewards loaded")
 		return
 
-	reward_card_1.text = reward_cards[0].title + "\n\n" + reward_cards[0].description
-	reward_card_2.text = reward_cards[1].title + "\n\n" + reward_cards[1].description
-	reward_card_3.text = reward_cards[2].title + "\n\n" + reward_cards[2].description
+	for reward in reward_cards:
 
-	print("BTN1=", reward_card_1.text)
-	print("BTN2=", reward_card_2.text)
-	print("BTN3=", reward_card_3.text)
+		var card = reward_card_scene.instantiate()
 
-	if not reward_card_1.pressed.is_connected(_on_reward_card_1_pressed):
-		reward_card_1.pressed.connect(_on_reward_card_1_pressed)
+		reward_container.add_child(card)
 
-	if not reward_card_2.pressed.is_connected(_on_reward_card_2_pressed):
-		reward_card_2.pressed.connect(_on_reward_card_2_pressed)
-
-	if not reward_card_3.pressed.is_connected(_on_reward_card_3_pressed):
-		reward_card_3.pressed.connect(_on_reward_card_3_pressed)
-
-
+		card.setup(reward)
+		
+		card.reward_clicked.connect(_on_reward_selected)
+		
 func select_reward(index: int):
 
 	var reward = reward_cards[index]
@@ -59,15 +46,12 @@ func select_reward(index: int):
 				reward.card_data
 			)
 
-			print("ADD CARD :", reward.title)
-
 		RewardData.RewardType.BONUS:
 
 			RunBonuses.add_bonus(
 				reward.bonus_data
 			)
 
-			print("ADD BONUS :", reward.title)
 
 		RewardData.RewardType.RELIC:
 
@@ -77,23 +61,14 @@ func select_reward(index: int):
 	reward_selected = true
 	reward_panel.visible = false
 
+func clear_rewards():
 
-func _on_reward_card_1_pressed():
+	for child in reward_container.get_children():
+		child.queue_free()
 
-	print("REWARD 1")
+func _on_reward_selected(reward: RewardData):
 
-	select_reward(0)
+	var index := reward_cards.find(reward)
 
-
-func _on_reward_card_2_pressed():
-
-	print("REWARD 2")
-
-	select_reward(1)
-
-
-func _on_reward_card_3_pressed():
-
-	print("REWARD 3")
-
-	select_reward(2)
+	if index != -1:
+		select_reward(index)

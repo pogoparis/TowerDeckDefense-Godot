@@ -191,7 +191,7 @@ offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="BoxContainer" parent="UI/RootUI/RewardPanel" unique_id=526870908]
+[node name="RewardContainer" type="BoxContainer" parent="UI/RootUI/RewardPanel" unique_id=526870908]
 custom_minimum_size = Vector2(700, 250)
 layout_mode = 1
 anchors_preset = 15
@@ -200,23 +200,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-
-[node name="RewardCard1" type="Button" parent="UI/RootUI/RewardPanel/VBoxContainer" unique_id=322868035]
-custom_minimum_size = Vector2(220, 250)
-layout_mode = 2
-
-[node name="RewardCard2" type="Button" parent="UI/RootUI/RewardPanel/VBoxContainer" unique_id=936613434]
-custom_minimum_size = Vector2(220, 250)
-layout_mode = 2
-
-[node name="RewardCard3" type="Button" parent="UI/RootUI/RewardPanel/VBoxContainer" unique_id=1769044727]
-custom_minimum_size = Vector2(220, 250)
-layout_mode = 2
-
-[node name="RewardContainer" type="Container" parent="UI/RootUI/RewardPanel" unique_id=1715140433]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")

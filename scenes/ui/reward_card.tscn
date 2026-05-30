@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://b5b3au3yk4r6f" path="res://scripts/ui/reward_card.gd" id="1_sj6m1"]
 
 [node name="RewardCard" type="Button" unique_id=1700675093]
+custom_minimum_size = Vector2(300, 120)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_sj6m1")
 
 [node name="MarginContainer" type="CenterContainer" parent="." unique_id=398687851]
@@ -18,9 +21,11 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1837556881]
 layout_mode = 2
+size_flags_vertical = 3
 text = "TITLE"
 
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=123074757]
 layout_mode = 2
+size_flags_vertical = 3
 text = "DESCRIPTION"
 autowrap_mode = 2
