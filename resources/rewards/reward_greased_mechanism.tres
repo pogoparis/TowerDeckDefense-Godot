@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://b6d2monse2f4v"]
+
+[ext_resource type="Resource" uid="uid://cs06o66j5er8k" path="res://resources/bonuses/greased_mechanism.tres" id="1_m7yi6"]
+[ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_s5lp7"]
+
+[resource]
+script = ExtResource("1_s5lp7")
+reward_type = 1
+title = "Greased Mechanism"
+description = "All towers gain +10% Fire Rate"
+bonus_data = ExtResource("1_m7yi6")
+metadata/_custom_type_script = "uid://ctnke4rvljw3g"

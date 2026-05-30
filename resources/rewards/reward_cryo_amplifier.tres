@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://q82wyqu1wyi5"]
+
+[ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_43uox"]
+
+[resource]
+script = ExtResource("1_43uox")
+reward_type = 1
+title = "Cryo Amplifier"
+description = "Slow effects are 20% stronger"
+metadata/_custom_type_script = "uid://ctnke4rvljw3g"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://bevtjsgvepdsu"]
+
+[ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_eyrxb"]
+[ext_resource type="Resource" uid="uid://jbs8p2tj0rli" path="res://resources/bonuses/turbo_loader.tres" id="1_lbgqk"]
+
+[resource]
+script = ExtResource("1_eyrxb")
+reward_type = 1
+title = "Turbo Loader"
+description = "All towers gain +20% Fire Rate"
+bonus_data = ExtResource("1_lbgqk")
+metadata/_custom_type_script = "uid://ctnke4rvljw3g"

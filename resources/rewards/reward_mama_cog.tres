@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://buuv0phqhlq7j"]
+
+[ext_resource type="Resource" uid="uid://beuo2iiyajb35" path="res://resources/cards/mama_cog_card.tres" id="1_20wr3"]
+[ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_51ist"]
+
+[resource]
+script = ExtResource("1_51ist")
+title = "Mama Cog"
+description = "Mechanic support tower"
+card_data = ExtResource("1_20wr3")
+metadata/_custom_type_script = "uid://ctnke4rvljw3g"

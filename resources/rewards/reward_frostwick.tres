@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://b7kscvdcfdxkd"]
+
+[ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_7nx7d"]
+[ext_resource type="Resource" uid="uid://b5d4ilpmbyndc" path="res://resources/cards/frostwick_card.tres" id="1_od5op"]
+
+[resource]
+script = ExtResource("1_7nx7d")
+title = "Frostwick"
+card_data = ExtResource("1_od5op")
+metadata/_custom_type_script = "uid://ctnke4rvljw3g"

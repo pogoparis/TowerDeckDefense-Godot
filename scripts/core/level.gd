@@ -112,8 +112,13 @@ func _on_tower_card_grumbolt_pressed() -> void:
 	card_manager.play_card(GRUMBOLT_CARD)
 
 func _on_reward_card_1_pressed() -> void:
-
 	print("REWARD 1")
-
 	RewardManager.select_reward(0)
 	
+func _on_reward_card_2_pressed() -> void:
+	print("REWARD 2")
+	RewardManager.select_reward(1)
+
+func _on_reward_card_3_pressed() -> void:
+	print("REWARD 3")
+	RewardManager.select_reward(2)
