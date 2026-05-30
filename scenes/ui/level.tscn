@@ -213,6 +213,11 @@ layout_mode = 2
 custom_minimum_size = Vector2(220, 250)
 layout_mode = 2
 
+[node name="RewardContainer" type="Container" parent="UI/RootUI/RewardPanel" unique_id=1715140433]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
 
@@ -237,6 +242,3 @@ script = ExtResource("14_88h5y")
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt" to="." method="_on_tower_card_grumbolt_pressed"]
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick" to="." method="_on_tower_card_frostwick_pressed"]
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog" to="." method="_on_tower_card_mama_cog_pressed"]
-[connection signal="pressed" from="UI/RootUI/RewardPanel/VBoxContainer/RewardCard1" to="." method="_on_reward_card_1_pressed"]
-[connection signal="pressed" from="UI/RootUI/RewardPanel/VBoxContainer/RewardCard2" to="." method="_on_reward_card_2_pressed"]
-[connection signal="pressed" from="UI/RootUI/RewardPanel/VBoxContainer/RewardCard3" to="." method="_on_reward_card_3_pressed"]

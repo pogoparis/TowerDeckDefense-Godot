@@ -6,5 +6,5 @@
 script = ExtResource("1_41bmb")
 title = "Overclocked Core"
 description = "+35% Fire Rate"
-fire_rate_mult = 1.35
+fire_rate_mult = 0.65
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"

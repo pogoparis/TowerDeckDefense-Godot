@@ -22,17 +22,13 @@ func show_rewards():
 
 	reward_cards = RewardDB.get_random_rewards(3)
 
-	print(reward_cards[0].title)
-	print(reward_cards[1].title)
-	print(reward_cards[2].title)
-
 	if reward_cards.size() < 3:
 		push_error("Not enough rewards loaded")
 		return
 
-	reward_card_1.text = reward_cards[0].title
-	reward_card_2.text = reward_cards[1].title
-	reward_card_3.text = reward_cards[2].title
+	reward_card_1.text = reward_cards[0].title + "\n\n" + reward_cards[0].description
+	reward_card_2.text = reward_cards[1].title + "\n\n" + reward_cards[1].description
+	reward_card_3.text = reward_cards[2].title + "\n\n" + reward_cards[2].description
 
 	print("BTN1=", reward_card_1.text)
 	print("BTN2=", reward_card_2.text)

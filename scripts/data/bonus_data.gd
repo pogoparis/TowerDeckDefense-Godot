@@ -1,6 +1,11 @@
 extends Resource
 class_name BonusData
 
+# fire_rate_mult :
+# 1.0 = normal
+# 0.8 = 20% faster
+# 0.65 = 35% faster
+
 @export var title : String
 @export_multiline var description : String
 

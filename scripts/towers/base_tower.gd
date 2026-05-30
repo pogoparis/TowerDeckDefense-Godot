@@ -113,6 +113,10 @@ func disable_behaviors():
 
 func apply_run_bonuses():
 
+	damage = base_damage
+	attack_range = base_range
+	fire_rate = base_fire_rate
+
 	for bonus in RunBonuses.owned_bonuses:
 		damage += bonus.damage_bonus
 		attack_range += bonus.range_bonus
@@ -120,3 +124,13 @@ func apply_run_bonuses():
 
 	if timer:
 		timer.wait_time = fire_rate
+		
+		print(
+	name,
+	" damage=",
+	damage,
+	" range=",
+	attack_range,
+	" fire_rate=",
+	fire_rate
+)

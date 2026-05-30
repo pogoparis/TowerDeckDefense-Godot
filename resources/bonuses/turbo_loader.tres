@@ -6,6 +6,6 @@
 script = ExtResource("1_qjm6f")
 title = "Turbo Loader"
 description = "+20% Fire Rate"
-fire_rate_mult = 1.2
+fire_rate_mult = 0.8
 rarity = "RARE"
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"
