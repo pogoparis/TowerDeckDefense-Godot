@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://x4vm0kw38mtj"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_l8f8t"]
+
+[resource]
+script = ExtResource("1_l8f8t")
+title = "Long Barrel"
+description = "+25 Range to all towers"
+range_bonus = 25
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

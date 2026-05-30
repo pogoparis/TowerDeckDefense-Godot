@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://76b56ios6yy7"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_qb1h0"]
+
+[resource]
+script = ExtResource("1_qb1h0")
+title = "Cryo Amplifier"
+description = "+20% Slow Effect"
+rarity = "RARE"
+slow_bonus = 0.2
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

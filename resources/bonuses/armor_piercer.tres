@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://b5buetlpu4a25"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_htp4m"]
+
+[resource]
+script = ExtResource("1_htp4m")
+title = "Armor Piercer"
+description = "+10 Damage to all towers"
+damage_bonus = 10
+rarity = "RARE"
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"
