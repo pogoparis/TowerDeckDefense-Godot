@@ -2,3 +2,4 @@ res://scenes/ui/reward_card.tscn
 res://scripts/ui/reward_card.gd
 res://scripts/cards/card_reward_manager.gd
 res://scripts/managers/wave_manager.gd
+res://scenes/ui/level.tscn
