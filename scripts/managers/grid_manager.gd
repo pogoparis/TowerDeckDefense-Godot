@@ -19,8 +19,6 @@ func setup_buildable_cells():
 				Vector2i(x + 1, y + 1)
 			] = true
 
-	print("BUILD CELLS :", buildable_cells.size())
-
 
 func world_to_cell(pos: Vector2) -> Vector2i:
 

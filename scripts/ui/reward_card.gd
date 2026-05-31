@@ -11,10 +11,6 @@ var reward_data : RewardData
 
 
 func setup(data: RewardData):
-
-	print("SETUP")
-	print(title_label)
-	print(description_label)
 	
 	reward_data = data
 
@@ -25,8 +21,5 @@ func setup(data: RewardData):
 		icon_texture.texture = data.icon
 
 func _pressed():
-
-	print("CARD CLICKED : ", reward_data.title)
-
 	reward_clicked.emit(reward_data)
 	

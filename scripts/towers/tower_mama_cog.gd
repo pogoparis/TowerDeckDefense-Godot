@@ -12,8 +12,6 @@ func _ready():
 	
 
 func update_aura():
-	print("=== MAMA COG UPDATE ===")
-	print("my cell = ", grid_cell)
 	if tower_manager == null:
 		return
 
@@ -34,10 +32,7 @@ func update_aura():
 	]
 
 	for cell in adjacent_cells:
-
-		print("checking cell ", cell)
 		var tower = tower_manager.get_tower_at_cell(cell)
-		print("found tower = ", tower)
 		
 		if tower == null:
 			continue
@@ -46,12 +41,4 @@ func update_aura():
 			continue
 
 		tower.damage = int(tower.base_damage * damage_bonus_mult)
-		print("BUFFING ", tower)
 		buffed_towers.append(tower)
-
-		print(
-			"Mama Cog buff -> ",
-			tower.grid_cell,
-			" damage=",
-			tower.damage
-		)

@@ -127,16 +127,7 @@ func apply_run_bonuses():
 
 	if timer:
 		timer.wait_time = fire_rate
-		
-		print(
-	name,
-	" damage=",
-	damage,
-	" range=",
-	attack_range,
-	" fire_rate=",
-	fire_rate
-)
+
 
 func recalculate_stats():
 	damage = int(base_damage * adjacency_damage_mult)

@@ -138,6 +138,4 @@ func wait_for_wave_clear():
 
 	Player.add_caps(3)
 
-	print("+3 CAPS")
-
 	current_wave_index += 1

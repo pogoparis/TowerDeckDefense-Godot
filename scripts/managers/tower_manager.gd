@@ -141,7 +141,7 @@ func apply_bonus_to_all_towers(bonus: BonusData):
 
 		if not is_instance_valid(tower):
 			continue
-		print("BUFFING TOWER: ", tower.damage)
+			
 		tower.apply_upgrade({
 			"damage": bonus.damage_bonus,
 			"range": bonus.range_bonus,

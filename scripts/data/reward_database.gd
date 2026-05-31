@@ -38,8 +38,6 @@ func load_rewards():
 
 	dir.list_dir_end()
 
-	print("LOADED REWARDS :", rewards.size())
-
 
 func get_random_rewards(count:int) -> Array[RewardData]:
 

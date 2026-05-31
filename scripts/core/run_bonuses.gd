@@ -5,12 +5,9 @@ var owned_bonuses: Array[BonusData] = []
 func add_bonus(bonus: BonusData):
 
 	if bonus == null:
-		push_error("BONUS IS NULL")
 		return
 
 	owned_bonuses.append(bonus)
-
-	print("BONUS ADDED: ", bonus.title)
 
 	refresh_all_towers()
 

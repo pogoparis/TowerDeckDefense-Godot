@@ -29,7 +29,6 @@ func _ready():
 	add_child(bg)
 
 func _pressed():
-	print("🃏 Carte cliquée - émission du signal")
 	emit_signal("tower_selected", tower_scene)
 	
 	# Rend la carte invisible aux clics de souris
@@ -38,4 +37,3 @@ func _pressed():
 # Fonction pour réactiver la carte (appelée depuis level.gd)
 func reset():
 	mouse_filter = MOUSE_FILTER_STOP
-	print("🃏 Carte réactivée")

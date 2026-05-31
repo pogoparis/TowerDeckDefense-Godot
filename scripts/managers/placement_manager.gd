@@ -93,33 +93,19 @@ func handle_right_click() -> bool:
 	
 func try_place_tower(mouse_world: Vector2):
 
-	print("TRY PLACE")
 
 	if not selected_tower_scene:
-		print("NO SCENE")
 		return
 
 	var cell = grid.world_to_cell(mouse_world)
 
-	print("CELL :", cell)
-
 	if not grid.can_place(cell):
-		print("CANNOT PLACE")
 		return
-
-	print("CAN PLACE")
 
 	if selected_card:
 
-		print("CARD :", selected_card.card_name)
-		print("COST :", selected_card.mana_cost)
-
 		if not Player.spend_caps(selected_card.mana_cost):
-
-			print("NOT ENOUGH Caps")
 			return
-
-		print("GOLD PAID")
 
 	var final_tower = tower_manager.create_tower(
 		selected_tower_scene,
@@ -129,13 +115,7 @@ func try_place_tower(mouse_world: Vector2):
 
 	final_tower.grid_cell = cell
 
-	print(
-		final_tower.name,
-		" cell=",
-		final_tower.grid_cell
-	)
-
-	print("TOWER CREATED")
+	
 	if final_tower.has_method("update_aura"):
 		final_tower.update_aura()
 
