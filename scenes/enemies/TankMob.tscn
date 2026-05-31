@@ -25,7 +25,7 @@ z_index = 10
 position = Vector2(-20, -65)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
-z_index = 10
+z_index = 11
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)

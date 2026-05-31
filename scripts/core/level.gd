@@ -63,7 +63,8 @@ func _ready():
 		tower_manager.setup(
 			tower_container
 		)
-
+		grid.setup_buildable_cells()
+		print(grid.buildable_cells)
 		wave_manager.start_prep_phase()
 
 func _on_grumbolt_pressed():

@@ -1,3 +1,5 @@
 res://scenes/ui/level.tscn
 res://resources/cards/frostwick_card.tres
 res://scripts/managers/grid_manager.gd
+res://scripts/core/level.gd
+res://scenes/enemies/TankMob.tscn

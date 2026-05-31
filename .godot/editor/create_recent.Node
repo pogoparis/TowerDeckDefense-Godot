@@ -1,4 +1,6 @@
 Label
+HBoxContainer
+TileMap
 TextureRect
 VBoxContainer
 CenterContainer
@@ -7,8 +9,6 @@ Sprite2D
 Container
 BoxContainer
 Panel
-HBoxContainer
 Node2D
 Marker2D
 ResourcePreloader
-Area2D

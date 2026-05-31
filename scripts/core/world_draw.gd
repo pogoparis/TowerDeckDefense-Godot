@@ -35,25 +35,28 @@ func _draw():
 			prev = point
 			d += step
 
+	# =========================
+	# BUILD GRID
+	# =========================
 
-		# =========================
-		# GRID VISUELLE 64x64
-		# =========================
-	var cell_size = 64
-	var viewport_size = get_viewport_rect().size
-	var grid_width = int(viewport_size.x / cell_size)
-	var grid_height = int(viewport_size.y / cell_size)
+	var cell_size = level.grid.CELL_SIZE
 
-	for x in range(grid_width):
-		for y in range(grid_height):
-			var top_left = Vector2(x * cell_size, y * cell_size)
-			draw_rect(
-				Rect2(top_left, Vector2(cell_size, cell_size)),
-				Color(0, 1, 0, 0.15),
-				false,
-				1.0
-			)
+	for cell in level.grid.buildable_cells.keys():
 
+		var pos = Vector2(
+			cell.x * level.grid.CELL_SIZE,
+			cell.y * level.grid.CELL_SIZE
+		)
+
+		draw_rect(
+			Rect2(
+				pos,
+				Vector2.ONE * level.grid.CELL_SIZE
+			),
+			Color(0,1,0,0.25),
+			false,
+			2.0
+		)
 
 	# =========================
 	# PORTEE DU GHOST
