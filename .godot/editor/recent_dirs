@@ -1,6 +1,6 @@
+res://scripts/data/
 res://scenes/ui/
 res://resources/rewards/
-res://scripts/data/
 res://resources/bonuses/
 res://resources/
 res://scripts/cards/
@@ -11,7 +11,6 @@ res://scenes/projectiles/
 res://scripts/managers/
 res://scenes/enemies/
 res://
-res://assets/ennemies/Rayman_poison/
 res://scenes/towers/
 res://scenes/
 res://assets/towers/

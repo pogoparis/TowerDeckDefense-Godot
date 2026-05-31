@@ -3,3 +3,6 @@ res://resources/cards/frostwick_card.tres
 res://scripts/managers/grid_manager.gd
 res://scripts/core/level.gd
 res://scenes/enemies/TankMob.tscn
+res://scripts/data/player_data.gd
+res://scripts/managers/placement_manager.gd
+res://scripts/cards/card_manager.gd

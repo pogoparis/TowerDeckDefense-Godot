@@ -39,7 +39,7 @@ func _ready():
 
 		RewardManager.reward_panel = reward_panel
 		RewardManager.reward_container = reward_container
-		print($UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt)
+
 		wave_manager.setup(
 			path,
 			wave_timer_label,
@@ -64,7 +64,11 @@ func _ready():
 			tower_container
 		)
 		grid.setup_buildable_cells()
-		print(grid.buildable_cells)
+		Player.caps_changed.connect(_on_caps_changed)
+		Player.base_hp_changed.connect(_on_base_hp_changed)
+
+		_on_caps_changed(Player.caps)
+		_on_base_hp_changed(Player.base_hp)
 		wave_manager.start_prep_phase()
 
 func _on_grumbolt_pressed():
@@ -106,3 +110,12 @@ func _on_tower_card_mama_cog_pressed() -> void:
 
 func _on_tower_card_grumbolt_pressed() -> void:
 	card_manager.play_card(GRUMBOLT_CARD)
+
+func _on_caps_changed(value:int):
+
+	$UI/RootUI/TopBar/CapsLabel.text = "Caps : %d" % value
+
+
+func _on_base_hp_changed(value:int):
+
+	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value

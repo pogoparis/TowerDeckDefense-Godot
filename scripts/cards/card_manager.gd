@@ -16,11 +16,21 @@ func play_card(card: CardData):
 	
 	match card.card_type:
 
+
+
 		CardData.CardType.TOWER:
+			if Player.caps < card.mana_cost:
+
+				print("NOT ENOUGH CAPS")
+
+				# TODO jouer erro_sound.wav
+
+				return
 			placement_manager.start_tower_placement(
-				card.tower_scene,
-				tower_container
-			)
+			card.tower_scene,
+			card,
+			tower_container
+		)
 
 		CardData.CardType.SPELL:
 
