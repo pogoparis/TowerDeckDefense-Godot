@@ -14,7 +14,7 @@ enum CardType {
 @export_multiline var description: String
 
 @export var card_type: CardType
-
+@export var card_texture : Texture2D
 @export var mana_cost := 1
 
 @export var icon: Texture2D

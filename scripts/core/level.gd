@@ -39,7 +39,7 @@ func _ready():
 
 		RewardManager.reward_panel = reward_panel
 		RewardManager.reward_container = reward_container
-			
+		print($UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt)
 		wave_manager.setup(
 			path,
 			wave_timer_label,

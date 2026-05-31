@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://rtvoygwhil8i" path="res://assets/towers/NainCanon256.png" id="5_28yk4"]
+[ext_resource type="Texture2D" uid="uid://bsai2p3e7pilj" path="res://assets/cards/GRUMBOLTDECOUPE256.png" id="5_28yk4"]
+[ext_resource type="Texture2D" uid="uid://42aaj4h4uc61" path="res://assets/cards/FROSTWICKDECOUPE256.png" id="6_28yk4"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
-[ext_resource type="Texture2D" uid="uid://d11q3sbw20n5x" path="res://assets/towers/FrostWick256.png" id="6_qswml"]
-[ext_resource type="Texture2D" uid="uid://dstbqbiyif1a7" path="res://assets/towers/GranMamaRepair256.png" id="7_03itj"]
+[ext_resource type="Texture2D" uid="uid://cf8anxwmrqssi" path="res://assets/cards/MAMACOGOKDECOUPE256.png" id="7_28yk4"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
 [ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
 [ext_resource type="Script" uid="uid://cmvfd187lmtgk" path="res://scripts/managers/wave_manager.gd" id="8_x7jdx"]
@@ -22,6 +22,12 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -19, 350, 0, 0, 0, 0, 288, 354, 0, 0, 0, 0, 290, 228, 0, 0, 0, 0, 740, 223, 0, 0, 0, 0, 738, 359, 0, 0, 0, 0, 1583, 359)
 }
 point_count = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qswml"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03itj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4slr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_28yk4"]
 
@@ -97,14 +103,14 @@ z_as_relative = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/separation = 16
 
 [node name="PanelGrumbolt" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
 z_index = 200
-custom_minimum_size = Vector2(128, 171)
+custom_minimum_size = Vector2(105, 171)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qswml")
 
 [node name="TowerCardGrumbolt" type="TextureButton" parent="UI/RootUI/TowerCards/PanelGrumbolt" unique_id=386525683]
 z_index = 200
@@ -119,15 +125,15 @@ offset_bottom = 100.0
 grow_vertical = 0
 scale = Vector2(0.6, 0.6)
 texture_normal = ExtResource("5_28yk4")
-texture_pressed = ExtResource("5_28yk4")
 stretch_mode = 5
 
 [node name="PanelFrostwick" type="Panel" parent="UI/RootUI/TowerCards" unique_id=693564071]
 z_index = 200
-custom_minimum_size = Vector2(128, 171)
+custom_minimum_size = Vector2(110, 171)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_03itj")
 
 [node name="TowerCardFrostwick" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFrostwick" unique_id=21185287]
 z_index = 200
@@ -141,20 +147,20 @@ offset_right = 202.0
 offset_bottom = 100.0
 grow_vertical = 0
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("6_qswml")
-texture_pressed = ExtResource("6_qswml")
+texture_normal = ExtResource("6_28yk4")
 stretch_mode = 5
 
 [node name="PanelMamaCog" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1825887646]
 z_index = 200
-custom_minimum_size = Vector2(128, 171)
+custom_minimum_size = Vector2(130, 171)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j4slr")
 
 [node name="TowerCardMamaCog" type="TextureButton" parent="UI/RootUI/TowerCards/PanelMamaCog" unique_id=275915761]
 z_index = 200
-custom_minimum_size = Vector2(128, 128)
+custom_minimum_size = Vector2(202, 256)
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -164,8 +170,7 @@ offset_right = 202.0
 offset_bottom = 100.0
 grow_vertical = 0
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("7_03itj")
-texture_pressed = ExtResource("7_03itj")
+texture_normal = ExtResource("7_28yk4")
 stretch_mode = 5
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]

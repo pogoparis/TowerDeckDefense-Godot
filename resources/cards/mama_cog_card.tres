@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://beuo2iiyajb35"]
 
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_t4w36"]
-[ext_resource type="Texture2D" uid="uid://dstbqbiyif1a7" path="res://assets/towers/GranMamaRepair256.png" id="1_x66l1"]
+[ext_resource type="Texture2D" uid="uid://cf8anxwmrqssi" path="res://assets/cards/MAMACOGOKDECOUPE256.png" id="1_x66l1"]
 [ext_resource type="PackedScene" uid="uid://bdovl6yaysw4e" path="res://scenes/towers/TowerMamaCog.tscn" id="3_61k8o"]
 
 [resource]
 script = ExtResource("1_t4w36")
 card_name = "Mama Cog"
 description = "Booste les tours proches."
+card_texture = ExtResource("1_x66l1")
 mana_cost = 3
-icon = ExtResource("1_x66l1")
 tower_scene = ExtResource("3_61k8o")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

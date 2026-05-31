@@ -1,7 +1,7 @@
 class_name GridManager
 extends Node
 
-const CELL_SIZE := 64
+const CELL_SIZE := 96
 
 var blocked_cells := {}
 var occupied_cells := {}
