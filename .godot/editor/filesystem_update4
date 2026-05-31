@@ -6,3 +6,8 @@ res://scenes/enemies/TankMob.tscn
 res://scripts/data/player_data.gd
 res://scripts/managers/placement_manager.gd
 res://scripts/cards/card_manager.gd
+res://resources/cards/mama_cog_card.tres
+res://scripts/core/path_follow_2d.gd
+res://scripts/enemies/enemy_base.gd
+res://scripts/managers/wave_manager.gd
+res://scenes/enemies/SimpleMob.tscn

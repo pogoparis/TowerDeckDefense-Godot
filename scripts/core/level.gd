@@ -39,7 +39,7 @@ func _ready():
 
 		RewardManager.reward_panel = reward_panel
 		RewardManager.reward_container = reward_container
-
+		
 		wave_manager.setup(
 			path,
 			wave_timer_label,
@@ -66,10 +66,17 @@ func _ready():
 		grid.setup_buildable_cells()
 		Player.caps_changed.connect(_on_caps_changed)
 		Player.base_hp_changed.connect(_on_base_hp_changed)
+		Player.wave_changed.connect(_on_wave_changed)
+
+		_on_wave_changed(Player.current_wave)
 
 		_on_caps_changed(Player.caps)
 		_on_base_hp_changed(Player.base_hp)
 		wave_manager.start_prep_phase()
+
+func _on_wave_changed(value:int):
+
+	$UI/RootUI/TopBar/WaveLabel.text = "Wave : %d" % value
 
 func _on_grumbolt_pressed():
 

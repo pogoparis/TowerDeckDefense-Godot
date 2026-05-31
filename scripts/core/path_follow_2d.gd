@@ -17,7 +17,16 @@ func _physics_process(delta):
 	progress += final_speed * delta
 
 	if progress_ratio >= 1.0:
-		queue_free()
 
-	if progress_ratio >= 1.0:
+		Player.damage_base(1)
+
+		if get_child_count() > 0:
+
+			var enemy = get_child(0)
+
+			if enemy is EnemyBase:
+
+				if enemy.enemy_manager:
+					enemy.enemy_manager.unregister_enemy(enemy)
+
 		queue_free()

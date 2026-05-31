@@ -84,8 +84,6 @@ func die():
 
 		explosion.global_position = global_position
 
-	EconomyManager.add_scrap(scrap_reward)
-
 	if enemy_manager:
 		enemy_manager.unregister_enemy(self)
 

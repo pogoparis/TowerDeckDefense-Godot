@@ -53,7 +53,7 @@ func start_wave():
 		return
 
 	var wave_data = waves[current_wave_index]
-
+	Player.set_wave(current_wave_index + 1)
 	await spawn_wave_data(wave_data)
 
 	await wait_for_wave_clear()
@@ -135,5 +135,9 @@ func wait_for_wave_clear():
 
 	while enemy_manager.get_all_enemies().size() > 0:
 		await get_tree().process_frame
+
+	Player.add_caps(3)
+
+	print("+3 CAPS")
 
 	current_wave_index += 1
