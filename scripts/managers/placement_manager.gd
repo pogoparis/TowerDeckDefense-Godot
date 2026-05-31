@@ -13,6 +13,7 @@ var current_mouse_world := Vector2.ZERO
 var path: Path2D
 var selected_card : CardData = null
 
+
 func _process(_delta):
 
 	if not grid:
@@ -126,7 +127,17 @@ func try_place_tower(mouse_world: Vector2):
 		enemy_manager
 	)
 
+	final_tower.grid_cell = cell
+
+	print(
+		final_tower.name,
+		" cell=",
+		final_tower.grid_cell
+	)
+
 	print("TOWER CREATED")
+	if final_tower.has_method("update_aura"):
+		final_tower.update_aura()
 
 	grid.occupy_cell(cell, final_tower)
 

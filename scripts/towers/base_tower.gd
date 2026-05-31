@@ -25,7 +25,8 @@ var damage: int
 var fire_rate: float
 var attack_range: float
 var enemy_manager: EnemyManager
-
+var grid_cell: Vector2i
+var tower_manager
 
 # ==============================
 #            NODES

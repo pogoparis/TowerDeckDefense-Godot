@@ -61,8 +61,9 @@ func _ready():
 	)
 
 		tower_manager.setup(
-			tower_container
-		)
+		tower_container
+	)
+	
 		grid.setup_buildable_cells()
 		Player.caps_changed.connect(_on_caps_changed)
 		Player.base_hp_changed.connect(_on_base_hp_changed)
@@ -73,6 +74,13 @@ func _ready():
 		_on_caps_changed(Player.caps)
 		_on_base_hp_changed(Player.base_hp)
 		wave_manager.start_prep_phase()
+
+func _on_towers_changed():
+
+	for tower in tower_manager.get_all_towers():
+
+		if tower.has_method("update_aura"):
+			tower.update_aura()
 
 func _on_wave_changed(value:int):
 

@@ -36,5 +36,5 @@ func fire_projectile(target: Node2D):
 	projectile.global_position = shoot_point.global_position
 	projectile.target = target
 	projectile.damage = damage
-
+	print("GRUMBOLT DAMAGE = ", damage)
 	get_parent().add_child(projectile)

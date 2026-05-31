@@ -4,6 +4,8 @@ class_name TowerManager
 var selected_tower: BaseTower = null
 var tower_container: Node2D
 var towers: Array[BaseTower] = []
+signal towers_changed
+
 
 func setup(new_tower_container: Node2D):
 
@@ -13,18 +15,29 @@ func setup(new_tower_container: Node2D):
 #        TOWER REGISTRY
 # ==============================
 
-func register_tower(tower: BaseTower):
+func register_tower(tower):
+	towers.append(tower)
+	towers_changed.emit()
 
-	if tower not in towers:
-		towers.append(tower)
-
-func unregister_tower(tower: BaseTower):
-
+func unregister_tower(tower):
 	towers.erase(tower)
+	towers_changed.emit()
 
 func get_all_towers() -> Array[BaseTower]:
 
 	return towers
+
+func get_tower_at_cell(cell: Vector2i) -> BaseTower:
+
+	for tower in towers:
+
+		if not is_instance_valid(tower):
+			continue
+
+		if tower.grid_cell == cell:
+			return tower
+
+	return null
 
 # ==============================
 #        TOWER CREATION
@@ -43,7 +56,8 @@ func create_tower(
 
 	tower.is_ghost = false
 	tower.enemy_manager = enemy_manager
-
+	tower.tower_manager = self
+	
 	tower.position = tower_container.to_local(world_position)
 	tower.modulate = Color(1,1,1,1)
 
@@ -52,6 +66,7 @@ func create_tower(
 	register_tower(tower)
 
 	return tower
+
 
 # ==============================
 #        INPUT
