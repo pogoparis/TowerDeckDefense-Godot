@@ -21,8 +21,8 @@ func update_aura():
 
 		if is_instance_valid(tower):
 
-			tower.damage = tower.base_damage
-			tower.attack_range = tower.base_range
+			tower.adjacency_damage_mult = 1.3
+			tower.recalculate_stats()
 
 	buffed_towers.clear()
 

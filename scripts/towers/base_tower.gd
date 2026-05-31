@@ -27,6 +27,8 @@ var attack_range: float
 var enemy_manager: EnemyManager
 var grid_cell: Vector2i
 var tower_manager
+var adjacency_damage_mult := 1.0
+var adjacency_range_mult := 1.0
 
 # ==============================
 #            NODES
@@ -135,3 +137,7 @@ func apply_run_bonuses():
 	" fire_rate=",
 	fire_rate
 )
+
+func recalculate_stats():
+	damage = int(base_damage * adjacency_damage_mult)
+	attack_range = base_range * adjacency_range_mult
