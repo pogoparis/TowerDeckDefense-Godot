@@ -2,6 +2,7 @@ class_name GridManager
 extends Node
 
 const CELL_SIZE := 96
+const GRID_OFFSET_PIXELS = Vector2(60, -40)
 
 var blocked_cells := {}
 var occupied_cells := {}
@@ -23,6 +24,8 @@ func setup_buildable_cells():
 
 func world_to_cell(pos: Vector2) -> Vector2i:
 
+	pos -= GRID_OFFSET_PIXELS
+
 	return Vector2i(
 		floor(pos.x / CELL_SIZE),
 		floor(pos.y / CELL_SIZE)
@@ -30,11 +33,10 @@ func world_to_cell(pos: Vector2) -> Vector2i:
 
 
 func cell_to_world(cell: Vector2i) -> Vector2:
-
 	return Vector2(
 		cell.x * CELL_SIZE + CELL_SIZE * 0.5,
 		cell.y * CELL_SIZE + CELL_SIZE * 0.5
-	)
+	) + GRID_OFFSET_PIXELS
 
 
 func is_cell_blocked(cell: Vector2i) -> bool:

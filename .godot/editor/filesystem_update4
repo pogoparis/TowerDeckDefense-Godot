@@ -11,3 +11,4 @@ res://scripts/core/path_follow_2d.gd
 res://scripts/enemies/enemy_base.gd
 res://scripts/managers/wave_manager.gd
 res://scenes/enemies/SimpleMob.tscn
+res://scripts/core/world_draw.gd

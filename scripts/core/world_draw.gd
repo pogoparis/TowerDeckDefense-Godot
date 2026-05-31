@@ -43,9 +43,12 @@ func _draw():
 
 	for cell in level.grid.buildable_cells.keys():
 
-		var pos = Vector2(
-			cell.x * level.grid.CELL_SIZE,
-			cell.y * level.grid.CELL_SIZE
+
+		var center = level.grid.cell_to_world(cell)
+
+		var pos = center - Vector2(
+			level.grid.CELL_SIZE * 0.5,
+			level.grid.CELL_SIZE * 0.5
 		)
 
 		draw_rect(
