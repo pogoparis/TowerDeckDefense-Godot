@@ -18,6 +18,7 @@ extends Node2D
 @onready var tower_card_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt
 @onready var tower_card_frostwick = $UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick
 @onready var tower_card_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog
+@onready var tower_card_vega = $UI/RootUI/TowerCards/PanelVega/TowerCardVega
 @onready var reward_panel = $UI/RootUI/RewardPanel
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
 
@@ -30,7 +31,7 @@ const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
 const GRUMBOLT_CARD = preload("res://resources/cards/grumbolt_card.tres")
 const FROSTWICK_CARD = preload("res://resources/cards/frostwick_card.tres")
 const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
-
+const VEGA_CARD = preload("res://resources/cards/vega_card.tres")
 # ==============================
 #            READY
 # ==============================
@@ -134,3 +135,6 @@ func _on_caps_changed(value:int):
 func _on_base_hp_changed(value:int):
 
 	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value
+	
+func _on_tower_card_vega_pressed() -> void:
+	card_manager.play_card(VEGA_CARD)

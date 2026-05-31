@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
 
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_06af7"]
-[ext_resource type="Texture2D" uid="uid://42aaj4h4uc61" path="res://assets/cards/FROSTWICKDECOUPE256.png" id="1_gxssf"]
+[ext_resource type="Texture2D" uid="uid://bsai2p3e7pilj" path="res://assets/cards/GRUMBOLTDECOUPE256.png" id="1_gxssf"]
 [ext_resource type="PackedScene" uid="uid://bor8wbjduq2b7" path="res://scenes/towers/TowerGrumbolt.tscn" id="3_pq1rj"]
 
 [resource]

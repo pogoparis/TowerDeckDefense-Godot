@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bf4hf4srdwe86"]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_2g46x"]
+[ext_resource type="Texture2D" uid="uid://cjkojkfpyb2r0" path="res://assets/cards/VegaSniper512.png" id="1_3l547"]
+[ext_resource type="PackedScene" uid="uid://bk61v24jr3lki" path="res://scenes/towers/TowerVega.tscn" id="3_ylls1"]
+
+[resource]
+script = ExtResource("1_2g46x")
+card_name = "Vega"
+description = "Le Tireur d'élite"
+card_texture = ExtResource("1_3l547")
+mana_cost = 2
+tower_scene = ExtResource("3_ylls1")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"
