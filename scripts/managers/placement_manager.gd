@@ -116,12 +116,6 @@ func try_place_tower(mouse_world: Vector2):
 	final_tower.grid_cell = cell
 	tower_manager.notify_towers_changed()
 	
-	print(
-	final_tower.name,
-	" grid_cell=",
-	final_tower.grid_cell
-)
-	
 	if final_tower.has_method("update_aura"):
 		final_tower.update_aura()
 

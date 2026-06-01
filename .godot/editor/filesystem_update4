@@ -11,3 +11,6 @@ res://scenes/ui/level.tscn
 res://scripts/projectiles/projectile_tower.gd
 res://scripts/managers/placement_manager.gd
 res://scripts/managers/tower_manager.gd
+res://scripts/projectiles/base_projectile.gd
+res://scripts/projectiles/fire_projectile.gd
+res://scripts/projectiles/frost_projectile.gd

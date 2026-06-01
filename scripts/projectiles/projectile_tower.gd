@@ -37,5 +37,4 @@ func fire_projectile(target: Node2D):
 	projectile.target = target
 	
 	projectile.damage = damage
-	print(projectile.damage)
 	get_parent().add_child(projectile)
