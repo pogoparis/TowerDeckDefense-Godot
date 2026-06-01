@@ -14,3 +14,4 @@ res://scripts/managers/tower_manager.gd
 res://scripts/projectiles/base_projectile.gd
 res://scripts/projectiles/fire_projectile.gd
 res://scripts/projectiles/frost_projectile.gd
+res://scripts/towers/tower_vega.gd

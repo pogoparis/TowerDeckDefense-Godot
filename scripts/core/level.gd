@@ -21,7 +21,7 @@ extends Node2D
 @onready var tower_card_vega = $UI/RootUI/TowerCards/PanelVega/TowerCardVega
 @onready var reward_panel = $UI/RootUI/RewardPanel
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
-@onready var synergy_manager = $SynergyManager
+@onready var synergy_manager: SynergyManager = $SynergyManager
 
 # ==============================
 #            STATE

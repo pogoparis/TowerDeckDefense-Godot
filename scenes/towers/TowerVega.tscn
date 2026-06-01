@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bk61v24jr3lki"]
 
-[ext_resource type="Script" uid="uid://bhicy76pra0oe" path="res://scripts/towers/tower_grumbolt.gd" id="1_2n4y4"]
+[ext_resource type="Script" uid="uid://ky2x8istkw0w" path="res://scripts/towers/tower_vega.gd" id="1_2n4y4"]
 [ext_resource type="PackedScene" uid="uid://8vvvb284ury7" path="res://scenes/projectiles/FireProjectile.tscn" id="2_jbhtt"]
 [ext_resource type="Texture2D" uid="uid://cvdlkb4fkcv80" path="res://assets/towers/Sniper512.png" id="3_2n4y4"]
 

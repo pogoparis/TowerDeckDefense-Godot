@@ -35,6 +35,7 @@ func fire_projectile(target: Node2D):
 
 	projectile.global_position = shoot_point.global_position
 	projectile.target = target
-	
 	projectile.damage = damage
+	projectile.source_tower = self
+
 	get_parent().add_child(projectile)

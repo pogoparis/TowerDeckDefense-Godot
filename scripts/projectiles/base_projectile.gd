@@ -3,6 +3,7 @@ class_name BaseProjectile
 
 var target: Node2D
 var damage := 10
+var source_tower: BaseTower
 
 @export var speed := 500.0
 @export var hit_distance := 12.0

@@ -30,6 +30,7 @@ var tower_manager
 var adjacency_damage_mult := 1.0
 var adjacency_range_mult := 1.0
 var status_effects: Dictionary = {}
+var execution_froide_active := false
 
 # ==============================
 #            NODES
