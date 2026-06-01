@@ -21,6 +21,7 @@ extends Node2D
 @onready var tower_card_vega = $UI/RootUI/TowerCards/PanelVega/TowerCardVega
 @onready var reward_panel = $UI/RootUI/RewardPanel
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
+@onready var synergy_manager = $SynergyManager
 
 # ==============================
 #            STATE
@@ -75,6 +76,10 @@ func _ready():
 		_on_caps_changed(Player.caps)
 		_on_base_hp_changed(Player.base_hp)
 		wave_manager.start_prep_phase()
+
+		tower_manager.towers_changed.connect(
+			synergy_manager.recalculate_synergies
+		)
 
 func _on_towers_changed():
 

@@ -29,6 +29,7 @@ var grid_cell: Vector2i
 var tower_manager
 var adjacency_damage_mult := 1.0
 var adjacency_range_mult := 1.0
+var status_effects: Dictionary = {}
 
 # ==============================
 #            NODES
@@ -102,6 +103,27 @@ func set_selected(value: bool):
 	is_selected = value
 	queue_redraw()
 
+
+func find_target_with_status(status_id: String) -> Node2D:
+
+	if not enemy_manager:
+		return null
+
+	for enemy in enemy_manager.get_all_enemies():
+
+		if not is_instance_valid(enemy):
+			continue
+
+		if not enemy.has_status(status_id):
+			continue
+
+		var dist = global_position.distance_to(enemy.global_position)
+
+		if dist <= attack_range:
+			return enemy
+
+	return null
+
 # ==============================
 #        VISUAL FEEDBACK
 # ==============================
@@ -128,7 +150,16 @@ func apply_run_bonuses():
 	if timer:
 		timer.wait_time = fire_rate
 
+func add_status(status_id: String):
+	status_effects[status_id] = true
+
+func remove_status(status_id: String):
+	status_effects.erase(status_id)
+
+func has_status(status_id: String) -> bool:
+	return status_effects.has(status_id)
 
 func recalculate_stats():
 	damage = int(base_damage * adjacency_damage_mult)
 	attack_range = base_range * adjacency_range_mult
+	

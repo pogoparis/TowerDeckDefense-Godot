@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://c111ayw6tnlxj" path="res://scripts/managers/tower_manager.gd" id="10_wxwm4"]
 [ext_resource type="Resource" uid="uid://h5us2ebt0mms" path="res://resources/waves/wave_02.tres" id="11_p6g1u"]
 [ext_resource type="Script" uid="uid://27bcwwylqh2d" path="res://scripts/cards/card_manager.gd" id="14_88h5y"]
+[ext_resource type="Script" uid="uid://chtjx5lhmojke" path="res://scripts/managers/synergy_manager.gd" id="18_03itj"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -282,6 +283,9 @@ script = ExtResource("10_wxwm4")
 
 [node name="CardManager" type="Node2D" parent="." unique_id=393382404]
 script = ExtResource("14_88h5y")
+
+[node name="SynergyManager" type="Node2D" parent="." unique_id=531771005]
+script = ExtResource("18_03itj")
 
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt" to="." method="_on_tower_card_grumbolt_pressed"]
 [connection signal="pressed" from="UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick" to="." method="_on_tower_card_frostwick_pressed"]

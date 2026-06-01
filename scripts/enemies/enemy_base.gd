@@ -7,11 +7,12 @@ class_name EnemyBase
 @export var speed := 120.0
 @export var scrap_reward := 5
 @export var death_explosion_scene: PackedScene
+@onready var enemy_manager: EnemyManager = get_tree().get_first_node_in_group("enemy_manager")
 
 var hp := 0
 var slow_multiplier := 1.0
 var slow_timer := 0.0
-@onready var enemy_manager: EnemyManager = get_tree().get_first_node_in_group("enemy_manager")
+var status_effects: Dictionary = {}
 
 func _ready():
 
@@ -25,7 +26,20 @@ func _ready():
 
 	if enemy_manager:
 		enemy_manager.register_enemy(self)
+
+func add_status(status_id: String):
+
+	status_effects[status_id] = true
 	
+func remove_status(status_id: String):
+
+	status_effects.erase(status_id)
+
+func has_status(status_id: String) -> bool:
+
+	return status_effects.has(status_id)	
+
+
 
 func take_damage(amount: int):
 

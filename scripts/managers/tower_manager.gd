@@ -11,13 +11,17 @@ func setup(new_tower_container: Node2D):
 
 	tower_container = new_tower_container
 
+func notify_towers_changed():
+
+	towers_changed.emit()
+
 # ==============================
 #        TOWER REGISTRY
 # ==============================
 
 func register_tower(tower):
+
 	towers.append(tower)
-	towers_changed.emit()
 
 func unregister_tower(tower):
 	towers.erase(tower)
