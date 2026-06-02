@@ -45,8 +45,6 @@ func draw_to_hand(amount: int):
 
 		hand.append(card)
 
-		print("DRAW : ", card.card_name)
-
 
 func draw_until_full_hand():
 
@@ -58,18 +56,14 @@ func draw_until_full_hand():
 	draw_to_hand(missing_cards)
 
 func add_reward_card(card: CardData):
-	print("ADD REWARD CARD CALLED")
 	if hand.size() < max_hand_size:
 
 		hand.append(card)
-
-		print("REWARD CARD -> HAND : ", card.card_name)
 
 	else:
 
 		draw_pile.append(card)
 
-		print("REWARD CARD -> DRAW PILE : ", card.card_name)
 
 func add_card(card: CardData):
 
@@ -77,8 +71,6 @@ func add_card(card: CardData):
 		return
 
 	hand.append(card)
-
-	print("CARD ADDED : ", card.card_name)
 
 
 func consume_card(card: CardData):
@@ -89,12 +81,6 @@ func consume_card(card: CardData):
 	if hand.has(card):
 
 		hand.erase(card)
-
-		print("CARD CONSUMED : ", card.card_name)
-
-		print("HAND SIZE : ", hand.size())
-
-		print("DECK SIZE : ", draw_pile.size())
 
 
 func play_card(card: CardData):

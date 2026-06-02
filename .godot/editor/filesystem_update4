@@ -15,3 +15,4 @@ res://resources/cards/grumbolt_card.tres
 res://scripts/towers/tower_vega.gd
 res://scripts/cards/starting_deck_data.gd
 res://resources/decks/ironclad_starter.tres
+res://scripts/towers/base_tower.gd

@@ -88,6 +88,7 @@ func find_target() -> Node2D:
 		var dist = global_position.distance_to(enemy.global_position)
 
 		if dist <= attack_range:
+
 			valid_target = enemy
 			break
 
@@ -147,6 +148,7 @@ func apply_run_bonuses():
 		damage += bonus.damage_bonus
 		attack_range += bonus.range_bonus
 		fire_rate *= bonus.fire_rate_mult
+		print(name, " APPLY RANGE = ", attack_range)
 
 	if timer:
 		timer.wait_time = fire_rate
@@ -161,6 +163,8 @@ func has_status(status_id: String) -> bool:
 	return status_effects.has(status_id)
 
 func recalculate_stats():
-	damage = int(base_damage * adjacency_damage_mult)
-	attack_range = base_range * adjacency_range_mult
-	
+
+	apply_run_bonuses()
+
+	damage = int(damage * adjacency_damage_mult)
+	attack_range = attack_range * adjacency_range_mult
