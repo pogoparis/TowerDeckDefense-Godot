@@ -30,7 +30,7 @@ func setup_starting_deck(cards: Array[CardData]):
 
 	draw_pile.shuffle()
 
-	draw_to_hand(refill_hand_size)
+	draw_to_hand(3)
 
 
 func draw_to_hand(amount: int):
@@ -39,12 +39,10 @@ func draw_to_hand(amount: int):
 
 		if draw_pile.is_empty():
 
-			if discard_pile.is_empty():
-				return
+			reshuffle_discard_into_draw()
 
-			draw_pile = discard_pile.duplicate()
-			discard_pile.clear()
-			draw_pile.shuffle()
+		if draw_pile.is_empty():
+			return
 
 		var card = draw_pile.pop_back()
 
@@ -111,6 +109,20 @@ func consume_card(card: CardData):
 
 		print("HAND SIZE : ", hand.size())
 
+		print("DISCARD SIZE : ", discard_pile.size())
+
+func reshuffle_discard_into_draw():
+
+	if discard_pile.is_empty():
+		return
+
+	print("RESHUFFLE")
+
+	draw_pile = discard_pile.duplicate()
+
+	discard_pile.clear()
+
+	draw_pile.shuffle()
 
 func play_card(card: CardData):
 
