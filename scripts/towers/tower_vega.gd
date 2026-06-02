@@ -4,4 +4,7 @@ class_name TowerVega
 func fire_projectile(target: Node2D):
 
 	if target is EnemyBase:
-		target.add_status(SynergyIds.VEGA_MARK)
+
+		if not target.has_status(SynergyIds.VEGA_MARK):
+
+			target.add_status(SynergyIds.VEGA_MARK)

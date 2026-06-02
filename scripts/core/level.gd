@@ -33,51 +33,58 @@ const GRUMBOLT_CARD = preload("res://resources/cards/grumbolt_card.tres")
 const FROSTWICK_CARD = preload("res://resources/cards/frostwick_card.tres")
 const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
 const VEGA_CARD = preload("res://resources/cards/vega_card.tres")
+
 # ==============================
 #            READY
 # ==============================
 
 func _ready():
 
-		RewardManager.reward_panel = reward_panel
-		RewardManager.reward_container = reward_container
+	var floating_text = preload("res://scenes/ui/floating_text.tscn").instantiate()
+	add_child(floating_text)
+
+	floating_text.global_position = Vector2(300, 300)
+
+# floating_text.setup("TEST")
+	RewardManager.reward_panel = reward_panel
+	RewardManager.reward_container = reward_container
 		
-		wave_manager.setup(
+	wave_manager.setup(
 			path,
 			wave_timer_label,
 			enemy_manager,
 			tower_manager
 		)
 
-		card_manager.setup(
+	card_manager.setup(
 		placement,
 		tower_container
 		)
 
-		placement.setup(
-		grid,
+	placement.setup(
+	grid,
 		tower_container,
 		path,
 		enemy_manager,
 		tower_manager
 	)
 
-		tower_manager.setup(
+	tower_manager.setup(
 		tower_container
 	)
 	
-		grid.setup_buildable_cells()
-		Player.caps_changed.connect(_on_caps_changed)
-		Player.base_hp_changed.connect(_on_base_hp_changed)
-		Player.wave_changed.connect(_on_wave_changed)
+	grid.setup_buildable_cells()
+	Player.caps_changed.connect(_on_caps_changed)
+	Player.base_hp_changed.connect(_on_base_hp_changed)
+	Player.wave_changed.connect(_on_wave_changed)
 
-		_on_wave_changed(Player.current_wave)
+	_on_wave_changed(Player.current_wave)
 
-		_on_caps_changed(Player.caps)
-		_on_base_hp_changed(Player.base_hp)
-		wave_manager.start_prep_phase()
+	_on_caps_changed(Player.caps)
+	_on_base_hp_changed(Player.base_hp)
+	wave_manager.start_prep_phase()
 
-		tower_manager.towers_changed.connect(
+	tower_manager.towers_changed.connect(
 			synergy_manager.recalculate_synergies
 		)
 

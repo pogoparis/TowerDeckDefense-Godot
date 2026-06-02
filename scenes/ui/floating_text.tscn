@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cml8cmgejb3a7"]
+
+[ext_resource type="Script" uid="uid://b03quye6wn0ea" path="res://scripts/ui/floating_text.gd" id="1_0qskq"]
+
+[node name="FloatingText" type="Node2D" unique_id=1546800779]
+z_index = 20
+script = ExtResource("1_0qskq")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=561404417]
+z_index = 20
+custom_minimum_size = Vector2(150, 20)
+offset_right = 40.0
+offset_bottom = 40.0
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
