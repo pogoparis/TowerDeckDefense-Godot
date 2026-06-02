@@ -2,14 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://bsai2p3e7pilj" path="res://assets/cards/GRUMBOLTDECOUPE256.png" id="5_28yk4"]
-[ext_resource type="Texture2D" uid="uid://42aaj4h4uc61" path="res://assets/cards/FROSTWICKDECOUPE256.png" id="6_28yk4"]
 [ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
-[ext_resource type="Texture2D" uid="uid://cf8anxwmrqssi" path="res://assets/cards/MAMACOGOKDECOUPE256.png" id="7_28yk4"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
 [ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
-[ext_resource type="Texture2D" uid="uid://cjkojkfpyb2r0" path="res://assets/cards/VegaSniper512.png" id="8_qswml"]
 [ext_resource type="Script" uid="uid://cmvfd187lmtgk" path="res://scripts/managers/wave_manager.gd" id="8_x7jdx"]
 [ext_resource type="Script" uid="uid://bks0ildaa61ts" path="res://scripts/managers/enemy_manager.gd" id="9_4br2k"]
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="9_mqloe"]
@@ -24,14 +20,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -19, 350, 0, 0, 0, 0, 271.58118, 356.35358, 0, 0, 0, 0, 271.58118, 234.61621, 0, 0, 0, 0, 706.6923, 233.29297, 0, 0, 0, 0, 706.6923, 353.7071, 0, 0, 0, 0, 1583, 359)
 }
 point_count = 6
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qswml"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03itj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4slr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1c6l3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_28yk4"]
 
@@ -106,104 +94,21 @@ grow_vertical = 2
 [node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
 z_index = 12
 z_as_relative = false
+custom_minimum_size = Vector2(120, 170)
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -169.95999
-offset_top = -180.0
-offset_right = 170.04004
-offset_bottom = -5.0
+offset_left = 50.0
+offset_top = -50.0
+offset_right = 130.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.7, 0.7)
 theme_override_constants/separation = 10
-
-[node name="PanelGrumbolt" type="Panel" parent="UI/RootUI/TowerCards" unique_id=732459640]
-z_index = 200
-custom_minimum_size = Vector2(105, 171)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_qswml")
-
-[node name="TowerCardGrumbolt" type="TextureButton" parent="UI/RootUI/TowerCards/PanelGrumbolt" unique_id=386525683]
-z_index = 200
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -156.0
-offset_right = 202.0
-offset_bottom = 100.0
-grow_vertical = 0
-scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("5_28yk4")
-stretch_mode = 5
-
-[node name="PanelFrostwick" type="Panel" parent="UI/RootUI/TowerCards" unique_id=693564071]
-z_index = 200
-custom_minimum_size = Vector2(105, 171)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_03itj")
-
-[node name="TowerCardFrostwick" type="TextureButton" parent="UI/RootUI/TowerCards/PanelFrostwick" unique_id=21185287]
-z_index = 200
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -156.0
-offset_right = 202.0
-offset_bottom = 100.0
-grow_vertical = 0
-scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("6_28yk4")
-stretch_mode = 5
-
-[node name="PanelMamaCog" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1825887646]
-z_index = 200
-custom_minimum_size = Vector2(110, 171)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_j4slr")
-
-[node name="TowerCardMamaCog" type="TextureButton" parent="UI/RootUI/TowerCards/PanelMamaCog" unique_id=275915761]
-z_index = 200
-custom_minimum_size = Vector2(202, 256)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -156.0
-offset_right = 202.0
-offset_bottom = 100.0
-grow_vertical = 0
-scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("7_28yk4")
-stretch_mode = 5
-
-[node name="PanelVega" type="Panel" parent="UI/RootUI/TowerCards" unique_id=1130112260]
-custom_minimum_size = Vector2(105, 171)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_1c6l3")
-
-[node name="TowerCardVega" type="TextureButton" parent="UI/RootUI/TowerCards/PanelVega" unique_id=271318177]
-custom_minimum_size = Vector2(202, 256)
-layout_mode = 1
-offset_left = 5.0
-offset_top = 15.0
-offset_right = 356.0
-offset_bottom = 526.0
-scale = Vector2(0.3, 0.3)
-texture_normal = ExtResource("8_qswml")
-stretch_mode = 5
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
 layout_mode = 0
@@ -286,8 +191,3 @@ script = ExtResource("14_88h5y")
 
 [node name="SynergyManager" type="Node2D" parent="." unique_id=531771005]
 script = ExtResource("18_03itj")
-
-[connection signal="pressed" from="UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt" to="." method="_on_tower_card_grumbolt_pressed"]
-[connection signal="pressed" from="UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick" to="." method="_on_tower_card_frostwick_pressed"]
-[connection signal="pressed" from="UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog" to="." method="_on_tower_card_mama_cog_pressed"]
-[connection signal="pressed" from="UI/RootUI/TowerCards/PanelVega/TowerCardVega" to="." method="_on_tower_card_vega_pressed"]

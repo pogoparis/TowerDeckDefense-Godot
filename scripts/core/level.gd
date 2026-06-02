@@ -15,17 +15,10 @@ extends Node2D
 @onready var tower_manager = $TowerManager
 @onready var effects_container = $World/EffectsContainer
 @onready var card_manager: CardManager = $CardManager
-@onready var tower_card_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt/TowerCardGrumbolt
-@onready var tower_card_frostwick = $UI/RootUI/TowerCards/PanelFrostwick/TowerCardFrostwick
-@onready var tower_card_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog/TowerCardMamaCog
-@onready var tower_card_vega = $UI/RootUI/TowerCards/PanelVega/TowerCardVega
 @onready var reward_panel = $UI/RootUI/RewardPanel
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
 @onready var synergy_manager: SynergyManager = $SynergyManager
-@onready var panel_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt
-@onready var panel_frostwick = $UI/RootUI/TowerCards/PanelFrostwick
-@onready var panel_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog
-@onready var panel_vega = $UI/RootUI/TowerCards/PanelVega
+@onready var tower_cards_container = $UI/RootUI/TowerCards
 
 # ==============================
 #            STATE
@@ -37,6 +30,9 @@ const GRUMBOLT_CARD = preload("res://resources/cards/grumbolt_card.tres")
 const FROSTWICK_CARD = preload("res://resources/cards/frostwick_card.tres")
 const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
 const VEGA_CARD = preload("res://resources/cards/vega_card.tres")
+const TOWER_CARD_SCENE = preload(
+	"res://scenes/ui/tower_card.tscn"
+)
 
 # ==============================
 #            READY
@@ -103,13 +99,20 @@ func _ready():
 
 func refresh_hand_ui():
 
-	panel_grumbolt.visible = card_manager.hand.has(GRUMBOLT_CARD)
+	for child in tower_cards_container.get_children():
+		child.queue_free()
 
-	panel_frostwick.visible = card_manager.hand.has(FROSTWICK_CARD)
+	for card_data in card_manager.hand:
 
-	panel_mama_cog.visible = card_manager.hand.has(MAMA_COG_CARD)
+		var card_ui = TOWER_CARD_SCENE.instantiate()
 
-	panel_vega.visible = card_manager.hand.has(VEGA_CARD)
+		tower_cards_container.add_child(card_ui)
+
+		card_ui.setup(card_data)
+
+		card_ui.card_clicked.connect(
+			_on_dynamic_card_clicked
+		)
 
 func _on_towers_changed():
 
@@ -151,16 +154,6 @@ func _physics_process(_delta):
 
 	placement.current_mouse_world = get_global_mouse_position()
 
-func _on_tower_card_frostwick_pressed() -> void:
-	card_manager.play_card(FROSTWICK_CARD)
-
-
-func _on_tower_card_mama_cog_pressed() -> void:
-	card_manager.play_card(MAMA_COG_CARD)
-
-
-func _on_tower_card_grumbolt_pressed() -> void:
-	card_manager.play_card(GRUMBOLT_CARD)
 
 func _on_caps_changed(value:int):
 
@@ -171,5 +164,7 @@ func _on_base_hp_changed(value:int):
 
 	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value
 	
-func _on_tower_card_vega_pressed() -> void:
-	card_manager.play_card(VEGA_CARD)
+
+func _on_dynamic_card_clicked(card_data: CardData):
+
+	card_manager.play_card(card_data)

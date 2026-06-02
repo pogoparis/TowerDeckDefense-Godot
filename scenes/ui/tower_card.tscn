@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://be5jdgkgwjaql"]
+
+[ext_resource type="Script" uid="uid://d34vsjfgs2usa" path="res://scripts/ui/tower_card.gd" id="1_womxw"]
+
+[node name="TowerCard" type="TextureButton" unique_id=449407454]
+custom_minimum_size = Vector2(80, 115)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -720.0
+offset_right = -560.0
+offset_bottom = -605.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_womxw")
