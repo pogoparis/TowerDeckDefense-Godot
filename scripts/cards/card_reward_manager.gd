@@ -37,14 +37,30 @@ func show_rewards():
 func select_reward(index: int):
 
 	var reward = reward_cards[index]
-
+	print("REWARD SELECTED")
+	print(reward.reward_type)
 	match reward.reward_type:
 
 		RewardData.RewardType.CARD:
 
+			print("CARD REWARD")
+
 			RunDeck.owned_cards.append(
 				reward.card_data
 			)
+
+			var card_manager = get_tree().current_scene.card_manager
+
+			card_manager.add_reward_card(
+				reward.card_data
+			)
+
+			print(
+				"HAND SIZE AFTER REWARD = ",
+				card_manager.hand.size()
+			)
+
+			get_tree().current_scene.refresh_hand_ui()
 
 		RewardData.RewardType.BONUS:
 
@@ -60,6 +76,8 @@ func select_reward(index: int):
 
 	reward_selected = true
 	reward_panel.visible = false
+
+
 
 func clear_rewards():
 

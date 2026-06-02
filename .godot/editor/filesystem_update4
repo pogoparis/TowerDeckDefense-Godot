@@ -4,3 +4,6 @@ res://scripts/cards/card_manager.gd
 res://scenes/ui/level.tscn
 res://scripts/core/level.gd
 res://scripts/managers/placement_manager.gd
+res://scripts/managers/wave_manager.gd
+res://scripts/cards/card_reward_manager.gd
+res://scripts/projectiles/fire_projectile.gd

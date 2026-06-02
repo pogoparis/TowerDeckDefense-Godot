@@ -4,6 +4,8 @@ class_name WaveManager
 @export var prep_time := 2
 @export var waves: Array[WaveData]
 
+@onready var card_manager: CardManager = $"../CardManager"
+
 var wave_started := false
 var current_wave_index := 0
 
@@ -137,5 +139,9 @@ func wait_for_wave_clear():
 		await get_tree().process_frame
 
 	Player.add_caps(3)
+
+	card_manager.draw_until_full_hand()
+
+	get_tree().current_scene.refresh_hand_ui()
 
 	current_wave_index += 1
