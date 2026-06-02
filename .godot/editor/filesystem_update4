@@ -12,3 +12,6 @@ res://scripts/ui/tower_card.gd
 res://scenes/towers/TowerVega.tscn
 res://resources/cards/vega_card.tres
 res://resources/cards/grumbolt_card.tres
+res://scripts/towers/tower_vega.gd
+res://scripts/cards/starting_deck_data.gd
+res://resources/decks/ironclad_starter.tres

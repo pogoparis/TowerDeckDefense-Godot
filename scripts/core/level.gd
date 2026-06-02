@@ -19,6 +19,7 @@ extends Node2D
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
 @onready var synergy_manager: SynergyManager = $SynergyManager
 @onready var tower_cards_container = $UI/RootUI/TowerCards
+@onready var deck_debug_label = $UI/RootUI/DeckDebugLabel
 
 # ==============================
 #            STATE
@@ -32,6 +33,9 @@ const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
 const VEGA_CARD = preload("res://resources/cards/vega_card.tres")
 const TOWER_CARD_SCENE = preload(
 	"res://scenes/ui/tower_card.tscn"
+)
+const IRONCLAD_STARTER = preload(
+	"res://resources/decks/ironclad_starter.tres"
 )
 
 # ==============================
@@ -49,12 +53,9 @@ func _ready():
 	RewardManager.reward_panel = reward_panel
 	RewardManager.reward_container = reward_container
 	
-	card_manager.setup_starting_deck([
-	GRUMBOLT_CARD,
-	FROSTWICK_CARD,
-	MAMA_COG_CARD,
-	VEGA_CARD
-	])
+	card_manager.setup_starting_deck(
+		IRONCLAD_STARTER.cards
+	)
 
 	refresh_hand_ui()
 
@@ -114,6 +115,8 @@ func refresh_hand_ui():
 			_on_dynamic_card_clicked
 		)
 
+	update_deck_debug()
+
 func _on_towers_changed():
 
 	for tower in tower_manager.get_all_towers():
@@ -168,3 +171,20 @@ func _on_base_hp_changed(value:int):
 func _on_dynamic_card_clicked(card_data: CardData):
 
 	card_manager.play_card(card_data)
+
+func update_deck_debug():
+
+	var total = (
+		card_manager.draw_pile.size()
+		+ card_manager.hand.size()
+	)
+
+	deck_debug_label.text = (
+		"Deck: %d\nHand: %d\nTotal: %d"
+		% [
+			card_manager.draw_pile.size(),
+			card_manager.hand.size(),
+			total
+		]
+	)
+	

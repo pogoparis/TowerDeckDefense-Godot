@@ -168,6 +168,11 @@ text = "Wave : 1"
 layout_mode = 2
 text = "Base : 100"
 
+[node name="DeckDebugLabel" type="Label" parent="UI/RootUI" unique_id=820343091]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
 

@@ -1,10 +1,10 @@
+Label
 TextureButton
 TextureRect
 Button
 RichTextLabel
 Node2D
 Panel
-Label
 HBoxContainer
 TileMap
 VBoxContainer

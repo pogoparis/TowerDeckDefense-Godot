@@ -9,7 +9,6 @@ var max_hand_size := 4
 
 var draw_pile : Array[CardData] = []
 var hand : Array[CardData] = []
-var discard_pile : Array[CardData] = []
 
 func setup(
 	new_placement_manager: PlacementManager,
@@ -20,13 +19,15 @@ func setup(
 	tower_container = new_tower_container
 
 
-func setup_starting_deck(cards: Array[CardData]):
+func setup_starting_deck(cards: Array):
 
 	draw_pile.clear()
 	hand.clear()
-	discard_pile.clear()
 
-	draw_pile = cards.duplicate()
+	draw_pile.clear()
+
+	for card in cards:
+		draw_pile.append(card)
 
 	draw_pile.shuffle()
 
@@ -36,10 +37,6 @@ func setup_starting_deck(cards: Array[CardData]):
 func draw_to_hand(amount: int):
 
 	for i in amount:
-
-		if draw_pile.is_empty():
-
-			reshuffle_discard_into_draw()
 
 		if draw_pile.is_empty():
 			return
@@ -53,22 +50,12 @@ func draw_to_hand(amount: int):
 
 func draw_until_full_hand():
 
-	while hand.size() < refill_hand_size:
+	var missing_cards = max_hand_size - hand.size()
 
-		if draw_pile.is_empty():
+	if missing_cards <= 0:
+		return
 
-			if discard_pile.is_empty():
-				return
-
-			draw_pile = discard_pile.duplicate()
-			discard_pile.clear()
-			draw_pile.shuffle()
-
-		var card = draw_pile.pop_back()
-
-		hand.append(card)
-
-		print("DRAW : ", card.card_name)
+	draw_to_hand(missing_cards)
 
 func add_reward_card(card: CardData):
 	print("ADD REWARD CARD CALLED")
@@ -103,26 +90,12 @@ func consume_card(card: CardData):
 
 		hand.erase(card)
 
-		discard_pile.append(card)
-
 		print("CARD CONSUMED : ", card.card_name)
 
 		print("HAND SIZE : ", hand.size())
 
-		print("DISCARD SIZE : ", discard_pile.size())
+		print("DECK SIZE : ", draw_pile.size())
 
-func reshuffle_discard_into_draw():
-
-	if discard_pile.is_empty():
-		return
-
-	print("RESHUFFLE")
-
-	draw_pile = discard_pile.duplicate()
-
-	discard_pile.clear()
-
-	draw_pile.shuffle()
 
 func play_card(card: CardData):
 
