@@ -104,7 +104,7 @@ func recalculate_synergies():
 
 			line.width = 8
 			line.default_color = Color(0.2, 1.0, 1.0)
-			line.z_index = 6
+			line.z_index = 6																																							
 
 			line.add_point(tower.global_position)
 			line.add_point(neighbor.global_position)

@@ -1,6 +1,9 @@
 class_name PlacementManager
 extends Node
 
+
+@onready var card_manager: CardManager = $"../CardManager"
+
 var selected_tower_scene: PackedScene = null
 var ghost_tower: Node2D = null
 var enemy_manager: EnemyManager
@@ -93,18 +96,22 @@ func handle_right_click() -> bool:
 	
 func try_place_tower(mouse_world: Vector2):
 
+	print("TRY PLACE")
 
 	if not selected_tower_scene:
+		print("NO SCENE")
 		return
 
 	var cell = grid.world_to_cell(mouse_world)
 
 	if not grid.can_place(cell):
+		print("INVALID CELL")
 		return
 
 	if selected_card:
 
 		if not Player.spend_caps(selected_card.mana_cost):
+			print("NOT ENOUGH CAPS")
 			return
 
 	var final_tower = tower_manager.create_tower(
@@ -113,13 +120,22 @@ func try_place_tower(mouse_world: Vector2):
 		enemy_manager
 	)
 
+	print("TOWER CREATED")
+
 	final_tower.grid_cell = cell
+
 	tower_manager.notify_towers_changed()
-	
+
 	if final_tower.has_method("update_aura"):
 		final_tower.update_aura()
 
 	grid.occupy_cell(cell, final_tower)
+
+	print("ABOUT TO CONSUME")
+
+	card_manager.consume_card(selected_card)
+	get_tree().current_scene.refresh_hand_ui()
+	print("CONSUMED CALL DONE")
 
 	clear_placement()
 
