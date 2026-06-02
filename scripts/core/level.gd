@@ -22,6 +22,10 @@ extends Node2D
 @onready var reward_panel = $UI/RootUI/RewardPanel
 @onready var reward_container = $UI/RootUI/RewardPanel/RewardContainer
 @onready var synergy_manager: SynergyManager = $SynergyManager
+@onready var panel_grumbolt = $UI/RootUI/TowerCards/PanelGrumbolt
+@onready var panel_frostwick = $UI/RootUI/TowerCards/PanelFrostwick
+@onready var panel_mama_cog = $UI/RootUI/TowerCards/PanelMamaCog
+@onready var panel_vega = $UI/RootUI/TowerCards/PanelVega
 
 # ==============================
 #            STATE
@@ -49,10 +53,12 @@ func _ready():
 	RewardManager.reward_panel = reward_panel
 	RewardManager.reward_container = reward_container
 	
-	card_manager.add_card(GRUMBOLT_CARD)
-	card_manager.add_card(FROSTWICK_CARD)
-	card_manager.add_card(MAMA_COG_CARD)
-	card_manager.add_card(VEGA_CARD)
+	card_manager.setup_starting_deck([
+	GRUMBOLT_CARD,
+	FROSTWICK_CARD,
+	MAMA_COG_CARD,
+	VEGA_CARD
+	])
 
 	refresh_hand_ui()
 
@@ -97,13 +103,13 @@ func _ready():
 
 func refresh_hand_ui():
 
-	tower_card_grumbolt.visible = card_manager.hand.has(GRUMBOLT_CARD)
+	panel_grumbolt.visible = card_manager.hand.has(GRUMBOLT_CARD)
 
-	tower_card_frostwick.visible = card_manager.hand.has(FROSTWICK_CARD)
+	panel_frostwick.visible = card_manager.hand.has(FROSTWICK_CARD)
 
-	tower_card_mama_cog.visible = card_manager.hand.has(MAMA_COG_CARD)
+	panel_mama_cog.visible = card_manager.hand.has(MAMA_COG_CARD)
 
-	tower_card_vega.visible = card_manager.hand.has(VEGA_CARD)
+	panel_vega.visible = card_manager.hand.has(VEGA_CARD)
 
 func _on_towers_changed():
 
