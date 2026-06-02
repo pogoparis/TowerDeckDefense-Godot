@@ -17,3 +17,4 @@ res://scripts/projectiles/frost_projectile.gd
 res://scripts/towers/tower_vega.gd
 res://scenes/ui/floating_text.tscn
 res://scripts/ui/floating_text.gd
+res://scripts/towers/tower_cannon.gd

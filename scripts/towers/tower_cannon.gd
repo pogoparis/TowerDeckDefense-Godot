@@ -6,6 +6,7 @@ class_name TowerCannon
 @onready var area: Area2D = $DetectionArea
 @onready var collision_shape: CollisionShape2D = $DetectionArea/CollisionShape2D
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var effects_container: Node2D = $"../EffectsContainer"
 
 var targets: Array = []
 

@@ -2,8 +2,10 @@ extends Node
 class_name SynergyManager
 
 @onready var tower_manager: TowerManager = $"../TowerManager"
+@onready var effects_container: Node2D = $"../World/EffectsContainer"
 
 var execution_froide_current := false
+var synergy_lines = []
 
 func recalculate_synergies():
 
@@ -12,6 +14,12 @@ func recalculate_synergies():
 	# ==============================
 
 	var execution_froide_found := false
+
+	for line in synergy_lines:
+		if is_instance_valid(line):
+			line.queue_free()
+
+	synergy_lines.clear()
 
 	for tower in tower_manager.get_all_towers():
 
@@ -58,18 +66,16 @@ func recalculate_synergies():
 
 	# ==============================
 	# EXECUTION FROIDE
-	# Vega + Grumbolt
 	# ==============================
+
+	var execution_pair_position: Vector2 = Vector2.ZERO
 
 	for tower in tower_manager.get_all_towers():
 
 		if not is_instance_valid(tower):
 			continue
 
-		if tower.get_script() == null:
-			continue
-
-		if tower.get_script().resource_path != "res://scripts/towers/tower_vega.gd":
+		if not tower is TowerVega:
 			continue
 
 		var adjacent_cells = [
@@ -86,12 +92,31 @@ func recalculate_synergies():
 			if neighbor == null:
 				continue
 
-			if neighbor is TowerGrumbolt:
+			if not neighbor is TowerGrumbolt:
+				continue
 
-				execution_froide_found = true
+			execution_froide_found = true
 
-				tower.execution_froide_active = true
-				neighbor.execution_froide_active = true
+			tower.execution_froide_active = true
+			neighbor.execution_froide_active = true
+
+			var line := Line2D.new()
+
+			line.width = 8
+			line.default_color = Color(0.2, 1.0, 1.0)
+			line.z_index = 6
+
+			line.add_point(tower.global_position)
+			line.add_point(neighbor.global_position)
+
+			effects_container.add_child(line)
+
+			synergy_lines.append(line)
+
+			execution_pair_position = (
+				tower.global_position +
+				neighbor.global_position
+			) / 2.0
 
 	# ==============================
 	# ACTIVATION VISUELLE
@@ -107,17 +132,10 @@ func recalculate_synergies():
 
 		get_tree().current_scene.add_child(floating_text)
 
-		# On cherche une Vega active pour afficher le texte
-		for tower in tower_manager.get_all_towers():
+		execution_pair_position.y -= 40
 
-			if tower.get_script() == null:
-				continue
+		floating_text.global_position = execution_pair_position
 
-			if tower.get_script().resource_path == "res://scripts/towers/tower_vega.gd":
-
-				floating_text.global_position = tower.global_position
-				break
-
-		floating_text.setup("EXECUTION FROIDE !")
+		floating_text.setup(" TIRS GUIDÉS !")
 
 	execution_froide_current = execution_froide_found

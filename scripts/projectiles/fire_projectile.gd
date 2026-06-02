@@ -6,7 +6,7 @@ func on_hit(target):
 	var final_damage = damage
 
 	print("HAS MARK = ", target.has_status(SynergyIds.VEGA_MARK))
-	print("EXECUTION ACTIVE = ", source_tower.execution_froide_active)
+	print(" TIRS GUIDÉS = ", source_tower.execution_froide_active)
 
 	if (
 		source_tower != null
