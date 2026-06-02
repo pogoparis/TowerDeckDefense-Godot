@@ -50,7 +50,7 @@ func draw_to_hand(amount: int):
 
 func draw_until_full_hand():
 
-	var missing_cards = max_hand_size - hand.size()
+	var missing_cards = refill_hand_size - hand.size()
 
 	if missing_cards <= 0:
 		return
