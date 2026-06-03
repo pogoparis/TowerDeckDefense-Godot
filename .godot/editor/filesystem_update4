@@ -3,3 +3,9 @@ res://resources/shaders/outline_buff.gdshader
 res://resources/cards/frostwick_card.tres
 res://scenes/enemies/SimpleMob.tscn
 res://scripts/towers/tower_vega.gd
+res://scenes/projectiles/FireProjectile.tscn
+res://scripts/projectiles/fire_projectile.gd
+res://scripts/managers/synergy_manager.gd
+res://scripts/towers/base_tower.gd
+res://scenes/towers/TowerGrumbolt.tscn
+res://scripts/ui/floating_text.gd

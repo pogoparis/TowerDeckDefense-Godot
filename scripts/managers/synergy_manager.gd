@@ -4,7 +4,8 @@ class_name SynergyManager
 @onready var tower_manager: TowerManager = $"../TowerManager"
 @onready var effects_container: Node2D = $"../World/EffectsContainer"
 
-var execution_froide_current := false
+var laser_guide_found := false
+var laser_guide_current := false
 var synergy_lines = []
 
 func recalculate_synergies():
@@ -13,9 +14,10 @@ func recalculate_synergies():
 	# RESET
 	# ==============================
 
-	var execution_froide_found := false
+	var laser_guide_found := false
 
 	for line in synergy_lines:
+
 		if is_instance_valid(line):
 			line.queue_free()
 
@@ -26,14 +28,16 @@ func recalculate_synergies():
 		if not is_instance_valid(tower):
 			continue
 
-			tower.adjacency_damage_mult = 1.0
-			tower.adjacency_range_mult = 1.0
-			tower.execution_froide_active = false
-			if tower.has_meta("execution_pair_active"):
-				tower.remove_meta("execution_pair_active")
-			tower.set_buff_visual(false)
+		tower.adjacency_damage_mult = 1.0
+		tower.adjacency_range_mult = 1.0
+		tower.laser_guide_active = false
 
-			tower.recalculate_stats()
+		if tower.has_meta("execution_pair_active"):
+			tower.remove_meta("execution_pair_active")
+
+		tower.set_buff_visual(false)
+
+		tower.recalculate_stats()
 
 	# ==============================
 	# MAMA COG
@@ -46,7 +50,7 @@ func recalculate_synergies():
 
 		if not tower is TowerMamaCog:
 			continue
-
+			
 		var adjacent_cells = [
 			tower.grid_cell + Vector2i.LEFT,
 			tower.grid_cell + Vector2i.RIGHT,
@@ -68,7 +72,12 @@ func recalculate_synergies():
 			neighbor.recalculate_stats()
 
 			var was_already_buffed = neighbor.buff_visual_active
-
+			print(
+				"MAMA -> ",
+				neighbor.name,
+				" cell=",
+				neighbor.grid_cell
+				)
 			neighbor.set_buff_visual(true)
 
 			if not was_already_buffed:
@@ -83,7 +92,11 @@ func recalculate_synergies():
 					neighbor.global_position + Vector2(0, -40)
 				)
 
-				floating_text.setup("+10%")
+				floating_text.setup(
+				"+10% DAMAGE",
+				Color("#FFD54A"),
+				1.4
+				)
 
 			neighbor.set_buff_visual(true)
 			
@@ -100,7 +113,10 @@ func recalculate_synergies():
 
 		if not tower is TowerVega:
 			continue
-
+		print(
+			"MAMACOG CELL = ",
+			tower.grid_cell
+		)
 		var adjacent_cells = [
 			tower.grid_cell + Vector2i.LEFT,
 			tower.grid_cell + Vector2i.RIGHT,
@@ -118,10 +134,10 @@ func recalculate_synergies():
 			if not neighbor is TowerGrumbolt:
 				continue
 
-			execution_froide_found = true
+			laser_guide_current  = true
 
-			tower.execution_froide_active = true
-			neighbor.execution_froide_active = true
+			tower.laser_guide_active = true
+			neighbor.laser_guide_active = true
 
 			if not tower.has_meta("execution_pair_active"):
 
@@ -164,7 +180,7 @@ func recalculate_synergies():
 	# ACTIVATION VISUELLE
 	# ==============================
 
-	if execution_froide_found and not execution_froide_current:
+	if laser_guide_found and not laser_guide_current:
 
 		print("EXECUTION FROIDE ACTIVE")
 
@@ -180,4 +196,4 @@ func recalculate_synergies():
 
 		floating_text.setup(" TIRS GUIDÉS !")
 
-	execution_froide_current = execution_froide_found
+	laser_guide_current = laser_guide_found

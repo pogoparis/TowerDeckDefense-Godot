@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://cfmfum70hcd7r" path="res://scripts/projectiles/fire_projectile.gd" id="1_gwvy7"]
 [ext_resource type="PackedScene" uid="uid://doblf2bixo4oo" path="res://scenes/projectiles/ExplosionImpactFire.tscn" id="2_gwvy7"]
 [ext_resource type="Texture2D" uid="uid://cn6tj1c7tboub" path="res://assets/projectiles/boulet128NoHalo.png" id="3_46ged"]
+[ext_resource type="Texture2D" uid="uid://yopywdgwybhb" path="res://assets/FX/Particule32.png" id="4_cjd6l"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_46ged"]
+blend_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_46ged"]
 
@@ -15,6 +19,13 @@ impact_scene = ExtResource("2_gwvy7")
 z_index = 40
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_46ged")
+
+[node name="GlowSprite" type="Sprite2D" parent="." unique_id=919853513]
+modulate = Color(1, 0.33333334, 0.13333334, 0.3764706)
+z_index = 30
+material = SubResource("CanvasItemMaterial_46ged")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_cjd6l")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=971283323]
 

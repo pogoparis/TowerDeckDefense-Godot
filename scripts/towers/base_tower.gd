@@ -32,7 +32,7 @@ var tower_manager
 var adjacency_damage_mult := 1.0
 var adjacency_range_mult := 1.0
 var status_effects: Dictionary = {}
-var execution_froide_active := false
+var laser_guide_active := false
 var buff_visual_active := false
 var was_buffed := false
 
@@ -48,18 +48,28 @@ var was_buffed := false
 # ==============================
 
 func _ready():
+
 	damage = base_damage
 	fire_rate = base_fire_rate
 	attack_range = base_range
+
 	add_to_group("towers")
+
 	apply_run_bonuses()
-	
+
+	if sprite and sprite.material:
+
+		sprite.material = sprite.material.duplicate()
+
+		sprite_material = sprite.material
+
 	if sprite_material:
+
 		sprite_material.set_shader_parameter(
 			"outline_size",
 			0.0
 		)
-	
+
 	if timer:
 		timer.wait_time = fire_rate
 	
@@ -80,11 +90,22 @@ func apply_upgrade(data: Dictionary):
 		timer.start()
 		update_visual_feedback()
 
+func get_outline_size() -> float:
+	return 4.0
 
 func set_buff_visual(active: bool):
 
 	buff_visual_active = active
-
+	print(
+	get_script().get_global_name(),
+	" OUTLINE=",
+	active
+)
+	print(
+	name,
+	" OUTLINE=",
+	active
+)
 	if sprite_material == null:
 		return
 

@@ -5,6 +5,18 @@ var marked_target: EnemyBase = null
 
 @onready var laser_line: Line2D = $LaserLine
 
+func set_buff_visual(active: bool):
+
+	super.set_buff_visual(active)
+
+	if sprite_material == null:
+		return
+
+	if active:
+		sprite_material.set_shader_parameter(
+			"outline_size",
+			5
+		)
 
 func fire_projectile(target: Node2D):
 
@@ -16,9 +28,12 @@ func fire_projectile(target: Node2D):
 
 	super.fire_projectile(target)
 
+func get_outline_size() -> float:
+	return 5.0
+
 func _process(_delta):
 
-	if not execution_froide_active:
+	if not laser_guide_active:
 		laser_line.visible = false
 		return
 
