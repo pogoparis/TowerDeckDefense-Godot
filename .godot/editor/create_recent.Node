@@ -1,3 +1,4 @@
+Sprite2D
 Label
 TextureButton
 TextureRect
@@ -9,6 +10,5 @@ HBoxContainer
 TileMap
 VBoxContainer
 CenterContainer
-Sprite2D
 Container
 BoxContainer

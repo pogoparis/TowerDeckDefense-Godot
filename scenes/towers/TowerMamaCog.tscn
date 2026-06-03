@@ -20,3 +20,10 @@ texture = ExtResource("2_43tn7")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]
 position = Vector2(-40.000004, 49.230774)
+
+[node name="HaloSprite" type="Sprite2D" parent="." unique_id=107971523]
+visible = false
+modulate = Color(1, 0.85, 0.2, 0.45)
+position = Vector2(0, -15.000003)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("2_43tn7")

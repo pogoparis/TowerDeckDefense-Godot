@@ -18,5 +18,10 @@ position = Vector2(0, -15)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_hyu7i")
 
+[node name="HaloSprite" type="Sprite2D" parent="Sprite2D" unique_id=245900457]
+visible = false
+modulate = Color(0.011091871, 0.0055459356, 0, 1)
+scale = Vector2(1.25, 1.25)
+
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]
 position = Vector2(-40.000004, 49.230774)

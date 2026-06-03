@@ -5,11 +5,16 @@ extends Node2D
 
 @onready var text_label: RichTextLabel = $RichTextLabel
 
-func setup(text: String) -> void:
+func setup(
+	text: String,
+	color: Color = Color.WHITE,
+	text_scale: float = 1.2
+) -> void:
 
 	text_label.text = text
 
-	scale = Vector2(1.2, 1.2)
+	modulate = color
+	scale = Vector2(text_scale, text_scale)
 
 	var tween = create_tween()
 

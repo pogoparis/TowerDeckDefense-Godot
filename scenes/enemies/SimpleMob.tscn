@@ -8,7 +8,7 @@
 z_index = 10
 script = ExtResource("1_1rxqv")
 max_hp = 50
-speed = 170.0
+speed = 150.0
 death_explosion_scene = ExtResource("2_ayvqy")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]

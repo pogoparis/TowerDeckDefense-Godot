@@ -39,8 +39,9 @@ var was_buffed := false
 # ==============================
 #            NODES
 # ==============================
-
+@onready var halo_sprite: Sprite2D = get_node_or_null("HaloSprite")
 @onready var timer: Timer = get_node_or_null("Timer")
+@onready var sprite_material := sprite.material
 
 # ==============================
 #            READY
@@ -53,6 +54,11 @@ func _ready():
 	add_to_group("towers")
 	apply_run_bonuses()
 	
+	if sprite_material:
+		sprite_material.set_shader_parameter(
+			"outline_size",
+			0.0
+		)
 	
 	if timer:
 		timer.wait_time = fire_rate
@@ -79,13 +85,19 @@ func set_buff_visual(active: bool):
 
 	buff_visual_active = active
 
-	if sprite == null:
+	if sprite_material == null:
 		return
 
 	if active:
-		sprite.modulate = Color(1.2, 1.2, 0.8)
+		sprite_material.set_shader_parameter(
+			"outline_size",
+			4
+		)
 	else:
-		sprite.modulate = Color.WHITE
+		sprite_material.set_shader_parameter(
+			"outline_size",
+			0.0
+		)
 
 func find_target() -> Node2D:
 
