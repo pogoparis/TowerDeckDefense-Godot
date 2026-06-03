@@ -137,7 +137,6 @@ func update_ghost(grid: GridManager, mouse_world: Vector2):
 		return
 
 	var cell = grid.world_to_cell(mouse_world)
-
 	ghost_tower.global_position = grid.cell_to_world(cell)
 
 	if grid.can_place(cell):

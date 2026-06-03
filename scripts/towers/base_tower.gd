@@ -164,7 +164,7 @@ func apply_run_bonuses():
 		damage += bonus.damage_bonus
 		attack_range += bonus.range_bonus
 		fire_rate *= bonus.fire_rate_mult
-		print(name, " APPLY RANGE = ", attack_range)
+
 
 	if timer:
 		timer.wait_time = fire_rate

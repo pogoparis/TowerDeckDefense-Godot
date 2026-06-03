@@ -55,6 +55,9 @@ func start_wave():
 		return
 
 	var wave_data = waves[current_wave_index]
+
+	print("RESOURCE = ", wave_data)
+	print("SCENE = ", wave_data.enemy_scene)
 	Player.set_wave(current_wave_index + 1)
 	await spawn_wave_data(wave_data)
 
@@ -67,8 +70,16 @@ func start_wave():
 
 	start_prep_phase()
 
+
 func spawn_wave_data(wave_data: WaveData) -> void:
 
+	print("WAVE = ", current_wave_index + 1)
+	print("ENEMY = ", wave_data.enemy_scene)
+	print("==========")
+	print("COUNT = ", wave_data.enemy_count)
+	print("INTERVAL = ", wave_data.spawn_interval)
+	print("SCENE = ", wave_data.enemy_scene)
+	print("==========")
 	spawn_wave(
 		wave_data.enemy_count,
 		wave_data.spawn_interval,

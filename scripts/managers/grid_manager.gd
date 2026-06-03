@@ -25,8 +25,8 @@ func setup_buildable_cells():
 	for cell in current_map.blocked_cells:
 		blocked_cells[cell] = true
 
-	for x in GRID_WIDTH:
-		for y in GRID_HEIGHT:
+	for x in range(GRID_WIDTH):
+		for y in range(GRID_HEIGHT):
 
 			var cell = Vector2i(x, y)
 
@@ -40,10 +40,12 @@ func world_to_cell(pos: Vector2) -> Vector2i:
 
 	pos -= GRID_OFFSET_PIXELS
 
-	return Vector2i(
+	var cell = Vector2i(
 		floor(pos.x / CELL_SIZE),
 		floor(pos.y / CELL_SIZE)
 	)
+
+	return cell
 
 
 func cell_to_world(cell: Vector2i) -> Vector2:
@@ -65,17 +67,19 @@ func is_cell_occupied(cell: Vector2i) -> bool:
 
 func can_place(cell: Vector2i) -> bool:
 
-	if current_map.path_cells.has(cell):
+	# Hors de la zone constructible
+	if not buildable_cells.has(cell):
 		return false
 
-	if current_map.blocked_cells.has(cell):
+	# Route / décor bloqué
+	if blocked_cells.has(cell):
 		return false
 
+	# Une tour est déjà présente
 	if occupied_cells.has(cell):
 		return false
 
 	return true
-
 
 func occupy_cell(cell: Vector2i, tower: Node2D):
 

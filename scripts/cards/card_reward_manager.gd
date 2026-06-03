@@ -37,8 +37,6 @@ func show_rewards():
 func select_reward(index: int):
 
 	var reward = reward_cards[index]
-	print("REWARD SELECTED")
-	print(reward.reward_type)
 	match reward.reward_type:
 
 		RewardData.RewardType.CARD:
@@ -53,11 +51,6 @@ func select_reward(index: int):
 
 			card_manager.add_reward_card(
 				reward.card_data
-			)
-
-			print(
-				"HAND SIZE AFTER REWARD = ",
-				card_manager.hand.size()
 			)
 
 			get_tree().current_scene.refresh_hand_ui()

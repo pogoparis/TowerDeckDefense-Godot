@@ -10,9 +10,10 @@
 [ext_resource type="Script" uid="uid://cmvfd187lmtgk" path="res://scripts/managers/wave_manager.gd" id="8_x7jdx"]
 [ext_resource type="Script" uid="uid://bks0ildaa61ts" path="res://scripts/managers/enemy_manager.gd" id="9_4br2k"]
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="9_mqloe"]
-[ext_resource type="PackedScene" uid="uid://ugub6d0kpt13" path="res://scenes/enemies/SimpleMob.tscn" id="10_p6g1u"]
+[ext_resource type="Resource" uid="uid://cx08iuoryrq5u" path="res://resources/waves/wave_01.tres" id="10_28yk4"]
 [ext_resource type="Script" uid="uid://c111ayw6tnlxj" path="res://scripts/managers/tower_manager.gd" id="10_wxwm4"]
-[ext_resource type="Resource" uid="uid://h5us2ebt0mms" path="res://resources/waves/wave_02.tres" id="11_p6g1u"]
+[ext_resource type="Resource" uid="uid://h5us2ebt0mms" path="res://resources/waves/wave_02.tres" id="11_qswml"]
+[ext_resource type="Resource" uid="uid://c6n0ur6xlr6lr" path="res://resources/waves/wave_03.tres" id="12_03itj"]
 [ext_resource type="Script" uid="uid://27bcwwylqh2d" path="res://scripts/cards/card_manager.gd" id="14_88h5y"]
 [ext_resource type="Script" uid="uid://chtjx5lhmojke" path="res://scripts/managers/synergy_manager.gd" id="18_03itj"]
 
@@ -23,17 +24,6 @@ _data = {
 point_count = 7
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_28yk4"]
-
-[sub_resource type="Resource" id="Resource_88h5y"]
-script = ExtResource("9_mqloe")
-enemy_scene = ExtResource("10_p6g1u")
-enemy_count = 5
-spawn_interval = 1.5
-metadata/_custom_type_script = "uid://c2spfgpqk8kgx"
-
-[sub_resource type="Resource" id="Resource_kv7s7"]
-script = ExtResource("9_mqloe")
-metadata/_custom_type_script = "uid://c2spfgpqk8kgx"
 
 [node name="Level" type="Node2D" unique_id=995050660 groups=["level"]]
 script = ExtResource("1_4br2k")
@@ -181,7 +171,8 @@ script = ExtResource("7_lwybd")
 
 [node name="WaveManager" type="Node2D" parent="." unique_id=1847154296]
 script = ExtResource("8_x7jdx")
-waves = Array[ExtResource("9_mqloe")]([SubResource("Resource_88h5y"), ExtResource("11_p6g1u"), SubResource("Resource_kv7s7")])
+prep_time = 3
+waves = Array[ExtResource("9_mqloe")]([ExtResource("10_28yk4"), ExtResource("11_qswml"), ExtResource("12_03itj")])
 
 [node name="EnemyManager" type="Node2D" parent="." unique_id=1116086763 groups=["enemy_manager"]]
 script = ExtResource("9_4br2k")

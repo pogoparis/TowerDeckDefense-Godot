@@ -6,9 +6,10 @@
 
 [node name="ExplosiveMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
 z_index = 10
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_ssm5u")
 max_hp = 100
-speed = 200.0
+speed = 150.0
 death_explosion_scene = ExtResource("2_m4lua")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]

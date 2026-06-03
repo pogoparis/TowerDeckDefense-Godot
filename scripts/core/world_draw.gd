@@ -57,9 +57,7 @@ func _draw():
 				pos,
 				Vector2.ONE * cell_size
 			),
-			Color(1, 0, 0, 0.6),
-			true,
-			2.0
+			Color(1, 0, 0, 0.6)
 		)
 	for x in level.grid.GRID_WIDTH:
 		for y in level.grid.GRID_HEIGHT:

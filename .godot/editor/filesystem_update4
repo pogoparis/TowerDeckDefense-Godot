@@ -1,5 +1,9 @@
-res://scenes/enemies/SimpleMob.tscn
+res://scenes/enemies/ExplosiveMob.tscn
 res://resources/cards/frostwick_card.tres
-res://scripts/projectiles/projectile_tower.gd
-res://scripts/towers/base_tower.gd
-res://scripts/managers/synergy_manager.gd
+res://scripts/managers/wave_manager.gd
+res://scenes/enemies/KamikazMob.tscn
+res://resources/waves/wave_03.tres
+res://scenes/ui/level.tscn
+res://resources/waves/wave_01.tres
+res://scenes/enemies/SimpleMob.tscn
+res://scripts/managers/grid_manager.gd
