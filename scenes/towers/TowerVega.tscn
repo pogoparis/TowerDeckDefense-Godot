@@ -4,6 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://8vvvb284ury7" path="res://scenes/projectiles/FireProjectile.tscn" id="2_jbhtt"]
 [ext_resource type="Texture2D" uid="uid://cvdlkb4fkcv80" path="res://assets/towers/Sniper512.png" id="3_2n4y4"]
 [ext_resource type="Material" uid="uid://dogs2rodkv8rm" path="res://resources/shaders/outline_buff.tres" id="3_jbhtt"]
+[ext_resource type="Texture2D" uid="uid://rtvoygwhil8i" path="res://assets/towers/NainCanon256.png" id="5_dhmpy"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dhmpy"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_dhmpy"]
+offsets = PackedFloat32Array(0, 0.6270161)
+colors = PackedColorArray(1, 0.3019608, 0.3019608, 0.3137255, 1, 0, 0, 1)
 
 [node name="TowerVega" type="Node2D" unique_id=676582971]
 z_index = 8
@@ -24,4 +32,21 @@ scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_2n4y4")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]
-position = Vector2(-40.000004, 49.230774)
+position = Vector2(24.615383, -32.307693)
+
+[node name="LaserLine" type="Line2D" parent="." unique_id=1113305468]
+visible = false
+z_index = 50
+material = SubResource("CanvasItemMaterial_dhmpy")
+width = 4.0
+default_color = Color(0.9600062, 0, 0.09544387, 1)
+gradient = SubResource("Gradient_dhmpy")
+texture_mode = 1
+antialiased = true
+
+[node name="HaloSprite" type="Sprite2D" parent="." unique_id=2041802846]
+visible = false
+z_index = 8
+position = Vector2(0, -1.9073486e-06)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("5_dhmpy")

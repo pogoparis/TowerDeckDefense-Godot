@@ -22,7 +22,7 @@ texture = ExtResource("2_1rxqv")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
 z_index = 10
-position = Vector2(-18, -67)
+position = Vector2(-16, -81)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
 z_index = 7
