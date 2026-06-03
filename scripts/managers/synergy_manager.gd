@@ -26,11 +26,13 @@ func recalculate_synergies():
 		if not is_instance_valid(tower):
 			continue
 
-		tower.adjacency_damage_mult = 1.0
-		tower.adjacency_range_mult = 1.0
-		tower.execution_froide_active = false
+			tower.adjacency_damage_mult = 1.0
+			tower.adjacency_range_mult = 1.0
+			tower.execution_froide_active = false
 
-		tower.recalculate_stats()
+			tower.set_buff_visual(false)
+
+			tower.recalculate_stats()
 
 	# ==============================
 	# MAMA COG
@@ -64,6 +66,26 @@ func recalculate_synergies():
 			neighbor.adjacency_damage_mult = tower.damage_bonus_mult
 			neighbor.recalculate_stats()
 
+			var was_already_buffed = neighbor.buff_visual_active
+
+			neighbor.set_buff_visual(true)
+
+			if not was_already_buffed:
+
+				var floating_text = preload(
+					"res://scenes/ui/floating_text.tscn"
+				).instantiate()
+
+				get_tree().current_scene.add_child(floating_text)
+
+				floating_text.global_position = (
+					neighbor.global_position + Vector2(0, -40)
+				)
+
+				floating_text.setup("+10%")
+
+			neighbor.set_buff_visual(true)
+			
 	# ==============================
 	# EXECUTION FROIDE
 	# ==============================

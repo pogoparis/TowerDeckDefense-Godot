@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MapData" format=3 uid="uid://c4afbo8f0oque"]
+
+[ext_resource type="Script" uid="uid://wjjpm35p0wh" path="res://scripts/data/map_data.gd" id="1_50jbh"]
+
+[resource]
+script = ExtResource("1_50jbh")
+map_name = "Décharge"
+blocked_cells = Array[Vector2i]([Vector2i(0, 3), Vector2i(0, 4), Vector2i(9, 0), Vector2i(8, 0), Vector2i(9, 3), Vector2i(9, 4), Vector2i(4, 8)])
+base_cell = Vector2i(10, 1)
+metadata/_custom_type_script = "uid://wjjpm35p0wh"

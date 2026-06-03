@@ -1,15 +1,15 @@
-[gd_scene format=3 uid="uid://ugub6d0kpt13"]
+[gd_scene format=3 uid="uid://cmjod41xbfvxr"]
 
-[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_1rxqv"]
-[ext_resource type="Texture2D" uid="uid://dwgqonjhm66vv" path="res://assets/ennemies/SimpleMob256.png" id="2_1rxqv"]
-[ext_resource type="PackedScene" uid="uid://k7ob07va7jxb" path="res://scenes/projectiles/ExplosionDeathFire.tscn" id="2_ayvqy"]
+[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_ssm5u"]
+[ext_resource type="PackedScene" uid="uid://k7ob07va7jxb" path="res://scenes/projectiles/ExplosionDeathFire.tscn" id="2_m4lua"]
+[ext_resource type="Texture2D" uid="uid://cbog4hkyyccn2" path="res://assets/ennemies/ExplosiveMob256.png" id="3_ssm5u"]
 
-[node name="SimpleMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
+[node name="ExplosiveMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
 z_index = 10
-script = ExtResource("1_1rxqv")
-max_hp = 40
-speed = 170.0
-death_explosion_scene = ExtResource("2_ayvqy")
+script = ExtResource("1_ssm5u")
+max_hp = 100
+speed = 200.0
+death_explosion_scene = ExtResource("2_m4lua")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
 z_index = 10
@@ -18,7 +18,7 @@ position = Vector2(0, -20)
 [node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
 z_index = 10
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_1rxqv")
+texture = ExtResource("3_ssm5u")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
 z_index = 10

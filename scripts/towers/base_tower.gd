@@ -1,6 +1,8 @@
 extends Node2D
 class_name BaseTower
 
+@onready var sprite: Sprite2D = get_node_or_null("Sprite2D")
+
 enum TowerFamily {
 	IRONCLAD,
 	SPARK,
@@ -31,6 +33,8 @@ var adjacency_damage_mult := 1.0
 var adjacency_range_mult := 1.0
 var status_effects: Dictionary = {}
 var execution_froide_active := false
+var buff_visual_active := false
+var was_buffed := false
 
 # ==============================
 #            NODES
@@ -70,6 +74,18 @@ func apply_upgrade(data: Dictionary):
 		timer.start()
 		update_visual_feedback()
 
+
+func set_buff_visual(active: bool):
+
+	buff_visual_active = active
+
+	if sprite == null:
+		return
+
+	if active:
+		sprite.modulate = Color(1.2, 1.2, 0.8)
+	else:
+		sprite.modulate = Color.WHITE
 
 func find_target() -> Node2D:
 

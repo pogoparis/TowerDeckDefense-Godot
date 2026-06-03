@@ -7,3 +7,5 @@ class_name TowerMamaCog
 func _ready():
 
 	super()
+	
+	

@@ -2,8 +2,6 @@ extends BaseTower
 class_name ProjectileTower
 
 @export var projectile_scene: PackedScene
-
-@onready var sprite: Sprite2D = $Sprite2D
 @onready var shoot_point: Marker2D = $ShootPoint
 
 func _ready():

@@ -1,23 +1,39 @@
 class_name GridManager
 extends Node
 
-const CELL_SIZE := 96
-const GRID_OFFSET_PIXELS = Vector2(60, -40)
+@export var current_map: MapData
+
+const GRID_WIDTH := 10
+const GRID_HEIGHT := 5
+const CELL_SIZE := 128
+const GRID_OFFSET_PIXELS = Vector2(250, 200)
 
 var blocked_cells := {}
 var occupied_cells := {}
-var buildable_cells := {}
+var buildable_cells: Array[Vector2i] = []
+
 
 func setup_buildable_cells():
 
+	if current_map == null:
+		push_error("No MapData assigned to GridManager")
+		return
+
+	blocked_cells.clear()
 	buildable_cells.clear()
 
-	for x in range(10):
-		for y in range(5):
+	for cell in current_map.blocked_cells:
+		blocked_cells[cell] = true
 
-			buildable_cells[
-				Vector2i(x + 1, y + 1)
-			] = true
+	for x in GRID_WIDTH:
+		for y in GRID_HEIGHT:
+
+			var cell = Vector2i(x, y)
+
+			if blocked_cells.has(cell):
+				continue
+
+			buildable_cells.append(cell)
 
 
 func world_to_cell(pos: Vector2) -> Vector2i:
@@ -31,11 +47,11 @@ func world_to_cell(pos: Vector2) -> Vector2i:
 
 
 func cell_to_world(cell: Vector2i) -> Vector2:
+
 	return Vector2(
 		cell.x * CELL_SIZE + CELL_SIZE * 0.5,
 		cell.y * CELL_SIZE + CELL_SIZE * 0.5
 	) + GRID_OFFSET_PIXELS
-
 
 func is_cell_blocked(cell: Vector2i) -> bool:
 
@@ -49,11 +65,16 @@ func is_cell_occupied(cell: Vector2i) -> bool:
 
 func can_place(cell: Vector2i) -> bool:
 
-	return (
-		buildable_cells.has(cell)
-		and not is_cell_blocked(cell)
-		and not is_cell_occupied(cell)
-	)
+	if current_map.path_cells.has(cell):
+		return false
+
+	if current_map.blocked_cells.has(cell):
+		return false
+
+	if occupied_cells.has(cell):
+		return false
+
+	return true
 
 
 func occupy_cell(cell: Vector2i, tower: Node2D):

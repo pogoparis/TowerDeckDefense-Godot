@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://c5fhxnr350rja" path="res://assets/background/background_level_1.png" id="6_lh6i8"]
+[ext_resource type="Texture2D" uid="uid://cmmsnhtfrpq6c" path="res://assets/background/Map_level1.png" id="4_88h5y"]
+[ext_resource type="Resource" uid="uid://c4afbo8f0oque" path="res://resources/maps/map_level1.tres" id="6_kv7s7"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
 [ext_resource type="Script" uid="uid://bn34njvu0btbq" path="res://scripts/managers/placement_manager.gd" id="7_lwybd"]
@@ -17,9 +18,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -19, 350, 0, 0, 0, 0, 271.58118, 356.35358, 0, 0, 0, 0, 271.58118, 234.61621, 0, 0, 0, 0, 706.6923, 233.29297, 0, 0, 0, 0, 706.6923, 353.7071, 0, 0, 0, 0, 1583, 359)
+"points": PackedVector2Array(0, 0, 0, 0, 207, -1, 0, 0, 0, 0, 206, 265, 0, 0, 0, 0, 746, 272, 0, 0, 0, 0, 745, 400, 0, 0, 0, 0, 1254, 407, 0, 0, 0, 0, 1255, 272, 0, 0, 0, 0, 1617, 275)
 }
-point_count = 6
+point_count = 7
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_28yk4"]
 
@@ -30,6 +31,10 @@ enemy_count = 5
 spawn_interval = 1.5
 metadata/_custom_type_script = "uid://c2spfgpqk8kgx"
 
+[sub_resource type="Resource" id="Resource_kv7s7"]
+script = ExtResource("9_mqloe")
+metadata/_custom_type_script = "uid://c2spfgpqk8kgx"
+
 [node name="Level" type="Node2D" unique_id=995050660 groups=["level"]]
 script = ExtResource("1_4br2k")
 metadata/_edit_vertical_guides_ = [-1100.0]
@@ -37,21 +42,14 @@ metadata/_edit_vertical_guides_ = [-1100.0]
 [node name="World" type="Node2D" parent="." unique_id=93436023]
 z_index = 1
 
-[node name="GroundTileMap" type="TileMapLayer" parent="World" unique_id=141763206]
-z_index = 1
-
-[node name="PathTileMap" type="TileMapLayer" parent="World" unique_id=1644371080]
-z_index = 2
-
 [node name="Path2D" type="Path2D" parent="World" unique_id=1234754296]
 z_index = 3
-position = Vector2(114.48877, 128.69461)
-scale = Vector2(0.65730333, 0.75572526)
+position = Vector2(70, 129)
 curve = SubResource("Curve2D_5xgho")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="World/Path2D" unique_id=1273408496]
 z_index = 2
-position = Vector2(-19, 350)
+position = Vector2(207, -1)
 rotation = 0.013028579
 rotates = false
 loop = false
@@ -76,8 +74,9 @@ z_index = 10
 script = ExtResource("7_kv7s7")
 
 [node name="Background" type="Sprite2D" parent="World" unique_id=2103578611]
-position = Vector2(640, 360)
-texture = ExtResource("6_lh6i8")
+position = Vector2(960.00006, 540.00006)
+scale = Vector2(1.2500001, 1.0546876)
+texture = ExtResource("4_88h5y")
 
 [node name="EffectsContainer" type="Node2D" parent="World" unique_id=1102281373]
 
@@ -175,13 +174,14 @@ offset_bottom = 23.0
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
+current_map = ExtResource("6_kv7s7")
 
 [node name="PlacementManager" type="Node2D" parent="." unique_id=1318624488]
 script = ExtResource("7_lwybd")
 
 [node name="WaveManager" type="Node2D" parent="." unique_id=1847154296]
 script = ExtResource("8_x7jdx")
-waves = Array[ExtResource("9_mqloe")]([SubResource("Resource_88h5y"), ExtResource("11_p6g1u")])
+waves = Array[ExtResource("9_mqloe")]([SubResource("Resource_88h5y"), ExtResource("11_p6g1u"), SubResource("Resource_kv7s7")])
 
 [node name="EnemyManager" type="Node2D" parent="." unique_id=1116086763 groups=["enemy_manager"]]
 script = ExtResource("9_4br2k")

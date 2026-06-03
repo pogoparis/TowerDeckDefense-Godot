@@ -35,28 +35,68 @@ func _draw():
 			prev = point
 			d += step
 
+
 	# =========================
 	# BUILD GRID
 	# =========================
 
 	var cell_size = level.grid.CELL_SIZE
 
-	for cell in level.grid.buildable_cells.keys():
-
+	# Cases bloquées (rouges)
+	for cell in level.grid.current_map.blocked_cells:
 
 		var center = level.grid.cell_to_world(cell)
 
 		var pos = center - Vector2(
-			level.grid.CELL_SIZE * 0.5,
-			level.grid.CELL_SIZE * 0.5
+			cell_size * 0.5,
+			cell_size * 0.5
 		)
 
 		draw_rect(
 			Rect2(
 				pos,
-				Vector2.ONE * level.grid.CELL_SIZE
+				Vector2.ONE * cell_size
 			),
-			Color(0,1,0,0.25),
+			Color(1, 0, 0, 0.6),
+			true,
+			2.0
+		)
+	for x in level.grid.GRID_WIDTH:
+		for y in level.grid.GRID_HEIGHT:
+
+			var cell = Vector2i(x, y)
+			var center = level.grid.cell_to_world(cell)
+
+			var pos = center - Vector2(
+				cell_size * 0.5,
+				cell_size * 0.5
+			)
+
+			draw_rect(
+				Rect2(
+					pos,
+					Vector2.ONE * cell_size
+				),
+				Color(0, 1, 0, 0.25),
+				false,
+				2.0
+			)
+	# On dessine uniquement les blocked_cells
+	for cell in level.grid.current_map.blocked_cells:
+
+		var center = level.grid.cell_to_world(cell)
+
+		var pos = center - Vector2(
+			cell_size * 0.5,
+			cell_size * 0.5
+		)
+
+		draw_rect(
+			Rect2(
+				pos,
+				Vector2.ONE * cell_size
+			),
+			Color(0, 1, 0, 0.25),
 			false,
 			2.0
 		)
