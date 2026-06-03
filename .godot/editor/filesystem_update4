@@ -7,3 +7,4 @@ res://scenes/ui/level.tscn
 res://resources/waves/wave_01.tres
 res://scenes/enemies/SimpleMob.tscn
 res://scripts/managers/grid_manager.gd
+res://scripts/managers/synergy_manager.gd

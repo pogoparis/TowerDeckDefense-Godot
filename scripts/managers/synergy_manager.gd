@@ -29,7 +29,8 @@ func recalculate_synergies():
 			tower.adjacency_damage_mult = 1.0
 			tower.adjacency_range_mult = 1.0
 			tower.execution_froide_active = false
-
+			if tower.has_meta("execution_pair_active"):
+				tower.remove_meta("execution_pair_active")
 			tower.set_buff_visual(false)
 
 			tower.recalculate_stats()
@@ -122,6 +123,25 @@ func recalculate_synergies():
 			tower.execution_froide_active = true
 			neighbor.execution_froide_active = true
 
+			if not tower.has_meta("execution_pair_active"):
+
+				var floating_text = preload(
+					"res://scenes/ui/floating_text.tscn"
+				).instantiate()
+
+				get_tree().current_scene.add_child(floating_text)
+
+				floating_text.global_position = (
+					tower.global_position +
+					neighbor.global_position
+				) / 2.0
+
+				floating_text.global_position.y -= 40
+
+				floating_text.setup("TIRS GUIDÉS !")
+
+				tower.set_meta("execution_pair_active", true)
+				neighbor.set_meta("execution_pair_active", true)
 			var line := Line2D.new()
 
 			line.width = 8

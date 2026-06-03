@@ -18,7 +18,7 @@ position = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
 z_index = 10
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_ssm5u")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
