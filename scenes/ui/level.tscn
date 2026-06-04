@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://27bcwwylqh2d" path="res://scripts/cards/card_manager.gd" id="14_88h5y"]
 [ext_resource type="Script" uid="uid://deud6v2qigaj1" path="res://scripts/phenomena/phenomenon_manager.gd" id="17_qswml"]
 [ext_resource type="Script" uid="uid://chtjx5lhmojke" path="res://scripts/managers/synergy_manager.gd" id="18_03itj"]
+[ext_resource type="Script" uid="uid://bc6u1fsswudqr" path="res://scripts/reactions/reaction_manager.gd" id="18_j4slr"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -206,4 +207,11 @@ script = ExtResource("18_03itj")
 [node name="PhenomenonManager" type="Node2D" parent="." unique_id=1531998107]
 script = ExtResource("17_qswml")
 
+[node name="PhenomenonManager" type="Node2D" parent="PhenomenonManager" unique_id=1613516641]
+script = ExtResource("17_qswml")
+
+[node name="PhenomenonManager" type="Node2D" parent="PhenomenonManager/PhenomenonManager" unique_id=1904392723]
+script = ExtResource("17_qswml")
+
 [node name="ReactionManager" type="Node2D" parent="." unique_id=13537425]
+script = ExtResource("18_j4slr")
