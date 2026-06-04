@@ -2,10 +2,9 @@ extends Node
 class_name ReactionManager
 
 @onready var phenomenon_manager: PhenomenonManager = $"../PhenomenonManager"
+@onready var enemy_manager: EnemyManager = $"../EnemyManager"
 
-const REACTION_DISTANCE := 64.0
-
-var active_pairs := {}
+var processed_pairs := {}
 
 func _process(_delta):
 
@@ -34,11 +33,14 @@ func check_electrocution():
 
 			if electric.phenomenon_type != PhenomenonType.Type.ELECTRIC_FIELD:
 				continue
-			var distance_between = water.global_position.distance_to(
+
+			var max_distance: float = water.radius + electric.radius
+
+			var distance_between: float = water.global_position.distance_to(
 				electric.global_position
 			)
 
-			if distance_between > REACTION_DISTANCE:
+			if distance_between > max_distance:
 				continue
 
 			var pair_id := str(
@@ -47,10 +49,10 @@ func check_electrocution():
 				electric.get_instance_id()
 			)
 
-			if active_pairs.has(pair_id):
+			if processed_pairs.has(pair_id):
 				continue
 
-			active_pairs[pair_id] = true
+			processed_pairs[pair_id] = true
 
 			trigger_electrocution(
 				water,
@@ -63,12 +65,20 @@ func trigger_electrocution(
 	electric: Phenomenon
 ):
 
-	var center := (
+	var effect := ReactionEffect.new()
+
+	effect.global_position = (
 		water.global_position +
 		electric.global_position
 	) * 0.5
 
+	effect.enemy_manager = enemy_manager
+
+	get_parent().add_child(effect)
+
+	phenomenon_manager.remove_phenomenon(water)
+	phenomenon_manager.remove_phenomenon(electric)
+
 	print(
-		"ELECTROCUTION TRIGGERED AT ",
-		center
+		"ELECTROCUTION CREATED"
 	)

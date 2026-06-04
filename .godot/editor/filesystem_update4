@@ -18,3 +18,4 @@ res://scripts/projectiles/frost_projectile.gd
 res://scripts/projectiles/base_projectile.gd
 res://scripts/reactions/reaction_type.gd
 res://scripts/reactions/reaction_manager.gd
+res://scripts/reactions/reaction_effect.gd
