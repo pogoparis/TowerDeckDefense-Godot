@@ -13,6 +13,7 @@ card_name = "Frostwick"
 description = "Dépose de la glace ralentissant les ennemis."
 card_texture = ExtResource("1_okjl3")
 mana_cost = 2
+tower_id = "TowerFrostwick"
 icon = SubResource("Resource_okjl3")
 tower_scene = ExtResource("3_m1hbc")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

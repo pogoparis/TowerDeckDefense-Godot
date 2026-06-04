@@ -10,5 +10,6 @@ card_name = "Mama Cog"
 description = "Booste les tours proches."
 card_texture = ExtResource("1_x66l1")
 mana_cost = 2
+tower_id = "TowerMamaCog"
 tower_scene = ExtResource("3_61k8o")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

@@ -10,5 +10,6 @@ card_name = "Vega"
 description = "Le Tireur d'élite"
 card_texture = ExtResource("1_ylls1")
 mana_cost = 2
+tower_id = "TowerVega"
 tower_scene = ExtResource("3_ylls1")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

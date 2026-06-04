@@ -10,13 +10,14 @@ enum CardType {
 	RELIC
 }
 
+
 @export var card_name: String
 @export_multiline var description: String
 
 @export var card_type: CardType
 @export var card_texture : Texture2D
 @export var mana_cost := 1
-
+@export var tower_id: String
 @export var icon: Texture2D
 
 # ==============================

@@ -10,5 +10,6 @@ card_name = "Grumbolt"
 description = "Tire un obus lent mais dévastateur."
 card_texture = ExtResource("1_gxssf")
 mana_cost = 2
+tower_id = "TowerGrumbolt"
 tower_scene = ExtResource("3_pq1rj")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

@@ -162,6 +162,20 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="CardTooltipAnchor" type="Control" parent="UI/RootUI" unique_id=133116616]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = -220.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
 current_map = ExtResource("6_kv7s7")
