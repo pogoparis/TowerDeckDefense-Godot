@@ -6,6 +6,6 @@ class_name TowerMamaCog
 
 func _ready():
 
-	super()
-	
-	
+	element_type = ElementType.Type.NATURE
+
+	super._ready()

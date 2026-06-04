@@ -5,6 +5,12 @@ var marked_target: EnemyBase = null
 
 @onready var laser_line: Line2D = $LaserLine
 
+func _ready():
+
+	element_type = ElementType.Type.AIR
+
+	super._ready()
+
 func set_buff_visual(active: bool):
 
 	super.set_buff_visual(active)

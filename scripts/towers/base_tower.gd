@@ -18,6 +18,8 @@ enum TowerFamily {
 @export var base_range: float = 120.0
 @export var family: TowerFamily
 @export var tower_tags: Array[String] = []
+@export var element_type: ElementType.Type = ElementType.Type.NONE
+@export var phenomenon_radius := 64.0
 
 # ==============================
 #        STATS ACTUELLES
