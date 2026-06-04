@@ -10,3 +10,4 @@ res://resources/cards/grumbolt_card.tres
 res://resources/cards/mama_cog_card.tres
 res://resources/cards/vega_card.tres
 res://scenes/ui/level.tscn
+res://scripts/managers/synergy_manager.gd

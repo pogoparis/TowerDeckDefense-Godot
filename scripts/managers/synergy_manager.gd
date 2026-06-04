@@ -7,7 +7,8 @@ class_name SynergyManager
 var laser_guide_found := false
 var laser_guide_current := false
 var synergy_lines = []
-
+var active_execution_pairs := {}
+var active_mama_pairs := {}
 func recalculate_synergies():
 
 	# ==============================
@@ -31,9 +32,6 @@ func recalculate_synergies():
 		tower.adjacency_damage_mult = 1.0
 		tower.adjacency_range_mult = 1.0
 		tower.laser_guide_active = false
-
-		if tower.has_meta("execution_pair_active"):
-			tower.remove_meta("execution_pair_active")
 
 		tower.set_buff_visual(false)
 
@@ -71,37 +69,46 @@ func recalculate_synergies():
 			neighbor.adjacency_damage_mult = tower.damage_bonus_mult
 			neighbor.recalculate_stats()
 
-			var was_already_buffed = neighbor.buff_visual_active
+			var pair_id = (
+				str(tower.get_instance_id())
+				+ "_"
+				+ str(neighbor.get_instance_id())
+			)
+
 			print(
 				"MAMA -> ",
 				neighbor.name,
 				" cell=",
 				neighbor.grid_cell
-				)
+			)
+
 			neighbor.set_buff_visual(true)
 
-			if not was_already_buffed:
+			if not active_mama_pairs.has(pair_id):
+
+				active_mama_pairs[pair_id] = true
 
 				var floating_text = preload(
 					"res://scenes/ui/floating_text.tscn"
 				).instantiate()
 
-				get_tree().current_scene.add_child(floating_text)
+				get_tree().current_scene.add_child(
+					floating_text
+				)
 
 				floating_text.global_position = (
-					neighbor.global_position + Vector2(0, -40)
+					neighbor.global_position
+					+ Vector2(0, -40)
 				)
 
 				floating_text.setup(
-				"+10% DAMAGE",
-				Color("#FFD54A"),
-				1.4
+					"+10% DAMAGE",
+					Color("#FFD54A"),
+					1.4
 				)
-
-			neighbor.set_buff_visual(true)
 			
 	# ==============================
-	# EXECUTION FROIDE
+	# LASER GUIDE
 	# ==============================
 
 	var execution_pair_position: Vector2 = Vector2.ZERO
@@ -113,10 +120,7 @@ func recalculate_synergies():
 
 		if not tower is TowerVega:
 			continue
-		print(
-			"MAMACOG CELL = ",
-			tower.grid_cell
-		)
+
 		var adjacent_cells = [
 			tower.grid_cell + Vector2i.LEFT,
 			tower.grid_cell + Vector2i.RIGHT,
@@ -134,66 +138,57 @@ func recalculate_synergies():
 			if not neighbor is TowerGrumbolt:
 				continue
 
-			laser_guide_current  = true
+			laser_guide_found = true
 
 			tower.laser_guide_active = true
 			neighbor.laser_guide_active = true
 
-			if not tower.has_meta("execution_pair_active"):
+			var pair_id = (
+				str(tower.get_instance_id())
+				+ "_"
+				+ str(neighbor.get_instance_id())
+			)
+
+			if not active_execution_pairs.has(pair_id):
+
+				active_execution_pairs[pair_id] = true
 
 				var floating_text = preload(
 					"res://scenes/ui/floating_text.tscn"
 				).instantiate()
 
-				get_tree().current_scene.add_child(floating_text)
+				get_tree().current_scene.add_child(
+					floating_text
+				)
 
 				floating_text.global_position = (
-					tower.global_position +
-					neighbor.global_position
+					tower.global_position
+					+ neighbor.global_position
 				) / 2.0
 
 				floating_text.global_position.y -= 40
 
 				floating_text.setup("TIRS GUIDÉS !")
 
-				tower.set_meta("execution_pair_active", true)
-				neighbor.set_meta("execution_pair_active", true)
 			var line := Line2D.new()
 
 			line.width = 8
 			line.default_color = Color(0.2, 1.0, 1.0)
-			line.z_index = 6																																							
+			line.z_index = 6
 
-			line.add_point(tower.global_position)
-			line.add_point(neighbor.global_position)
+			line.add_point(
+				tower.global_position
+			)
+
+			line.add_point(
+				neighbor.global_position
+			)
 
 			effects_container.add_child(line)
 
 			synergy_lines.append(line)
 
 			execution_pair_position = (
-				tower.global_position +
-				neighbor.global_position
+				tower.global_position
+				+ neighbor.global_position
 			) / 2.0
-
-	# ==============================
-	# ACTIVATION VISUELLE
-	# ==============================
-
-	if laser_guide_found and not laser_guide_current:
-
-		print("EXECUTION FROIDE ACTIVE")
-
-		var floating_text = preload(
-			"res://scenes/ui/floating_text.tscn"
-		).instantiate()
-
-		get_tree().current_scene.add_child(floating_text)
-
-		execution_pair_position.y -= 40
-
-		floating_text.global_position = execution_pair_position
-
-		floating_text.setup(" TIRS GUIDÉS !")
-
-	laser_guide_current = laser_guide_found
