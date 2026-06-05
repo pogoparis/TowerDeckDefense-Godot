@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://7d0spyyowrme"]
 
 [ext_resource type="Script" uid="uid://burriba2vsf5v" path="res://scripts/towers/tower_frostwick.gd" id="1_gmfpu"]
-[ext_resource type="Texture2D" uid="uid://d11q3sbw20n5x" path="res://assets/towers/FrostWick256.png" id="2_gmfpu"]
 [ext_resource type="PackedScene" uid="uid://bxjsygbigk5qg" path="res://scenes/projectiles/FrostProjectile.tscn" id="2_hlil0"]
 [ext_resource type="Material" uid="uid://dogs2rodkv8rm" path="res://resources/shaders/outline_buff.tres" id="3_c6hhw"]
+[ext_resource type="Texture2D" uid="uid://dku5vbuc4n8w2" path="res://assets/towers/TowerThunder256.png" id="4_c6hhw"]
 
 [node name="TowerFrostwick" type="Node2D" unique_id=676582971]
 z_index = 8
@@ -22,7 +22,7 @@ z_index = 8
 material = ExtResource("3_c6hhw")
 position = Vector2(0, -15)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("2_gmfpu")
+texture = ExtResource("4_c6hhw")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]
 position = Vector2(-40.000004, 49.230774)

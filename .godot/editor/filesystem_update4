@@ -11,3 +11,5 @@ res://scripts/enemies/enemy_base.gd
 res://scripts/phenomena/phenomenon_manager.gd
 res://scripts/projectiles/projectile_tower.gd
 res://scripts/towers/base_tower.gd
+res://scenes/towers/TowerGrumbolt.tscn
+res://scenes/towers/TowerFrostwick.tscn
