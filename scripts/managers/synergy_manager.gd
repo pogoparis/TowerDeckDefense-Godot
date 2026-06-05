@@ -75,13 +75,6 @@ func recalculate_synergies():
 				+ str(neighbor.get_instance_id())
 			)
 
-			print(
-				"MAMA -> ",
-				neighbor.name,
-				" cell=",
-				neighbor.grid_cell
-			)
-
 			neighbor.set_buff_visual(true)
 
 			if not active_mama_pairs.has(pair_id):

@@ -39,7 +39,11 @@ func check_electrocution():
 			var distance_between: float = water.global_position.distance_to(
 				electric.global_position
 			)
+			if water.age < water.min_reaction_age:
+				continue
 
+			if electric.age < electric.min_reaction_age:
+				continue
 			if distance_between > max_distance:
 				continue
 
@@ -65,7 +69,7 @@ func trigger_electrocution(
 	electric: Phenomenon
 ):
 
-	var effect := ReactionEffect.new()
+	var effect := ElectrocutionZone.new()
 
 	effect.global_position = (
 		water.global_position +
@@ -78,7 +82,3 @@ func trigger_electrocution(
 
 	phenomenon_manager.remove_phenomenon(water)
 	phenomenon_manager.remove_phenomenon(electric)
-
-	print(
-		"ELECTROCUTION CREATED"
-	)

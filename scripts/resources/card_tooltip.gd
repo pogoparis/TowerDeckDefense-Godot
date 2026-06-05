@@ -12,13 +12,7 @@ func _ready():
 
 	modulate = Color.RED
 
-	print("TOOLTIP READY")
-	print("POSITION = ", position)
-	print("SIZE = ", size)
-
 func setup(card: CardData):
-
-	print("TOOLTIP FOR :", card.card_name)
 
 	name_label.text = card.card_name
 	cost_label.text = "Cost : %d" % card.mana_cost

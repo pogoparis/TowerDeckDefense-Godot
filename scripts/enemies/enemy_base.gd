@@ -15,6 +15,7 @@ var slow_timer := 0.0
 var status_effects: Dictionary = {}
 
 func _ready():
+	add_status("test", 3.0)
 
 	if not hp_fill:
 		push_error("HPFill introuvable dans " + str(name))
@@ -27,17 +28,36 @@ func _ready():
 	if enemy_manager:
 		enemy_manager.register_enemy(self)
 
-func add_status(status_id: String):
+func add_status(
+	status_id: String,
+	duration: float = 3.0
+):
 
-	status_effects[status_id] = true
+	if has_status(status_id):
+		return
+
+	status_effects[status_id] = duration
 	
 func remove_status(status_id: String):
 
 	status_effects.erase(status_id)
 
+func get_status_time(
+	status_id: String
+) -> float:
+
+	if not status_effects.has(status_id):
+		return 0.0
+
+	return status_effects[status_id]
+
 func has_status(status_id: String) -> bool:
 
-	return status_effects.has(status_id)	
+	return (
+		status_effects.has(status_id)
+		and
+		status_effects[status_id] > 0.0
+	)
 
 
 
@@ -76,6 +96,8 @@ func apply_slow(multiplier: float, duration: float):
 
 func _process(delta):
 
+	update_statuses(delta)
+
 	if slow_timer > 0:
 
 		slow_timer -= delta
@@ -83,6 +105,22 @@ func _process(delta):
 		if slow_timer <= 0:
 
 			slow_multiplier = 1.0
+
+func update_statuses(delta):
+
+	var expired := []
+
+	for status_id in status_effects.keys():
+
+		status_effects[status_id] -= delta
+
+		if status_effects[status_id] <= 0.0:
+
+			expired.append(status_id)
+
+	for status_id in expired:
+
+		status_effects.erase(status_id)
 
 func die():
 

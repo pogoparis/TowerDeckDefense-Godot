@@ -49,11 +49,6 @@ func spawn_phenomenon(
 
 	active_phenomena.append(phenomenon)
 
-	print(
-		"PHENOMENON CREATED : ",
-		type
-	)
-
 
 func remove_phenomenon(
 	phenomenon: Phenomenon
