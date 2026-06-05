@@ -13,8 +13,8 @@ func setup(instance: SynergyInstance, preview: bool = false) -> void:
 	if instance.rule and instance.rule.visual_profile:
 		var vp: SynergyVisualProfile = instance.rule.visual_profile
 		var grad := Gradient.new()
-		grad.set_color(0, vp.link_color_a)
-		grad.set_color(1, vp.link_color_b)
+		grad.add_point(0.0, vp.link_color_a)
+		grad.add_point(1.0, vp.link_color_b)
 		gradient = grad
 		default_color = vp.link_color_a
 	if preview:
