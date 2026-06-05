@@ -74,11 +74,6 @@ func trigger_mini_shock(enemy: EnemyBase):
 
 	mini_shock_cooldowns[enemy.get_instance_id()] = MINI_SHOCK_COOLDOWN
 
-	print(
-		"MINI SHOCK : ",
-		enemy.name
-	)
-
 # =====================================================
 # TERRAIN REACTIONS
 # =====================================================
@@ -155,7 +150,3 @@ func trigger_electrocution(
 
 	phenomenon_manager.remove_phenomenon(water)
 	phenomenon_manager.remove_phenomenon(electric)
-
-	print(
-		"ELECTROCUTION CREATED"
-	)

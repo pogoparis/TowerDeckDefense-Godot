@@ -1,13 +1,14 @@
 extends Node2D
 class_name EnemyBase
 
-@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
-
 @export var max_hp := 30
 @export var speed := 120.0
 @export var scrap_reward := 5
 @export var death_explosion_scene: PackedScene
+
 @onready var enemy_manager: EnemyManager = get_tree().get_first_node_in_group("enemy_manager")
+@onready var status_icons: StatusIconContainer = $StatusIcons
+@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
 
 var hp := 0
 var slow_multiplier := 1.0
@@ -37,10 +38,20 @@ func add_status(
 		return
 
 	status_effects[status_id] = duration
+
+	if status_icons:
+		status_icons.update_statuses(
+			status_effects
+		)
 	
 func remove_status(status_id: String):
 
 	status_effects.erase(status_id)
+
+	if status_icons:
+		status_icons.update_statuses(
+			status_effects
+		)
 
 func get_status_time(
 	status_id: String
@@ -109,9 +120,9 @@ func _process(delta):
 func update_statuses(delta):
 
 	var expired := []
-
+	
 	for status_id in status_effects.keys():
-
+		
 		status_effects[status_id] -= delta
 
 		if status_effects[status_id] <= 0.0:
@@ -121,7 +132,13 @@ func update_statuses(delta):
 	for status_id in expired:
 
 		status_effects.erase(status_id)
+	
+	if expired.size() > 0 and status_icons:
 
+		status_icons.update_statuses(
+			status_effects
+		)
+	
 func die():
 
 	if death_explosion_scene:

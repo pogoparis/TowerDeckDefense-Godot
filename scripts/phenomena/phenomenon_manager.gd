@@ -29,13 +29,6 @@ func spawn_phenomenon(
 
 		existing.refresh()
 
-		print(
-			"PHENOMENON MERGED : ",
-			type,
-			" POWER=",
-			existing.power
-		)
-
 		return
 
 	var phenomenon := Phenomenon.new()

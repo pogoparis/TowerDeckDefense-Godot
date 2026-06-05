@@ -98,16 +98,7 @@ func get_outline_size() -> float:
 func set_buff_visual(active: bool):
 
 	buff_visual_active = active
-	print(
-	get_script().get_global_name(),
-	" OUTLINE=",
-	active
-)
-	print(
-	name,
-	" OUTLINE=",
-	active
-)
+
 	if sprite_material == null:
 		return
 

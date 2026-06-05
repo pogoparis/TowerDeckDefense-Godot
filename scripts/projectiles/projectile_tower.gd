@@ -24,11 +24,7 @@ func _on_timer_timeout():
 
 	if valid_target == null:
 		return
-	print(
-		get_script().get_global_name(),
-		" ELEMENT = ",
-		element_type
-	)
+
 	fire_projectile(valid_target)
 
 func fire_projectile(target: Node2D):
