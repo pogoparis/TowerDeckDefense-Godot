@@ -34,8 +34,10 @@ func _update_preview_state() -> void:
 	_highlight_color = Color(1, 1, 1, 0.35)
 
 	if not _level or not SynergyGuideService.should_show_placement_halos():
+		_clear_link_preview()
 		return
 	if not _level.get("ghost_tower") or _level.ghost_tower == null:
+		_clear_link_preview()
 		return
 	if not _level.get("selected_tower_data") or _level.selected_tower_data == null:
 		return
@@ -55,9 +57,19 @@ func _update_preview_state() -> void:
 		if t is Node2D:
 			_partner_towers.append(t)
 
+	_refresh_link_preview(preview.get("possible", []))
+
+
+func _clear_link_preview() -> void:
+	var link_layer := get_parent().get_node_or_null("SynergyLinkLayer")
+	if link_layer and link_layer.has_method("clear_preview"):
+		link_layer.clear_preview()
+
+
+func _refresh_link_preview(possible: Array) -> void:
 	var link_layer := get_parent().get_node_or_null("SynergyLinkLayer")
 	if link_layer and link_layer.has_method("refresh_preview"):
-		link_layer.refresh_preview(preview.get("possible", []))
+		link_layer.refresh_preview(possible)
 
 
 func _update_tower_highlights() -> void:
