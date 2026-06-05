@@ -6,16 +6,19 @@ class_name SynergyManager
 
 var laser_guide_found := false
 var laser_guide_current := false
+
 var synergy_lines = []
+
 var active_execution_pairs := {}
 var active_mama_pairs := {}
+
 func recalculate_synergies():
 
 	# ==============================
 	# RESET
 	# ==============================
 
-	var laser_guide_found := false
+	laser_guide_found = false
 
 	for line in synergy_lines:
 
@@ -48,7 +51,7 @@ func recalculate_synergies():
 
 		if not tower is TowerMamaCog:
 			continue
-			
+
 		var adjacent_cells = [
 			tower.grid_cell + Vector2i.LEFT,
 			tower.grid_cell + Vector2i.RIGHT,
@@ -81,25 +84,14 @@ func recalculate_synergies():
 
 				active_mama_pairs[pair_id] = true
 
-				var floating_text = preload(
-					"res://scenes/ui/floating_text.tscn"
-				).instantiate()
-
-				get_tree().current_scene.add_child(
-					floating_text
-				)
-
-				floating_text.global_position = (
-					neighbor.global_position
-					+ Vector2(0, -40)
-				)
-
-				floating_text.setup(
+				FloatingTextService.spawn(
+					get_tree().current_scene,
+					neighbor.global_position + Vector2(0, -40),
 					"+10% DAMAGE",
 					Color("#FFD54A"),
 					1.4
 				)
-			
+
 	# ==============================
 	# LASER GUIDE
 	# ==============================
@@ -146,22 +138,14 @@ func recalculate_synergies():
 
 				active_execution_pairs[pair_id] = true
 
-				var floating_text = preload(
-					"res://scenes/ui/floating_text.tscn"
-				).instantiate()
-
-				get_tree().current_scene.add_child(
-					floating_text
+				FloatingTextService.spawn(
+					get_tree().current_scene,
+					(
+						tower.global_position
+						+ neighbor.global_position
+					) / 2.0 + Vector2(0, -40),
+					"TIRS GUIDÉS !"
 				)
-
-				floating_text.global_position = (
-					tower.global_position
-					+ neighbor.global_position
-				) / 2.0
-
-				floating_text.global_position.y -= 40
-
-				floating_text.setup("TIRS GUIDÉS !")
 
 			var line := Line2D.new()
 

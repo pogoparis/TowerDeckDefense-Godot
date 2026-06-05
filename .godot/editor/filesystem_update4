@@ -1,10 +1,7 @@
-res://scenes/ui/tower_card.tscn
+res://scenes/ui/level.tscn
 res://resources/shaders/outline_buff.gdshader
 res://resources/cards/frostwick_card.tres
-res://scripts/phenomena/phenomenon.gd
 res://scripts/reactions/reaction_manager.gd
-res://scripts/data/status_ids.gd
-res://scripts/enemies/enemy_base.gd
-res://scripts/phenomena/phenomenon_manager.gd
+res://scenes/ui/floating_text.tscn
+res://scenes/ui/floating_text_service.gd
 res://scripts/managers/synergy_manager.gd
-res://scripts/resources/card_tooltip.gd

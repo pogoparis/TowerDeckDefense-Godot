@@ -207,11 +207,5 @@ script = ExtResource("18_03itj")
 [node name="PhenomenonManager" type="Node2D" parent="." unique_id=1531998107]
 script = ExtResource("17_qswml")
 
-[node name="PhenomenonManager" type="Node2D" parent="PhenomenonManager" unique_id=1613516641]
-script = ExtResource("17_qswml")
-
-[node name="PhenomenonManager" type="Node2D" parent="PhenomenonManager/PhenomenonManager" unique_id=1904392723]
-script = ExtResource("17_qswml")
-
 [node name="ReactionManager" type="Node2D" parent="." unique_id=13537425]
 script = ExtResource("18_j4slr")
