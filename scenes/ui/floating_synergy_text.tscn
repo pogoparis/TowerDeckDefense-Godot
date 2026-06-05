@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://floating_synergy_txt"]
+
+[ext_resource type="Script" path="res://scenes/ui/floating_synergy_text.gd" id="1"]
+
+[node name="FloatingSynergyText" type="Node2D"]
+z_index = 50
+script = ExtResource("1")

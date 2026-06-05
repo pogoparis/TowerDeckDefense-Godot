@@ -31,6 +31,7 @@ func _on_registry_changed() -> void:
 func _update_preview_state() -> void:
 	_highlight_cells.clear()
 	_partner_towers.clear()
+	_highlight_color = Color(1, 1, 1, 0.35)
 
 	if not _level or not SynergyGuideService.should_show_placement_halos():
 		return

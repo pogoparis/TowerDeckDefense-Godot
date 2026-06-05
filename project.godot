@@ -15,6 +15,13 @@ run/main_scene="uid://bv7wk3sb5b3ch"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SynergyManager="*res://scripts/autoload/synergy_manager.gd"
+SynergyGuideService="*res://scripts/autoload/synergy_guide_service.gd"
+PhenomenonManager="*res://scripts/autoload/phenomenon_manager.gd"
+ReactionManager="*res://scripts/autoload/reaction_manager.gd"
+
 [display]
 
 window/size/resizable=false

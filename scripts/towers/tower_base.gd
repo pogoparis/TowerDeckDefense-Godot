@@ -43,6 +43,8 @@ func _draw() -> void:
 
 
 func _register_synergy() -> void:
+	if has_meta("is_ghost") and get_meta("is_ghost"):
+		return
 	if not data or not SynergyManager:
 		return
 	var level := _find_level()

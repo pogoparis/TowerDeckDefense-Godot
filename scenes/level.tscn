@@ -5,10 +5,15 @@
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scenes/world_draw.gd" id="2_b121j"]
 [ext_resource type="Texture2D" uid="uid://dmritv1xcbrip" path="res://assets/ennemies/ennemy_fireball.png" id="2_mx8sn"]
 [ext_resource type="Script" uid="uid://u1r1ocefleiw" path="res://scenes/enemy_pivot.gd" id="4_8c41q"]
-[ext_resource type="PackedScene" uid="uid://hwku0ydalmpd" path="res://scenes/TowerFire.tscn" id="4_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://dqb783mx4h777" path="res://assets/towers/tour_de_feu_1_128_comp.png" id="6_b121j"]
-[ext_resource type="Script" uid="uid://can1itutisgls" path="res://scenes/ui_tower_card_fire.gd" id="6_klq6b"]
 [ext_resource type="Texture2D" uid="uid://bi2iqsj85alxp" path="res://assets/background/Background_lvl1.jpg" id="7_8c41q"]
+[ext_resource type="Script" path="res://scenes/synergy/synergy_link_layer.gd" id="8_link"]
+[ext_resource type="Script" path="res://scenes/synergy/synergy_preview_layer.gd" id="9_preview"]
+[ext_resource type="PackedScene" uid="uid://synergy_panel_ui" path="res://scenes/ui/SynergyPanel.tscn" id="10_panel"]
+[ext_resource type="Script" path="res://scenes/ui/ui_tower_card.gd" id="11_card"]
+[ext_resource type="Resource" path="res://data/towers/tower_water.tres" id="12_water"]
+[ext_resource type="Resource" path="res://data/towers/tower_electric.tres" id="13_elec"]
+[ext_resource type="Resource" path="res://data/towers/tower_air.tres" id="14_air"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -18,40 +23,39 @@ point_count = 7
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8c41q"]
 
-[node name="Level" type="Node2D" unique_id=995050660]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_klq6b")
-metadata/_edit_vertical_guides_ = [-1100.0]
 
-[node name="World" type="Node2D" parent="." unique_id=93436023]
+[node name="World" type="Node2D" parent="."]
 z_index = 1
 
-[node name="Path2D" type="Path2D" parent="World" unique_id=1234754296]
+[node name="Path2D" type="Path2D" parent="World"]
 z_index = 4
 curve = SubResource("Curve2D_5xgho")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="World/Path2D" unique_id=1273408496]
+[node name="PathFollow2D" type="PathFollow2D" parent="World/Path2D"]
 z_index = 2
 position = Vector2(-19, 362)
 rotation = 0.08198497
 loop = false
 script = ExtResource("1_w7c3h")
 
-[node name="EnemyPivot" type="CharacterBody2D" parent="World/Path2D/PathFollow2D" unique_id=417138091 groups=["enemies"]]
+[node name="EnemyPivot" type="CharacterBody2D" parent="World/Path2D/PathFollow2D" groups=["enemies"]]
 rotation = -0.17453292
 scale = Vector2(0.5, 0.5)
 script = ExtResource("4_8c41q")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=1729007847]
+[node name="Sprite2D" type="Sprite2D" parent="World/Path2D/PathFollow2D/EnemyPivot"]
 z_index = 10
 texture = ExtResource("2_mx8sn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Path2D/PathFollow2D/EnemyPivot" unique_id=979414820]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Path2D/PathFollow2D/EnemyPivot"]
 shape = SubResource("CircleShape2D_8c41q")
 
-[node name="PathLine" type="Line2D" parent="World/Path2D" unique_id=926539895]
+[node name="PathLine" type="Line2D" parent="World/Path2D"]
 z_index = 5
 
-[node name="Camera2D" type="Camera2D" parent="World" unique_id=1300751352]
+[node name="Camera2D" type="Camera2D" parent="World"]
 position = Vector2(640, 384)
 limit_enabled = false
 limit_left = 0
@@ -59,36 +63,55 @@ limit_top = 0
 limit_right = 1600
 limit_bottom = 900
 
-[node name="TowerFire" parent="World" unique_id=676582971 instance=ExtResource("4_mx8sn")]
-visible = false
-z_index = 2
-position = Vector2(0, -128)
-projectile_scene = null
-
-[node name="Background" type="Sprite2D" parent="World" unique_id=155568546]
+[node name="Background" type="Sprite2D" parent="World"]
 texture = ExtResource("7_8c41q")
 centered = false
 
-[node name="BuildGrid" type="Node2D" parent="World" unique_id=2128860896]
+[node name="BuildGrid" type="Node2D" parent="World"]
 
-[node name="TowerContainer" type="Node2D" parent="World" unique_id=1044129839]
+[node name="PhenomenonContainer" type="Node2D" parent="World"]
+z_index = 3
+
+[node name="TowerContainer" type="Node2D" parent="World"]
 z_index = 5
 
-[node name="EnemyContainer" type="Node2D" parent="World" unique_id=820611676]
+[node name="EnemyContainer" type="Node2D" parent="World"]
 
-[node name="WorldDraw" type="Node2D" parent="World" unique_id=1813535843]
+[node name="WorldDraw" type="Node2D" parent="World"]
 z_index = 1
 script = ExtResource("2_b121j")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=169918824]
+[node name="SynergyLinkLayer" type="Node2D" parent="World"]
+script = ExtResource("8_link")
 
-[node name="TowerCardFire" type="TextureButton" parent="UI" unique_id=1746530277]
+[node name="SynergyPreviewLayer" type="Node2D" parent="World"]
+script = ExtResource("9_preview")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TowerDeck" type="HBoxContainer" parent="UI"]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 144.0
-offset_bottom = 144.0
-focus_mode = 0
-action_mode = 0
+offset_right = 400.0
+offset_bottom = 180.0
+theme_override_constants/separation = 12
+
+[node name="CardWater" type="TextureButton" parent="UI/TowerDeck"]
+custom_minimum_size = Vector2(120, 140)
 texture_normal = ExtResource("6_b121j")
-script = ExtResource("6_klq6b")
-tower_scene = ExtResource("4_mx8sn")
+script = ExtResource("11_card")
+tower_data = ExtResource("12_water")
+
+[node name="CardElectric" type="TextureButton" parent="UI/TowerDeck"]
+custom_minimum_size = Vector2(120, 140)
+texture_normal = ExtResource("6_b121j")
+script = ExtResource("11_card")
+tower_data = ExtResource("13_elec")
+
+[node name="CardAir" type="TextureButton" parent="UI/TowerDeck"]
+custom_minimum_size = Vector2(120, 140)
+texture_normal = ExtResource("6_b121j")
+script = ExtResource("11_card")
+tower_data = ExtResource("14_air")
+
+[node name="SynergyPanel" parent="UI" instance=ExtResource("10_panel")]

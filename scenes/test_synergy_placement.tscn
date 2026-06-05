@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://test_synergy_place"]
+
+[ext_resource type="Script" path="res://scenes/test_synergy_placement.gd" id="1"]
+[ext_resource type="Script" path="res://scenes/synergy/synergy_link_layer.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/synergy/synergy_preview_layer.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://synergy_panel_ui" path="res://scenes/ui/SynergyPanel.tscn" id="4"]
+[ext_resource type="Resource" path="res://data/towers/tower_electric.tres" id="5"]
+
+[node name="TestSynergyPlacement" type="Node2D"]
+script = ExtResource("1")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="TowerContainer" type="Node2D" parent="World"]
+
+[node name="PhenomenonContainer" type="Node2D" parent="World"]
+
+[node name="SynergyLinkLayer" type="Node2D" parent="World"]
+script = ExtResource("2")
+
+[node name="SynergyPreviewLayer" type="Node2D" parent="World"]
+script = ExtResource("3")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="SynergyPanel" parent="UI" instance=ExtResource("4")]
+
+[node name="Hint" type="Label" parent="UI"]
+offset_left = 16.0
+offset_top = 400.0
+offset_right = 600.0
+offset_bottom = 480.0
+text = "Sandbox synergies : Bobine Foudre pré-placée. Sélectionnez Canon à Flotte ou Souffleur et placez adjacent."
