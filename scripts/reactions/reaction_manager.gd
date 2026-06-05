@@ -62,17 +62,38 @@ func check_wet_charged(enemy: EnemyBase):
 
 func trigger_mini_shock(enemy: EnemyBase):
 
-	enemy.take_damage(MINI_SHOCK_DAMAGE)
+	enemy.take_damage(
+		MINI_SHOCK_DAMAGE
+	)
+
 	FloatingTextService.spawn(
 		get_tree().current_scene,
-		enemy.global_position + Vector2(0, -40),
+		enemy.global_position + Vector2(0, -55),
+		"SHOCK !",
+		Color.YELLOW,
+		1.3
+	)
+
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(0, -30),
 		"⚡1",
 		Color.YELLOW,
-		1.2
+		1.0
 	)
-	enemy.remove_status(StatusIds.CHARGED)
 
-	mini_shock_cooldowns[enemy.get_instance_id()] = MINI_SHOCK_COOLDOWN
+	enemy.remove_status(
+		StatusIds.CHARGED
+	)
+
+	mini_shock_cooldowns[
+		enemy.get_instance_id()
+	] = MINI_SHOCK_COOLDOWN
+
+	print(
+		"MINI SHOCK : ",
+		enemy.name
+	)
 
 # =====================================================
 # TERRAIN REACTIONS

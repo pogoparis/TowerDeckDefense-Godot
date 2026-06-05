@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var lifetime := 2.5
+@export var lifetime := 1.2
 @export var rise_distance := 50.0
 
 @onready var text_label: RichTextLabel = $RichTextLabel
