@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/tower_data.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://tower_air_storm" path="res://scenes/towers/TowerAir.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "souffleur_geant"
+display_name = "Souffleur Géant"
+element = 2
+phenomenon_type = 2
+base_phenomenon_interval = 3.2
+phenomenon_radius = 26.0
+phenomenon_duration = 4.0
+element_color = Color(0.6, 0.95, 1, 1)
+tower_scene = ExtResource("2")
+attack_range = 50.0
+fire_rate = 1.1
+damage = 6

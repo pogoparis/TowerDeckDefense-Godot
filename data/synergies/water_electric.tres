@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SynergyRuleData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/synergy_rule_data.gd" id="1"]
+[ext_resource type="Resource" path="res://data/visual/water_electric_visual.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+synergy_id = "water_electric"
+display_name = "Canalisation"
+element_a = 0
+element_b = 1
+effect = 0
+multiplier = 1.3
+visual_profile = ExtResource("2")

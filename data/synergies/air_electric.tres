@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SynergyRuleData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/synergy_rule_data.gd" id="1"]
+[ext_resource type="Resource" path="res://data/visual/air_electric_visual.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+synergy_id = "air_electric"
+display_name = "Surtension"
+element_a = 2
+element_b = 1
+effect = 2
+multiplier = 1.35
+visual_profile = ExtResource("2")

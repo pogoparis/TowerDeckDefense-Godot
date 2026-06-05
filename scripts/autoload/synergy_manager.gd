@@ -206,9 +206,12 @@ func _refresh_active_synergies() -> void:
 
 
 func _pair_key(a: Vector2i, b: Vector2i) -> String:
-	if a < b:
-		return "%d,%d|%d,%d" % [a.x, a.y, b.x, b.y]
-	return "%d,%d|%d,%d" % [b.x, b.y, a.x, a.y]
+	var ca := a
+	var cb := b
+	if ca.x > cb.x or (ca.x == cb.x and ca.y > cb.y):
+		ca = b
+		cb = a
+	return "%d,%d|%d,%d" % [ca.x, ca.y, cb.x, cb.y]
 
 
 func _spawn_floating_text(instance: SynergyInstance) -> void:
