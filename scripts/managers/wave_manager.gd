@@ -1,13 +1,14 @@
 extends Node
 class_name WaveManager
 
-@export var prep_time := 2
+@export var prep_time := 20
 @export var waves: Array[WaveData]
 
 @onready var card_manager: CardManager = $"../CardManager"
 
 var wave_started := false
 var current_wave_index := 0
+var prep_running := false
 
 var path: Path2D
 var wave_timer_label: Label
@@ -17,33 +18,56 @@ var tower_manager: TowerManager
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 
-func start_prep_phase():
-
-	wave_started = false
-	for i in range(prep_time, 0, -1):
-		wave_timer_label.text = "Wave in: " + str(i)
-		await get_tree().create_timer(1.0).timeout
-	wave_timer_label.text = "WAVE !"
-	start_wave()
-
 func setup(
 	new_path: Path2D,
 	new_wave_timer_label: Label,
 	new_enemy_manager: EnemyManager,
 	new_tower_manager: TowerManager
 ):
-	
+
 	tower_manager = new_tower_manager
 	path = new_path
 	wave_timer_label = new_wave_timer_label
 	enemy_manager = new_enemy_manager
+
+
+func start_prep_phase():
+
+	wave_started = false
+	prep_running = true
+
+	for i in range(prep_time, 0, -1):
+
+		if not prep_running:
+			return
+
+		wave_timer_label.text = "Prep : " + str(i)
+
+		await get_tree().create_timer(1.0).timeout
+
+	if prep_running:
+		start_wave()
+
+
+func force_start_wave():
+
+	if not prep_running:
+		return
+
+	prep_running = false
+
+	start_wave()
+
 
 func start_wave():
 
 	if wave_started:
 		return
 
+	prep_running = false
 	wave_started = true
+
+	wave_timer_label.text = "WAVE !"
 
 	if waves.is_empty():
 		push_error("Aucune wave configurée")
@@ -57,6 +81,7 @@ func start_wave():
 	var wave_data = waves[current_wave_index]
 
 	Player.set_wave(current_wave_index + 1)
+
 	await spawn_wave_data(wave_data)
 
 	await wait_for_wave_clear()
@@ -105,10 +130,6 @@ func spawn_wave(
 		await get_tree().create_timer(interval).timeout
 
 
-# ==============================
-#        ENEMY SPAWN
-# ==============================
-
 func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 
 	if not enemy_scene:
@@ -134,7 +155,8 @@ func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 	pf.add_child(enemy)
 
 	return pf
-	
+
+
 func wait_for_wave_clear():
 
 	while enemy_manager.get_all_enemies().size() > 0:

@@ -20,7 +20,9 @@ extends Node2D
 @onready var synergy_manager: SynergyManager = $SynergyManager
 @onready var tower_cards_container = $UI/RootUI/TowerCards
 @onready var deck_debug_label = $UI/RootUI/DeckDebugLabel
-
+@onready var start_wave_button = $UI/RootUI/StartWaveButton
+	
+	
 # ==============================
 #            STATE
 # ==============================
@@ -44,6 +46,10 @@ const IRONCLAD_STARTER = preload(
 
 func _ready():
 
+	start_wave_button.pressed.connect(
+	wave_manager.force_start_wave
+	)
+	
 	var floating_text = preload("res://scenes/ui/floating_text.tscn").instantiate()
 	add_child(floating_text)
 

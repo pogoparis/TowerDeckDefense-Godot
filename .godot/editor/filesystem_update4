@@ -1,5 +1,7 @@
+res://scenes/phenomena/water_pool.tscn
 res://resources/shaders/outline_buff.gdshader
 res://resources/cards/frostwick_card.tres
-res://scenes/phenomena/water_pool.tscn
-res://scripts/phenomena/water_pool.gd
-res://scripts/phenomena/phenomenon.gd
+res://scripts/cards/card_manager.gd
+res://scenes/ui/level.tscn
+res://scripts/managers/wave_manager.gd
+res://scripts/core/level.gd

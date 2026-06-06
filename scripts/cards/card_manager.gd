@@ -10,6 +10,42 @@ var max_hand_size := 4
 var draw_pile : Array[CardData] = []
 var hand : Array[CardData] = []
 
+# ==================================================
+# MULLIGAN
+# ==================================================
+
+var mulligan_used := false
+
+func can_use_mulligan() -> bool:
+	return not mulligan_used
+
+
+func mulligan(cards_to_replace: Array[CardData]):
+
+	if mulligan_used:
+		return
+
+	if cards_to_replace.is_empty():
+		return
+
+	for card in cards_to_replace:
+
+		if hand.has(card):
+
+			hand.erase(card)
+			draw_pile.append(card)
+
+	draw_pile.shuffle()
+
+	draw_to_hand(cards_to_replace.size())
+
+	mulligan_used = true
+
+
+# ==================================================
+# SETUP
+# ==================================================
+
 func setup(
 	new_placement_manager: PlacementManager,
 	new_tower_container: Node2D
@@ -24,7 +60,7 @@ func setup_starting_deck(cards: Array):
 	draw_pile.clear()
 	hand.clear()
 
-	draw_pile.clear()
+	mulligan_used = false
 
 	for card in cards:
 		draw_pile.append(card)
@@ -33,6 +69,10 @@ func setup_starting_deck(cards: Array):
 
 	draw_to_hand(3)
 
+
+# ==================================================
+# DRAW
+# ==================================================
 
 func draw_to_hand(amount: int):
 
@@ -55,7 +95,13 @@ func draw_until_full_hand():
 
 	draw_to_hand(missing_cards)
 
+
+# ==================================================
+# DECK MANAGEMENT
+# ==================================================
+
 func add_reward_card(card: CardData):
+
 	if hand.size() < max_hand_size:
 
 		hand.append(card)
@@ -82,6 +128,10 @@ func consume_card(card: CardData):
 
 		hand.erase(card)
 
+
+# ==================================================
+# PLAY
+# ==================================================
 
 func play_card(card: CardData):
 
