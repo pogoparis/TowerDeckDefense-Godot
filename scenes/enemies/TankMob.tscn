@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_yasrm"]
 [ext_resource type="PackedScene" uid="uid://k7ob07va7jxb" path="res://scenes/projectiles/ExplosionDeathFire.tscn" id="2_ceoxr"]
 [ext_resource type="Texture2D" uid="uid://cj522lt3chpud" path="res://assets/ennemies/TankSympa256.png" id="2_yasrm"]
+[ext_resource type="Script" uid="uid://n37wabgxja8j" path="res://scripts/status/status_icon_container.gd" id="4_rikg4"]
 
 [node name="TankMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
 z_index = 10
@@ -36,3 +37,8 @@ z_index = 10
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(0.09009846, 0.09009849, 0.09009848, 1)
+
+[node name="StatusIcons" type="Node2D" parent="." unique_id=247430249]
+z_index = 20
+position = Vector2(40, -78)
+script = ExtResource("4_rikg4")

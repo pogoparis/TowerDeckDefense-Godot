@@ -22,7 +22,7 @@ scale = Vector2(1, 1.138)
 texture = ExtResource("3_3rv47")
 
 [node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
-z_index = 10
+z_index = 12
 position = Vector2(-16, -80)
 
 [node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]

@@ -6,25 +6,61 @@ class_name Phenomenon
 @export var duration := 5.0
 @export var min_reaction_age := 1.5
 
+const WATER_POOL_SCENE := preload(
+	"res://scenes/phenomena/water_pool.tscn"
+)
+
 var contamination_timer := 0.0
 const CONTAMINATION_INTERVAL := 0.5
+
 var power := 1
 var age := 0.0
+
+var visual: Node2D = null
+
+func _ready():
+
+	create_visual()
+
+func create_visual():
+
+	match phenomenon_type:
+
+		PhenomenonType.Type.WATER_POOL:
+
+			visual = WATER_POOL_SCENE.instantiate()
+
+			add_child(visual)
+			visual.scale = Vector2.ONE
+
+			update_visual_scale()
+
+func update_visual_scale():
+
+	if visual == null:
+		return
+
+	visual.scale = Vector2.ONE * (
+		1.0 + (power - 1) * 0.15
+	)
+
 
 func refresh():
 
 	age = 0.0
 
-	power += 1
+	power = min(power + 1, 5)
 
-	radius += 4.0
+	radius = min(radius + 4.0, 96.0)
+	duration = min(duration + 0.5, 12.0)
 
-	duration += 0.5
+	update_visual_scale()
 
 
 func _process(delta):
 
 	age += delta
+
 	contamination_timer -= delta
 
 	if contamination_timer <= 0.0:
@@ -32,10 +68,12 @@ func _process(delta):
 		contamination_timer = CONTAMINATION_INTERVAL
 
 		apply_contamination()
+
 		queue_redraw()
 
 	if age >= duration:
 		queue_free()
+
 
 func get_status_id() -> String:
 
@@ -58,9 +96,12 @@ func get_status_id() -> String:
 
 	return ""
 
+
 func apply_contamination():
 
-	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
+	var enemy_manager := get_tree().get_first_node_in_group(
+		"enemy_manager"
+	)
 
 	if enemy_manager == null:
 		return
@@ -89,14 +130,15 @@ func apply_contamination():
 				3.0
 			)
 
+
 func _draw():
+
+	if phenomenon_type == PhenomenonType.Type.WATER_POOL:
+		return
 
 	var color := Color.WHITE
 
 	match phenomenon_type:
-
-		PhenomenonType.Type.WATER_POOL:
-			color = Color.CORNFLOWER_BLUE
 
 		PhenomenonType.Type.ELECTRIC_FIELD:
 			color = Color.YELLOW

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bxcqenfdr7yhm"]
+
+[ext_resource type="Script" uid="uid://bgqi8qgybau64" path="res://scripts/phenomena/water_pool.gd" id="1_iyevr"]
+[ext_resource type="Texture2D" uid="uid://drglcd6tkytdp" path="res://assets/phenomena/flaque64.png" id="2_ymkk6"]
+
+[node name="WaterPool" type="Node2D" unique_id=373775459]
+z_index = 9
+script = ExtResource("1_iyevr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=189809071]
+z_index = 9
+texture = ExtResource("2_ymkk6")
