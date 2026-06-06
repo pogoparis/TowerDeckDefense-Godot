@@ -1,13 +1,13 @@
+VBoxContainer
+Label
 Button
+Panel
 CollisionShape2D
 Area2D
 Sprite2D
 Node2D
 Control
 RichTextLabel
-Label
-VBoxContainer
-Panel
 GPUParticles2D
 Line2D
 TextureButton

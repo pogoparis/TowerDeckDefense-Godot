@@ -20,12 +20,18 @@ extends Node2D
 @onready var synergy_manager: SynergyManager = $SynergyManager
 @onready var tower_cards_container = $UI/RootUI/TowerCards
 @onready var deck_debug_label = $UI/RootUI/DeckDebugLabel
-@onready var start_wave_button = $UI/RootUI/StartWaveButton
-	
+@onready var prep_panel = $UI/RootUI/PrepPanel
+@onready var start_wave_button = $UI/RootUI/PrepPanel/StartWaveButton
+@onready var mulligan_button = $UI/RootUI/PrepPanel/MulliganButton
+@onready var confirm_mulligan_button = $UI/RootUI/PrepPanel/ConfirmMulliganButton
+@onready var mulligan_label = $UI/RootUI/PrepPanel/MulliganLabel
+
 	
 # ==============================
 #            STATE
 # ==============================
+var mulligan_mode := false
+var selected_mulligan_cards : Array[CardData] = []
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
@@ -45,7 +51,9 @@ const IRONCLAD_STARTER = preload(
 # ==============================
 
 func _ready():
-
+	mulligan_button.pressed.connect(_on_mulligan_pressed)
+	confirm_mulligan_button.pressed.connect(_on_confirm_mulligan_pressed)
+	mulligan_button.pressed.connect(_on_mulligan_pressed)
 	start_wave_button.pressed.connect(
 	wave_manager.force_start_wave
 	)
@@ -103,6 +111,43 @@ func _ready():
 	tower_manager.towers_changed.connect(
 			synergy_manager.recalculate_synergies
 		)
+
+func _on_confirm_mulligan_pressed():
+
+	if selected_mulligan_cards.is_empty():
+		return
+
+	card_manager.mulligan(
+		selected_mulligan_cards
+	)
+
+	selected_mulligan_cards.clear()
+
+	mulligan_mode = false
+
+	confirm_mulligan_button.visible = false
+	mulligan_label.visible = false
+	mulligan_button.visible = false
+
+	refresh_hand_ui()
+
+	print("MULLIGAN CONFIRMED")
+
+func _on_mulligan_pressed():
+
+	if card_manager.mulligan_used:
+		return
+
+	mulligan_mode = true
+
+	selected_mulligan_cards.clear()
+
+	mulligan_label.visible = true
+	confirm_mulligan_button.visible = true
+
+	mulligan_label.text = "0/3 cartes sélectionnées"
+
+	print("MULLIGAN MODE")
 
 func refresh_hand_ui():
 
@@ -173,11 +218,25 @@ func _on_base_hp_changed(value:int):
 
 	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value
 	
-
 func _on_dynamic_card_clicked(card_data: CardData):
 
-	card_manager.play_card(card_data)
+	print("CLICK :", card_data.card_name)
 
+	if mulligan_mode:
+
+		if selected_mulligan_cards.has(card_data):
+			selected_mulligan_cards.erase(card_data)
+		else:
+			selected_mulligan_cards.append(card_data)
+
+		mulligan_label.text = (
+			"%d/3 cartes sélectionnées"
+			% selected_mulligan_cards.size()
+		)
+
+		return
+
+	card_manager.play_card(card_data)
 func update_deck_debug():
 
 	var total = (

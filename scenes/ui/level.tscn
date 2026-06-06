@@ -178,11 +178,35 @@ offset_bottom = -220.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="StartWaveButton" type="Button" parent="UI/RootUI" unique_id=1998052254]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="PrepPanel" type="VBoxContainer" parent="UI/RootUI" unique_id=1968416627]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 115.0
+offset_bottom = 132.0
+theme_override_constants/separation = 4
+
+[node name="StartWaveButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1998052254]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
 text = "START WAVE"
+
+[node name="MulliganButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1023923591]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+text = "MULLIGAN"
+
+[node name="ConfirmMulliganButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1167089499]
+visible = false
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+text = "CONFIRMER"
+
+[node name="MulliganLabel" type="Label" parent="UI/RootUI/PrepPanel" unique_id=1797813612]
+visible = false
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+text = "0/3 cartes sélectionnées"
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
