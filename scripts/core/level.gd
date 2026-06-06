@@ -31,7 +31,7 @@ extends Node2D
 #            STATE
 # ==============================
 var mulligan_mode := false
-var selected_mulligan_cards : Array[CardData] = []
+var selected_mulligan_cards : Array = []
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
@@ -51,9 +51,9 @@ const IRONCLAD_STARTER = preload(
 # ==============================
 
 func _ready():
+	print("HAS EXIT = ", has_method("exit_mulligan_mode"))
 	mulligan_button.pressed.connect(_on_mulligan_pressed)
 	confirm_mulligan_button.pressed.connect(_on_confirm_mulligan_pressed)
-	mulligan_button.pressed.connect(_on_mulligan_pressed)
 	start_wave_button.pressed.connect(
 	wave_manager.force_start_wave
 	)
@@ -115,10 +115,25 @@ func _ready():
 func _on_confirm_mulligan_pressed():
 
 	if selected_mulligan_cards.is_empty():
+
+		exit_mulligan_mode()
+
+		mulligan_button.visible = false
+
+		card_manager.mulligan_used = true
+
 		return
 
+	var cards_to_replace : Array[CardData] = []
+
+	for card_ui in selected_mulligan_cards:
+
+		cards_to_replace.append(
+			card_ui.card_data
+		)
+
 	card_manager.mulligan(
-		selected_mulligan_cards
+		cards_to_replace
 	)
 
 	selected_mulligan_cards.clear()
@@ -145,10 +160,38 @@ func _on_mulligan_pressed():
 	mulligan_label.visible = true
 	confirm_mulligan_button.visible = true
 
-	mulligan_label.text = "0/3 cartes sélectionnées"
+	mulligan_label.text = (
+		"PHASE DE MULLIGAN\n"
+		+ "Cliquez sur les cartes à remplacer"
+	)
 
-	print("MULLIGAN MODE")
+func exit_mulligan_mode():
 
+	if not mulligan_mode:
+		return
+
+	if selected_mulligan_cards.size() > 0:
+
+		var cards_to_replace : Array[CardData] = []
+
+		for card_ui in selected_mulligan_cards:
+
+			cards_to_replace.append(
+				card_ui.card_data
+			)
+
+		card_manager.mulligan(cards_to_replace)
+
+		refresh_hand_ui()
+
+	mulligan_mode = false
+
+	selected_mulligan_cards.clear()
+
+	confirm_mulligan_button.visible = false
+	mulligan_label.visible = false
+	mulligan_button.visible = false
+	
 func refresh_hand_ui():
 
 	for child in tower_cards_container.get_children():
@@ -218,25 +261,43 @@ func _on_base_hp_changed(value:int):
 
 	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value
 	
-func _on_dynamic_card_clicked(card_data: CardData):
-
-	print("CLICK :", card_data.card_name)
+func _on_dynamic_card_clicked(
+	card_data: CardData,
+	card_ui
+):
 
 	if mulligan_mode:
 
-		if selected_mulligan_cards.has(card_data):
-			selected_mulligan_cards.erase(card_data)
-		else:
-			selected_mulligan_cards.append(card_data)
+		if selected_mulligan_cards.has(card_ui):
 
-		mulligan_label.text = (
-			"%d/3 cartes sélectionnées"
-			% selected_mulligan_cards.size()
-		)
+			selected_mulligan_cards.erase(card_ui)
+
+		else:
+
+			if selected_mulligan_cards.size() < 3:
+				selected_mulligan_cards.append(card_ui)
+
+		var count := selected_mulligan_cards.size()
+
+		if count == 0:
+
+			mulligan_label.text = (
+				"PHASE DE MULLIGAN\n"
+				+ "Cliquez sur les cartes à remplacer"
+			)
+
+		else:
+
+			mulligan_label.text = (
+				"PHASE DE MULLIGAN\n"
+				+ "%d/3 cartes sélectionnées"
+				% count
+			)
 
 		return
 
 	card_manager.play_card(card_data)
+	
 func update_deck_debug():
 
 	var total = (

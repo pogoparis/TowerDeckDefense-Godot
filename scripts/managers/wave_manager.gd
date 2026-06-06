@@ -32,7 +32,14 @@ func setup(
 
 
 func start_prep_phase():
+	var level = get_tree().current_scene
 
+	if level:
+
+		level.mulligan_button.visible = (
+			not card_manager.mulligan_used
+		)
+		
 	wave_started = false
 	prep_running = true
 
@@ -60,6 +67,14 @@ func force_start_wave():
 
 
 func start_wave():
+
+	print("START_WAVE CALLED")
+
+	var level = get_tree().current_scene
+
+	if level:
+
+		level.exit_mulligan_mode()
 
 	if wave_started:
 		return
