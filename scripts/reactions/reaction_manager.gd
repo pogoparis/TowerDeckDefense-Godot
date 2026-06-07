@@ -82,9 +82,9 @@ func trigger_mini_shock(enemy: EnemyBase):
 		1.0
 	)
 
-	enemy.remove_status(
-		StatusIds.CHARGED
-	)
+	#enemy.remove_status(
+	#	StatusIds.CHARGED
+	#C'est agréable, je me sens.)
 
 	mini_shock_cooldowns[
 		enemy.get_instance_id()

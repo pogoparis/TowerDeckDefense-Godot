@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="StartingDeckData" format=3 uid="uid://bds107373kraj"]
 
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_4ihr5"]
-[ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/grumbolt_card.tres" id="2_3r8ju"]
+[ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/water_cannon_card.tres" id="2_3r8ju"]
 [ext_resource type="Script" uid="uid://cturi3aifg006" path="res://scripts/cards/starting_deck_data.gd" id="2_50f57"]
-[ext_resource type="Resource" uid="uid://b5d4ilpmbyndc" path="res://resources/cards/frostwick_card.tres" id="3_h8hp6"]
-[ext_resource type="Resource" uid="uid://beuo2iiyajb35" path="res://resources/cards/mama_cog_card.tres" id="4_tv2p3"]
+[ext_resource type="Resource" uid="uid://b5d4ilpmbyndc" path="res://resources/cards/tesla_coil_card.tres" id="3_h8hp6"]
+[ext_resource type="Resource" uid="uid://beuo2iiyajb35" path="res://resources/cards/industrial_fan_card.tres" id="4_tv2p3"]
 [ext_resource type="Resource" uid="uid://bf4hf4srdwe86" path="res://resources/cards/vega_card.tres" id="5_kt7n3"]
 
 [resource]

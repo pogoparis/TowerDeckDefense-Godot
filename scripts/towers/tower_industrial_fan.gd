@@ -1,5 +1,5 @@
-extends BaseTower
-class_name TowerMamaCog
+extends ProjectileTower
+class_name TowerIndustrialFan
 
 @export var damage_bonus_mult := 1.3
 @export var range_bonus_mult := 1.3

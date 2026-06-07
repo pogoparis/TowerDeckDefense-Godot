@@ -1,5 +1,5 @@
 extends ProjectileTower
-class_name TowerGrumbolt
+class_name TowerWaterCannon
 
 func _ready():
 

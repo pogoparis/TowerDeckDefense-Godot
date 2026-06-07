@@ -1,5 +1,5 @@
 extends ProjectileTower
-class_name TowerFrostwick
+class_name TowerTeslaCoil
 
 func _ready():
 

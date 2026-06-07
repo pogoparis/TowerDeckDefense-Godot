@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="RewardData" format=3 uid="uid://bog4mlguh08nv"]
 
 [ext_resource type="Script" uid="uid://ctnke4rvljw3g" path="res://scripts/data/reward_data.gd" id="1_10r4n"]
-[ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/grumbolt_card.tres" id="1_g5r3w"]
+[ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/water_cannon_card.tres" id="1_g5r3w"]
 
 [resource]
 script = ExtResource("1_10r4n")

@@ -49,7 +49,7 @@ func recalculate_synergies():
 		if not is_instance_valid(tower):
 			continue
 
-		if not tower is TowerMamaCog:
+		if not tower is TowerIndustrialFan:
 			continue
 
 		var adjacent_cells = [
@@ -120,7 +120,7 @@ func recalculate_synergies():
 			if neighbor == null:
 				continue
 
-			if not neighbor is TowerGrumbolt:
+			if not neighbor is TowerWaterCannon:
 				continue
 
 			laser_guide_found = true

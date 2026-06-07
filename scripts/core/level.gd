@@ -35,9 +35,9 @@ var selected_mulligan_cards : Array = []
 const PATH_FOLLOW_SCRIPT = preload("res://scripts/core/path_follow_2d.gd")
 const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 const TOWER_FIRE_SCENE = preload("res://scenes/towers/TowerFire.tscn")
-const GRUMBOLT_CARD = preload("res://resources/cards/grumbolt_card.tres")
-const FROSTWICK_CARD = preload("res://resources/cards/frostwick_card.tres")
-const MAMA_COG_CARD = preload("res://resources/cards/mama_cog_card.tres")
+const GRUMBOLT_CARD = preload("res://resources/cards/water_cannon_card.tres")
+const FROSTWICK_CARD = preload("res://resources/cards/tesla_coil_card.tres")
+const MAMA_COG_CARD = preload("res://resources/cards/industrial_fan_card.tres")
 const VEGA_CARD = preload("res://resources/cards/vega_card.tres")
 const TOWER_CARD_SCENE = preload(
 	"res://scenes/ui/tower_card.tscn"

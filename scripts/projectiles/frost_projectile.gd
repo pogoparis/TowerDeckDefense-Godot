@@ -5,6 +5,7 @@ func on_hit(target):
 
 	target.take_damage(damage)
 
-	target.apply_slow(0.5, 3.0)
-
-	spawn_tower_phenomenon(target)
+	target.add_status(
+		StatusIds.CHARGED,
+		3.0
+	)

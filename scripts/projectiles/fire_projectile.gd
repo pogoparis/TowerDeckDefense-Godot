@@ -33,4 +33,7 @@ func on_hit(target):
 
 	target.take_damage(final_damage)
 
-	spawn_tower_phenomenon(target)
+	target.add_status(
+		StatusIds.WET,
+		3.0
+	)

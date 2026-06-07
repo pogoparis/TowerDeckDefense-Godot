@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://beuo2iiyajb35"]
+
+[ext_resource type="Texture2D" uid="uid://cf8anxwmrqssi" path="res://assets/cards/MAMACOGOKDECOUPE256.png" id="1_23fxp"]
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_xsd1k"]
+[ext_resource type="PackedScene" uid="uid://bdovl6yaysw4e" path="res://scenes/towers/TowerIndustrialFan.tscn" id="3_0wbu5"]
+
+[resource]
+script = ExtResource("2_xsd1k")
+card_name = "Industrial Fan Tower"
+description = "Fan"
+card_texture = ExtResource("1_23fxp")
+mana_cost = 2
+tower_id = "TowerMamaCog"
+tower_scene = ExtResource("3_0wbu5")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"
