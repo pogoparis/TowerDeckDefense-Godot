@@ -1,4 +1,4 @@
-﻿[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
 
 [ext_resource type="Texture2D" uid="uid://bmpdg7406xgku" path="res://assets/cards/CardCanonEau512.png" id="1_725cy"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_0y8in"]
