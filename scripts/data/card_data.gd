@@ -26,3 +26,15 @@ enum CardType {
 
 @export var tower_scene: PackedScene
 @export var bonus_data: BonusData
+
+# ==============================
+#       CONSUME (BUILD/CONSUME)
+# ==============================
+
+@export var consume_cost := 2
+@export var consume_phenomenon_type: PhenomenonType.Type = PhenomenonType.Type.NONE
+@export var consume_radius := 96.0
+@export var consume_duration := 6.0
+
+func can_consume() -> bool:
+	return consume_phenomenon_type != PhenomenonType.Type.NONE

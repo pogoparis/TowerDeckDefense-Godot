@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cna3k2ab41t4b"]
+
+[ext_resource type="Script" uid="uid://drskf6i14yrn6" path="res://scripts/ui/card_action_panel.gd" id="1_0gbsc"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1289974696]
+script = ExtResource("1_0gbsc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=278936630]
+layout_mode = 2
+
+[node name="BuildButton" type="Button" parent="HBoxContainer" unique_id=1916594071]
+layout_mode = 2
+text = "POSER"
+
+[node name="ConsumeButton" type="Button" parent="HBoxContainer" unique_id=316711569]
+layout_mode = 2
+text = "DÉFAUSSER"

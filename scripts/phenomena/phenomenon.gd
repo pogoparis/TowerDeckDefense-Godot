@@ -133,27 +133,35 @@ func apply_contamination():
 
 func _draw():
 
-	if phenomenon_type == PhenomenonType.Type.WATER_POOL:
-		return
-
-	var color := Color.WHITE
+	var fill_color := Color.WHITE
+	var border_color := Color.WHITE
 
 	match phenomenon_type:
 
+		PhenomenonType.Type.WATER_POOL:
+			fill_color   = Color(0.15, 0.45, 1.0,  0.30)
+			border_color = Color(0.3,  0.7,  1.0,  0.85)
+
 		PhenomenonType.Type.ELECTRIC_FIELD:
-			color = Color.YELLOW
+			fill_color   = Color(1.0,  0.95, 0.1,  0.25)
+			border_color = Color(1.0,  1.0,  0.2,  0.90)
 
 		PhenomenonType.Type.FIRE_ZONE:
-			color = Color.ORANGE_RED
+			fill_color   = Color(1.0,  0.25, 0.0,  0.28)
+			border_color = Color(1.0,  0.5,  0.0,  0.90)
 
 		PhenomenonType.Type.THORN_PATCH:
-			color = Color.LIME_GREEN
+			fill_color   = Color(0.1,  0.8,  0.1,  0.28)
+			border_color = Color(0.2,  1.0,  0.2,  0.90)
 
 		PhenomenonType.Type.WIND_CURRENT:
-			color = Color.CYAN
+			fill_color   = Color(0.4,  0.9,  1.0,  0.22)
+			border_color = Color(0.5,  1.0,  1.0,  0.85)
 
-	draw_circle(
-		Vector2.ZERO,
-		radius,
-		color
-	)
+	# Fond semi-transparent
+	draw_circle(Vector2.ZERO, radius, fill_color)
+
+	# Contour pulsant selon l'âge
+	var pulse := 1.0 + sin(age * 4.0) * 0.06
+	var border_width := 3.0
+	draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 48, border_color, border_width)

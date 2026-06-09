@@ -12,4 +12,5 @@ card_texture = ExtResource("1_725cy")
 mana_cost = 2
 tower_id = "TowerWaterCannon"
 tower_scene = ExtResource("3_u0dlg")
+consume_phenomenon_type = 1
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

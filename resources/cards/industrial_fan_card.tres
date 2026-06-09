@@ -12,4 +12,5 @@ card_texture = ExtResource("1_23fxp")
 mana_cost = 2
 tower_id = "TowerMamaCog"
 tower_scene = ExtResource("3_0wbu5")
+consume_phenomenon_type = 5
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

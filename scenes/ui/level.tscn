@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
 [ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
 [ext_resource type="Texture2D" uid="uid://cmmsnhtfrpq6c" path="res://assets/background/Map_level1.png" id="4_88h5y"]
+[ext_resource type="PackedScene" uid="uid://cna3k2ab41t4b" path="res://scenes/ui/card_action_panel.tscn" id="5_j4slr"]
+[ext_resource type="PackedScene" uid="uid://v3lqus8xkamh" path="res://scenes/ui/mulligan_overlay.tscn" id="6_1c6l3"]
 [ext_resource type="Resource" uid="uid://c4afbo8f0oque" path="res://resources/maps/map_level1.tres" id="6_kv7s7"]
 [ext_resource type="Script" uid="uid://2kaq0gxbdcc7" path="res://scripts/managers/grid_manager.gd" id="6_lwybd"]
 [ext_resource type="Script" uid="uid://b41oasfsvad8o" path="res://scripts/core/world_draw.gd" id="7_kv7s7"]
@@ -178,35 +180,14 @@ offset_bottom = -220.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="PrepPanel" type="VBoxContainer" parent="UI/RootUI" unique_id=1968416627]
+[node name="CardActionPanel" parent="UI/RootUI" unique_id=1289974696 instance=ExtResource("5_j4slr")]
+visible = false
+z_index = 30
+layout_mode = 0
+
+[node name="MulliganOverlay" parent="UI/RootUI" unique_id=1414977688 instance=ExtResource("6_1c6l3")]
+visible = false
 layout_mode = 1
-offset_left = 10.0
-offset_top = 50.0
-offset_right = 115.0
-offset_bottom = 132.0
-theme_override_constants/separation = 4
-
-[node name="StartWaveButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1998052254]
-custom_minimum_size = Vector2(180, 40)
-layout_mode = 2
-text = "START WAVE"
-
-[node name="MulliganButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1023923591]
-custom_minimum_size = Vector2(180, 40)
-layout_mode = 2
-text = "MULLIGAN"
-
-[node name="ConfirmMulliganButton" type="Button" parent="UI/RootUI/PrepPanel" unique_id=1167089499]
-visible = false
-custom_minimum_size = Vector2(180, 40)
-layout_mode = 2
-text = "CONFIRMER"
-
-[node name="MulliganLabel" type="Label" parent="UI/RootUI/PrepPanel" unique_id=1797813612]
-visible = false
-custom_minimum_size = Vector2(180, 40)
-layout_mode = 2
-text = "0/3 cartes sélectionnées"
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
@@ -234,6 +215,7 @@ script = ExtResource("14_88h5y")
 script = ExtResource("18_03itj")
 
 [node name="PhenomenonManager" type="Node2D" parent="." unique_id=1531998107]
+z_index = 6
 script = ExtResource("17_qswml")
 
 [node name="ReactionManager" type="Node2D" parent="." unique_id=13537425]

@@ -2,6 +2,7 @@ class_name CardManager
 extends Node
 
 var placement_manager: PlacementManager
+var phenomenon_manager: PhenomenonManager
 var tower_container: Node2D
 
 var refill_hand_size := 3
@@ -9,6 +10,110 @@ var max_hand_size := 4
 
 var draw_pile : Array[CardData] = []
 var hand : Array[CardData] = []
+
+# ==================================================
+# CONSUME STATE
+# ==================================================
+
+var _consume_card: CardData = null
+var _consume_ghost: Node2D = null
+
+signal consume_mode_started(card_data)
+signal consume_mode_cancelled
+signal consume_resolved(card_data, position)
+
+func is_consuming() -> bool:
+	return _consume_card != null
+
+
+func start_consume_placement(card: CardData):
+
+	if not card.can_consume():
+		return
+
+	if Player.caps < card.consume_cost:
+		print("NOT ENOUGH CAPS TO CONSUME")
+		return
+
+	_consume_card = card
+
+	_spawn_consume_ghost()
+
+	consume_mode_started.emit(card)
+
+
+func _spawn_consume_ghost():
+
+	if _consume_ghost:
+		_consume_ghost.queue_free()
+
+	_consume_ghost = Node2D.new()
+
+	var circle := ColorRect.new()
+	var r := _consume_card.consume_radius
+	circle.size = Vector2(r * 2.0, r * 2.0)
+	circle.position = Vector2(-r, -r)
+
+	match _consume_card.consume_phenomenon_type:
+		PhenomenonType.Type.WATER_POOL:
+			circle.color = Color(0.2, 0.5, 1.0, 0.35)
+		PhenomenonType.Type.ELECTRIC_FIELD:
+			circle.color = Color(0.9, 0.9, 0.2, 0.35)
+		_:
+			circle.color = Color(1.0, 1.0, 1.0, 0.30)
+
+	_consume_ghost.add_child(circle)
+	_consume_ghost.z_index = 998
+
+	get_tree().current_scene.add_child(_consume_ghost)
+
+
+func update_consume_ghost(world_position: Vector2):
+
+	if _consume_ghost:
+		_consume_ghost.global_position = world_position
+
+
+func confirm_consume(world_position: Vector2):
+
+	if not is_consuming():
+		return
+
+	if not Player.spend_caps(_consume_card.consume_cost):
+		cancel_consume()
+		return
+
+	phenomenon_manager.spawn_phenomenon(
+		_consume_card.consume_phenomenon_type,
+		world_position,
+		_consume_card.consume_radius,
+		_consume_card.consume_duration
+	)
+
+	var resolved_card := _consume_card
+
+	consume_card(resolved_card)
+
+	_clear_consume()
+
+	consume_resolved.emit(resolved_card, world_position)
+
+
+func cancel_consume():
+
+	_clear_consume()
+
+	consume_mode_cancelled.emit()
+
+
+func _clear_consume():
+
+	if _consume_ghost:
+		_consume_ghost.queue_free()
+		_consume_ghost = null
+
+	_consume_card = null
+
 
 # ==================================================
 # MULLIGAN
@@ -48,11 +153,13 @@ func mulligan(cards_to_replace: Array[CardData]):
 
 func setup(
 	new_placement_manager: PlacementManager,
-	new_tower_container: Node2D
+	new_tower_container: Node2D,
+	new_phenomenon_manager: PhenomenonManager
 ):
 
 	placement_manager = new_placement_manager
 	tower_container = new_tower_container
+	phenomenon_manager = new_phenomenon_manager
 
 
 func setup_starting_deck(cards: Array):
@@ -130,7 +237,7 @@ func consume_card(card: CardData):
 
 
 # ==================================================
-# PLAY
+# PLAY (BUILD)
 # ==================================================
 
 func play_card(card: CardData):
