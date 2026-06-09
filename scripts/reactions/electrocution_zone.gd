@@ -2,9 +2,9 @@ extends ReactionEffect
 class_name ElectrocutionZone
 
 # ── Paramètres électrocution ──────────────────────────
-const STUN_DURATION_BASE := 3.0
-const BURST_DAMAGE_BASE  := 40
-const TICK_DAMAGE_BASE   := 15
+const STUN_DURATION_BASE := 4.0
+const BURST_DAMAGE_BASE  := 100
+const TICK_DAMAGE_BASE   := 20
 const TICK_RATE_SEC   := 0.35
 const ZONE_DURATION   := 3.5    # durée totale de la zone
 

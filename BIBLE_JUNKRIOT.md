@@ -17,6 +17,12 @@ UNE RÉACTION MAJEURE DOIT ÊTRE PLUS PUISSANTE QU'UN PHÉNOMÈNE.
 TOUR  <  PHÉNOMÈNE  <  RÉACTION MAJEURE
 ```
 
+```
+Si le joueur ne consomme jamais ses cartes → le design a échoué.
+Si le joueur consomme parfois ses cartes  → le concept fonctionne.
+Si le joueur hésite constamment entre BUILD et CONSUME → le cœur du jeu est trouvé.
+```
+
 La vraie question du prototype n'est pas *"combien d'éléments avons-nous ?"* mais :
 **"BUILD / CONSUME crée-t-il une décision réellement intéressante ?"**
 
@@ -54,9 +60,9 @@ La tension vient de ce choix constant : poser une tour durable ou déclencher un
 
 ### Composition du deck de départ (Ironclad Starter)
 - Canon à Eau × 3
-- Bobine Tesla × 2
-- Industrial Fan × 2
-- Vega × 2 *(à réévaluer — voir section 3)*
+- Bobine Tesla × 3
+
+*Industrial Fan, Vega : hors du prototype V1. Ni dans le deck, ni dans les récompenses.*
 
 ### Actions sur une carte
 - **BUILD** (coût : **4 caps**) → pose la tour sur la grille, carte retirée
@@ -197,16 +203,16 @@ Rayon et durée sont modifiables par les bonus (Zone Étendue, Persistance).
 
 ### Électrocution (majeure, via ElectrocutionZone)
 - **Condition** : déclenchée explicitement (carte CONSUME ou mécanique future)
-- **Burst initial** : 40 dégâts (× Électrocution Fatale) + stun 3s
-- **Ticks** : 15 dégâts / 0.35s pendant 3.5s
+- **Burst initial** : 100 dégâts (× Électrocution Fatale) + stun 4s — volontairement abusé pour le prototype
+- **Ticks** : 20 dégâts / 0.35s pendant 3.5s
 - **Rayon** : 112
 - **Visuel** : arcs électriques, rayons depuis le centre, flash d'entrée
 - **Ambition** : doit être le moment où la vague bascule
 
 ### Court-Circuit (Water Pool + ennemi CHARGED)
 - **Condition** : ennemi CHARGED dans une zone Water Pool
-- **Dégâts** : 35 (× Électrocution Fatale)
-- **Stun** : 2.5s (+ Paralysie Prolongée)
+- **Dégâts** : 80 (× Électrocution Fatale) — volontairement abusé pour le prototype
+- **Stun** : 3s (+ Paralysie Prolongée)
 - **Cooldown** : 4s par ennemi
 - **Visuel** : flash cyan, arcs courts
 

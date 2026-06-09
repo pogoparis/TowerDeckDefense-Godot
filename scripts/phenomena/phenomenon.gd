@@ -307,8 +307,8 @@ func _spawn_wind_puff(pos: Vector2):
 # ══════════════════════════════════════════════════════
 # RÉACTION CROISÉE — Water Pool + CHARGED = électrocution
 # ══════════════════════════════════════════════════════
-const CROSS_SHOCK_DAMAGE     := 35
-const CROSS_STUN_DURATION    := 2.5
+const CROSS_SHOCK_DAMAGE     := 80
+const CROSS_STUN_DURATION    := 3.0
 const CROSS_SHOCK_COOLDOWN   := 4.0
 var _cross_shock_timers: Dictionary = {}   # enemy → cooldown restant
 
