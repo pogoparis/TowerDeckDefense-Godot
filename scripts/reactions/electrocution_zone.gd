@@ -2,9 +2,9 @@ extends ReactionEffect
 class_name ElectrocutionZone
 
 # ── Paramètres électrocution ──────────────────────────
-const STUN_DURATION   := 3.0    # secondes d'immobilisation
-const BURST_DAMAGE    := 40     # dégâts immédiats à l'entrée
-const TICK_DAMAGE     := 15     # dégâts par tick
+const STUN_DURATION_BASE := 3.0
+const BURST_DAMAGE_BASE  := 40
+const TICK_DAMAGE_BASE   := 15
 const TICK_RATE_SEC   := 0.35
 const ZONE_DURATION   := 3.5    # durée totale de la zone
 
@@ -19,10 +19,9 @@ func _ready():
 	radius    = 112.0
 	duration  = ZONE_DURATION
 	tick_rate = TICK_RATE_SEC
-	damage    = TICK_DAMAGE
+	damage    = int(TICK_DAMAGE_BASE * RunBonuses.get_electrocution_damage_mult())
 	z_index   = 15
 
-	# Entrée dramatique : flash + burst damage + stun
 	_trigger_entry()
 
 
@@ -44,10 +43,12 @@ func _trigger_entry():
 		if enemy.global_position.distance_to(global_position) > radius:
 			continue
 
-		enemy.take_damage(BURST_DAMAGE)
-		enemy.apply_slow(0.0, STUN_DURATION)          # stun = immobilisation totale
-		enemy.add_status(StatusIds.STUNNED, STUN_DURATION)
-		enemy.add_status(StatusIds.CHARGED, STUN_DURATION)
+		var burst: int = int(BURST_DAMAGE_BASE * RunBonuses.get_electrocution_damage_mult())
+		var stun: float = STUN_DURATION_BASE + RunBonuses.get_stun_duration_bonus()
+		enemy.take_damage(burst)
+		enemy.apply_slow(0.0, stun)
+		enemy.add_status(StatusIds.STUNNED, stun)
+		enemy.add_status(StatusIds.CHARGED, stun)
 		hit_count += 1
 
 	# 3) Texte flottant spectaculaire
@@ -59,10 +60,12 @@ func _trigger_entry():
 			Color(1.0, 1.0, 0.0),
 			2.2
 		)
+		var burst_shown: int = int(BURST_DAMAGE_BASE * RunBonuses.get_electrocution_damage_mult())
+		var stun_shown: float = STUN_DURATION_BASE + RunBonuses.get_stun_duration_bonus()
 		FloatingTextService.spawn(
 			get_tree().current_scene,
 			global_position + Vector2(0, -50),
-			str(BURST_DAMAGE) + " DMG — STUN " + str(STUN_DURATION) + "s",
+			str(burst_shown) + " DMG — STUN " + str(snapped(stun_shown, 0.1)) + "s",
 			Color(0.9, 0.9, 1.0),
 			1.6
 		)
@@ -100,15 +103,15 @@ func _damage_tick():
 			continue
 		if enemy.global_position.distance_to(global_position) > radius:
 			continue
-		enemy.take_damage(TICK_DAMAGE)
+		enemy.take_damage(damage)
 		# Maintient le stun
-		enemy.apply_slow(0.0, STUN_DURATION * 0.5)
+		enemy.apply_slow(0.0, STUN_DURATION_BASE * 0.5)
 
 		# Mini FloatingText sur chaque ennemi touché
 		FloatingTextService.spawn(
 			get_tree().current_scene,
 			enemy.global_position + Vector2(randf_range(-20, 20), -45),
-			"⚡" + str(TICK_DAMAGE),
+			"⚡" + str(damage),
 			Color(1.0, 1.0, 0.3),
 			0.9
 		)
