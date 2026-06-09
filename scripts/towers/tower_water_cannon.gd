@@ -19,7 +19,7 @@ func find_target() -> Node2D:
 			func(p): return p.phenomenon_type == PhenomenonType.Type.ELECTRIC_FIELD
 		)
 		if not electric_fields.is_empty():
-			# Priorité 1a : ennemi dans le field, en portée, PAS déjà stun
+			# Priorité 1 : ennemi dans le field, en portée, PAS déjà stun
 			for enemy in enemies:
 				if not is_instance_valid(enemy):
 					continue
@@ -30,16 +30,7 @@ func find_target() -> Node2D:
 				for field in electric_fields:
 					if field.global_position.distance_to(enemy.global_position) <= field.radius:
 						return enemy
-
-			# Priorité 1b : ennemi dans le field (tous déjà stun)
-			for enemy in enemies:
-				if not is_instance_valid(enemy):
-					continue
-				if global_position.distance_to(enemy.global_position) > attack_range:
-					continue
-				for field in electric_fields:
-					if field.global_position.distance_to(enemy.global_position) <= field.radius:
-						return enemy
+			# Si tous les mobs dans le field sont déjà stun → ciblage normal
 
 	# ── Priorité 2 : ciblage normal (premier ennemi en portée) ──
 	return super.find_target()
