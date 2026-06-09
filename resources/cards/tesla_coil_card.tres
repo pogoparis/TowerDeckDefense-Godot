@@ -17,4 +17,5 @@ tower_id = "TowerTesla"
 icon = SubResource("Resource_okjl3")
 tower_scene = ExtResource("3_8ely1")
 consume_phenomenon_type = 2
+consume_radius = 150.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"
