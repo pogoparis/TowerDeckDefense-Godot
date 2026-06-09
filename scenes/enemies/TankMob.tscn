@@ -8,8 +8,8 @@
 [node name="TankMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
 z_index = 10
 script = ExtResource("1_yasrm")
-max_hp = 150
-speed = 100.0
+max_hp = 300
+speed = 60.0
 death_explosion_scene = ExtResource("2_rikg4")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]

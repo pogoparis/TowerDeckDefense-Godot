@@ -92,6 +92,26 @@ func start_wave():
 
 	await wait_for_wave_clear()
 
+	# Bonus Ferrailleur : caps supplémentaires après la vague
+	var caps_bonus := RunBonuses.get_caps_per_wave()
+	if caps_bonus > 0:
+		Player.add_caps(caps_bonus)
+		FloatingTextService.spawn(
+			get_tree().current_scene,
+			Vector2(get_viewport().get_visible_rect().size / 2.0),
+			"+" + str(caps_bonus) + " caps (Ferrailleur)",
+			Color(1.0, 0.85, 0.2),
+			2.0
+		)
+
+	# Bonus Fouille des Décombres : pioche supplémentaire (max 4 cartes en main)
+	var draw_bonus := RunBonuses.get_post_wave_draw_bonus()
+	if draw_bonus > 0:
+		var available_slots := card_manager.max_hand_size - card_manager.hand.size()
+		if available_slots > 0:
+			card_manager.draw_to_hand(min(draw_bonus, available_slots))
+			get_tree().current_scene.refresh_hand_ui()
+
 	RewardManager.show_rewards()
 
 	while not RewardManager.reward_selected:
