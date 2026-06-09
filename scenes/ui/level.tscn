@@ -87,21 +87,20 @@ grow_vertical = 2
 [node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
 z_index = 12
 z_as_relative = false
-custom_minimum_size = Vector2(120, 170)
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = -50.0
-offset_right = 130.0
-offset_bottom = 65.0
+offset_left = -300.0
+offset_top = -175.0
+offset_right = 300.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(0.7, 0.7)
-theme_override_constants/separation = 10
+alignment = 1
+theme_override_constants/separation = 12
 
 [node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
 layout_mode = 0

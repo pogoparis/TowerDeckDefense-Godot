@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
 
-[ext_resource type="Texture2D" uid="uid://bsai2p3e7pilj" path="res://assets/cards/GRUMBOLTDECOUPE256.png" id="1_725cy"]
+[ext_resource type="Texture2D" uid="uid://bmpdg7406xgku" path="res://assets/cards/CardCanonEau512.png" id="1_725cy"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_0y8in"]
 [ext_resource type="PackedScene" uid="uid://bor8wbjduq2b7" path="res://scenes/towers/TowerWaterCannon.tscn" id="3_u0dlg"]
 
 [resource]
 script = ExtResource("2_0y8in")
 card_name = "Canon a Eau"
-description = "Envoie de l'eau"
+description = "Arrose les ennemis et applique WET. Cible en priorité les zones électriques."
 card_texture = ExtResource("1_725cy")
 mana_cost = 2
 tower_id = "TowerWaterCannon"

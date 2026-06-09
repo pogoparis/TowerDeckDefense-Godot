@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_2g46x")
 card_name = "Vega"
-description = "Le Tireur d'élite"
+description = "Tireur d'élite. Marque les cibles. Dégâts bonus si guidé laser."
 card_texture = ExtResource("1_ylls1")
 mana_cost = 2
 tower_id = "TowerVega"

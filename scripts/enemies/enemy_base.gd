@@ -15,6 +15,9 @@ var slow_multiplier := 1.0
 var slow_timer := 0.0
 var status_effects: Dictionary = {}
 
+var _knockback_cooldown := 0.0
+const KNOCKBACK_COOLDOWN := 3.0   # secondes entre deux knockbacks
+
 func _ready():
 	add_status("test", 3.0)
 
@@ -107,6 +110,9 @@ func apply_slow(multiplier: float, duration: float):
 
 
 func apply_knockback(force: float):
+	if _knockback_cooldown > 0.0:
+		return   # Immunité temporaire
+
 	var pf := get_parent()
 	if not (pf is PathFollow2D):
 		return
@@ -119,6 +125,9 @@ func apply_knockback(force: float):
 
 	# Shake du visuel pendant le recul
 	_shake_visual(0.4)
+
+	# Déclenche le cooldown
+	_knockback_cooldown = KNOCKBACK_COOLDOWN
 
 func _shake_visual(duration: float):
 	var visual := get_node_or_null("VisualRoot")
@@ -147,6 +156,9 @@ func _shake_visual(duration: float):
 func _process(delta):
 
 	update_statuses(delta)
+
+	if _knockback_cooldown > 0.0:
+		_knockback_cooldown -= delta
 
 	if slow_timer > 0:
 

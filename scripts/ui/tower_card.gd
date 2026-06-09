@@ -18,6 +18,7 @@ var _drag_emitted := false
 func setup(data: CardData):
 	card_data = data
 	texture_normal = data.card_texture
+	stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
 
 
 func set_selected(value: bool):
