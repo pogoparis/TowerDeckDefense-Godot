@@ -35,7 +35,15 @@ func _ready():
 	visible = false
 
 
-func show_phase():
+var _max_cards := 3
+
+
+func show_phase(max_cards: int = 3):
+	_max_cards = max_cards
+	if max_cards >= 3:
+		title_label.text = "PHASE DE MULLIGAN"
+	else:
+		title_label.text = "ÉCHANGE INTER-VAGUE"
 	update_count(0)
 	visible = true
 
@@ -46,6 +54,6 @@ func hide_phase():
 
 func update_count(count: int):
 	if count == 0:
-		sub_label.text = "Sélectionnez les cartes à remplacer (max 3)"
+		sub_label.text = "Sélectionnez jusqu'à %d carte(s) à remplacer" % _max_cards
 	else:
-		sub_label.text = "%d/3 carte(s) sélectionnée(s)" % count
+		sub_label.text = "%d/%d carte(s) sélectionnée(s)" % [count, _max_cards]

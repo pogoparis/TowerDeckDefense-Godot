@@ -260,11 +260,14 @@ func _physics_process(_delta):
 #          MULLIGAN
 # ==============================
 
-func start_mulligan_phase():
+var _mulligan_max_cards := 3
+
+func start_mulligan_phase(max_cards: int = 3):
+	_mulligan_max_cards = max_cards
 	mulligan_mode = true
 	selected_mulligan_cards.clear()
 	card_manager.mulligan_used = false
-	mulligan_overlay.show_phase()
+	mulligan_overlay.show_phase(max_cards)
 
 
 func _on_mulligan_validated():
@@ -289,7 +292,7 @@ func _handle_mulligan_tap(card_ui: TowerCardUI):
 		selected_mulligan_cards.erase(card_ui)
 		card_ui.set_selected(false)
 	else:
-		if selected_mulligan_cards.size() < 3:
+		if selected_mulligan_cards.size() < _mulligan_max_cards:
 			selected_mulligan_cards.append(card_ui)
 			card_ui.set_selected(true)
 

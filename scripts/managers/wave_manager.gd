@@ -35,7 +35,10 @@ func start_prep_phase():
 	var level = get_tree().current_scene
 
 	if level and level.has_method("start_mulligan_phase"):
-		level.start_mulligan_phase()
+		# Première vague : mulligan complet (max 3 cartes)
+		# Vagues suivantes : échange simple (max 1 carte)
+		var max_cards := 3 if current_wave_index == 0 else 1
+		level.start_mulligan_phase(max_cards)
 
 	wave_started = false
 	prep_running = true
