@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://7d0spyyowrme"]
 
 [ext_resource type="Script" uid="uid://burriba2vsf5v" path="res://scripts/towers/tower_tesla_coil.gd" id="1_fctnh"]
-[ext_resource type="PackedScene" uid="uid://bxjsygbigk5qg" path="res://scenes/projectiles/FrostProjectile.tscn" id="2_h1en2"]
+[ext_resource type="PackedScene" uid="uid://bxjsygbigk5qg" path="res://scenes/projectiles/ElectricProjectile.tscn" id="2_h1en2"]
 [ext_resource type="Material" uid="uid://dogs2rodkv8rm" path="res://resources/shaders/outline_buff.tres" id="3_3pltm"]
 [ext_resource type="Texture2D" uid="uid://dku5vbuc4n8w2" path="res://assets/towers/TowerThunder256.png" id="4_i5g3v"]
 

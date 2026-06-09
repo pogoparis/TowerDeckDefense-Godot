@@ -7,7 +7,7 @@ class_name ReactionManager
 
 var processed_pairs := {}
 
-const MINI_SHOCK_DAMAGE := 1
+const MINI_SHOCK_DAMAGE := 8
 const MINI_SHOCK_COOLDOWN := 1.0
 
 var mini_shock_cooldowns := {}
@@ -77,7 +77,7 @@ func trigger_mini_shock(enemy: EnemyBase):
 	FloatingTextService.spawn(
 		get_tree().current_scene,
 		enemy.global_position + Vector2(0, -30),
-		"⚡1",
+		"⚡" + str(MINI_SHOCK_DAMAGE),
 		Color.YELLOW,
 		1.0
 	)
@@ -90,10 +90,6 @@ func trigger_mini_shock(enemy: EnemyBase):
 		enemy.get_instance_id()
 	] = MINI_SHOCK_COOLDOWN
 
-	print(
-		"MINI SHOCK : ",
-		enemy.name
-	)
 
 # =====================================================
 # TERRAIN REACTIONS

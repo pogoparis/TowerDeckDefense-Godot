@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bor8wbjduq2b7"]
 
 [ext_resource type="Script" uid="uid://bhicy76pra0oe" path="res://scripts/towers/tower_water_cannon.gd" id="1_60yvw"]
-[ext_resource type="PackedScene" uid="uid://8vvvb284ury7" path="res://scenes/projectiles/FireProjectile.tscn" id="2_ovb8g"]
+[ext_resource type="PackedScene" uid="uid://8vvvb284ury7" path="res://scenes/projectiles/WaterProjectile.tscn" id="2_ovb8g"]
 [ext_resource type="Material" uid="uid://dogs2rodkv8rm" path="res://resources/shaders/outline_buff.tres" id="3_cpgrd"]
 [ext_resource type="Texture2D" uid="uid://ca5maoolbge2p" path="res://assets/towers/TowerWater256.png" id="4_jj7ov"]
 

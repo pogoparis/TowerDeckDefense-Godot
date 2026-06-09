@@ -32,6 +32,7 @@ extends Node2D
 var mulligan_mode := false
 var selected_mulligan_cards: Array = []
 var selected_card_ui: TowerCardUI = null
+var _is_dragging_card := false
 
 const TOWER_CARD_SCENE = preload("res://scenes/ui/tower_card.tscn")
 const IRONCLAD_STARTER = preload("res://resources/decks/ironclad_starter.tres")
@@ -74,64 +75,33 @@ func _ready():
 
 	tower_manager.towers_changed.connect(synergy_manager.recalculate_synergies)
 
-	card_action_panel.build_pressed.connect(_on_action_build)
 	card_action_panel.consume_pressed.connect(_on_action_consume)
 	card_manager.consume_resolved.connect(_on_consume_resolved)
 	mulligan_overlay.validated.connect(_on_mulligan_validated)
 
-	# Lance la phase de préparation (affiche le mulligan automatiquement)
 	wave_manager.start_prep_phase()
 
 
 # ==============================
-#          MULLIGAN
+#     DRAG → BUILD
 # ==============================
 
-func start_mulligan_phase():
-	mulligan_mode = true
-	selected_mulligan_cards.clear()
-	card_manager.mulligan_used = false
-	mulligan_overlay.show_phase()
+func _on_card_drag_started(card_data: CardData, _card_ui: TowerCardUI):
 
+	if mulligan_mode:
+		return
 
-func _on_mulligan_validated():
-	# Applique les échanges de cartes
-	if selected_mulligan_cards.size() > 0:
-		var cards_to_replace: Array[CardData] = []
-		for card_ui in selected_mulligan_cards:
-			cards_to_replace.append(card_ui.card_data)
-		card_manager.mulligan(cards_to_replace)
-		selected_mulligan_cards.clear()
-
-	mulligan_mode = false
-	mulligan_overlay.hide_phase()
-
-	refresh_hand_ui()
-
-	# Lance la wave
-	wave_manager.force_start_wave()
-
-
-func _handle_mulligan_tap(card_ui: TowerCardUI):
-
-	if selected_mulligan_cards.has(card_ui):
-		selected_mulligan_cards.erase(card_ui)
-		card_ui.set_selected(false)
-	else:
-		if selected_mulligan_cards.size() < 3:
-			selected_mulligan_cards.append(card_ui)
-			card_ui.set_selected(true)
-
-	mulligan_overlay.update_count(selected_mulligan_cards.size())
+	_deselect_card()
+	_is_dragging_card = true
+	card_manager.play_card(card_data)
 
 
 # ==============================
-#        CARD SELECTION
+#     TAP → CONSUME PANEL
 # ==============================
 
 func _on_card_tapped(card_data: CardData, card_ui: TowerCardUI):
 
-	# Pendant le mulligan : tap = sélectionner/désélectionner
 	if mulligan_mode:
 		_handle_mulligan_tap(card_ui)
 		return
@@ -139,6 +109,10 @@ func _on_card_tapped(card_data: CardData, card_ui: TowerCardUI):
 	# Retap sur la carte déjà sélectionnée → désélectionne
 	if selected_card_ui == card_ui:
 		_deselect_card()
+		return
+
+	# Carte sans consume → on ne fait rien (ou on pourrait montrer un feedback)
+	if not card_data.can_consume():
 		return
 
 	_select_card(card_ui)
@@ -175,22 +149,8 @@ func _deselect_card():
 
 
 # ==============================
-#        BUILD / CONSUME
+#        CONSUME
 # ==============================
-
-func _on_action_build():
-
-	if not selected_card_ui:
-		return
-
-	var card_data = selected_card_ui.card_data
-
-	card_action_panel.hide_panel()
-	selected_card_ui.set_selected(false)
-	selected_card_ui = null
-
-	card_manager.play_card(card_data)
-
 
 func _on_action_consume():
 
@@ -219,13 +179,33 @@ func _input(event: InputEvent):
 
 	var mouse_world = get_global_mouse_position()
 
-	# Escape annule tout (sauf pendant le mulligan)
+	# Escape annule tout (sauf mulligan)
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		if not mulligan_mode:
 			_deselect_card()
+			_is_dragging_card = false
 		return
 
-	# Mode CONSUME actif
+	# ── Relâche du drag → pose la tour ──────────────────
+	if _is_dragging_card and placement.is_placing():
+
+		var released := false
+
+		if event is InputEventMouseButton:
+			if not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				released = true
+		elif event is InputEventScreenTouch:
+			if not event.pressed:
+				released = true
+
+		if released:
+			_is_dragging_card = false
+			placement.try_place_tower(mouse_world)
+			refresh_hand_ui()
+			get_viewport().set_input_as_handled()
+			return
+
+	# ── Mode CONSUME actif ───────────────────────────────
 	if card_manager.is_consuming():
 
 		card_manager.update_consume_ghost(mouse_world)
@@ -241,9 +221,15 @@ func _input(event: InputEvent):
 				get_viewport().set_input_as_handled()
 				return
 
+		if event is InputEventScreenTouch and event.pressed:
+			card_manager.confirm_consume(mouse_world)
+			refresh_hand_ui()
+			get_viewport().set_input_as_handled()
+			return
+
 		return
 
-	# Mode PLACEMENT tour actif
+	# ── Mode PLACEMENT tour ──────────────────────────────
 	if placement.handle_input(event, mouse_world):
 		return
 
@@ -253,20 +239,61 @@ func _input(event: InputEvent):
 
 func _unhandled_input(event: InputEvent):
 
-	# Pendant le mulligan : pas de déselection sur la map
 	if mulligan_mode:
 		return
-
-	if card_manager.is_consuming() or placement.is_placing():
+	if card_manager.is_consuming() or placement.is_placing() or _is_dragging_card:
 		return
 
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			_deselect_card()
 
+	if event is InputEventScreenTouch and event.pressed:
+		_deselect_card()
+
 
 func _physics_process(_delta):
 	placement.current_mouse_world = get_global_mouse_position()
+
+
+# ==============================
+#          MULLIGAN
+# ==============================
+
+func start_mulligan_phase():
+	mulligan_mode = true
+	selected_mulligan_cards.clear()
+	card_manager.mulligan_used = false
+	mulligan_overlay.show_phase()
+
+
+func _on_mulligan_validated():
+
+	if selected_mulligan_cards.size() > 0:
+		var cards_to_replace: Array[CardData] = []
+		for card_ui in selected_mulligan_cards:
+			cards_to_replace.append(card_ui.card_data)
+		card_manager.mulligan(cards_to_replace)
+		selected_mulligan_cards.clear()
+
+	mulligan_mode = false
+	mulligan_overlay.hide_phase()
+
+	refresh_hand_ui()
+	wave_manager.force_start_wave()
+
+
+func _handle_mulligan_tap(card_ui: TowerCardUI):
+
+	if selected_mulligan_cards.has(card_ui):
+		selected_mulligan_cards.erase(card_ui)
+		card_ui.set_selected(false)
+	else:
+		if selected_mulligan_cards.size() < 3:
+			selected_mulligan_cards.append(card_ui)
+			card_ui.set_selected(true)
+
+	mulligan_overlay.update_count(selected_mulligan_cards.size())
 
 
 # ==============================
@@ -276,6 +303,7 @@ func _physics_process(_delta):
 func refresh_hand_ui():
 
 	_deselect_card()
+	_is_dragging_card = false
 
 	for child in tower_cards_container.get_children():
 		child.queue_free()
@@ -285,6 +313,7 @@ func refresh_hand_ui():
 		tower_cards_container.add_child(card_ui)
 		card_ui.setup(card_data)
 		card_ui.card_tapped.connect(_on_card_tapped)
+		card_ui.card_drag_started.connect(_on_card_drag_started)
 
 	update_deck_debug()
 

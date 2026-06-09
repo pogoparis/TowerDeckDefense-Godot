@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cdk4dk7llwlp1"]
 
 [ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_yasrm"]
-[ext_resource type="PackedScene" uid="uid://k7ob07va7jxb" path="res://scenes/projectiles/ExplosionDeathFire.tscn" id="2_ceoxr"]
+[ext_resource type="PackedScene" uid="uid://ccvpbgxa3hkma" path="res://scenes/impacts/DeathExplosion.tscn" id="2_rikg4"]
 [ext_resource type="Texture2D" uid="uid://cj522lt3chpud" path="res://assets/ennemies/TankSympa256.png" id="2_yasrm"]
 [ext_resource type="Script" uid="uid://n37wabgxja8j" path="res://scripts/status/status_icon_container.gd" id="4_rikg4"]
 
@@ -10,7 +10,7 @@ z_index = 10
 script = ExtResource("1_yasrm")
 max_hp = 150
 speed = 100.0
-death_explosion_scene = ExtResource("2_ceoxr")
+death_explosion_scene = ExtResource("2_rikg4")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
 z_index = 10

@@ -105,6 +105,45 @@ func apply_slow(multiplier: float, duration: float):
 	slow_multiplier = multiplier
 	slow_timer = duration
 
+
+func apply_knockback(force: float):
+	var pf := get_parent()
+	if not (pf is PathFollow2D):
+		return
+
+	# Recul progressif : tween sur le progress pour éviter la téléportation
+	var target_progress: float = max(0.0, pf.progress - force)
+	var tween := create_tween()
+	tween.tween_property(pf, "progress", target_progress, 0.4)\
+		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+
+	# Shake du visuel pendant le recul
+	_shake_visual(0.4)
+
+func _shake_visual(duration: float):
+	var visual := get_node_or_null("VisualRoot")
+	if not visual:
+		return
+
+	var origin: Vector2 = visual.position
+	var shake_tween := create_tween()
+
+	# Oscille rapidement en X (recul ressenti)
+	var steps := 6
+	for i in steps:
+		var t: float = float(i) / steps
+		var strength: float = lerp(14.0, 0.0, t)   # décroît avec le temps
+		var offset_x: float = strength * (-1.0 if i % 2 == 0 else 1.0)
+		var offset_y: float = randf_range(-strength * 0.3, strength * 0.3)
+		shake_tween.tween_property(visual, "position",
+			origin + Vector2(offset_x, offset_y),
+			duration / steps
+		).set_trans(Tween.TRANS_SINE)
+
+	# Retour en position initiale
+	shake_tween.tween_property(visual, "position", origin, 0.05)
+
+
 func _process(delta):
 
 	update_statuses(delta)

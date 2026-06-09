@@ -41,9 +41,8 @@ func spawn_impact():
 
 	var impact = impact_scene.instantiate()
 
-	impact.global_position = global_position
-
 	get_parent().add_child(impact)
+	impact.global_position = global_position
 
 
 func spawn_tower_phenomenon(_target):
