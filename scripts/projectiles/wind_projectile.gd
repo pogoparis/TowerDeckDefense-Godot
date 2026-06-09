@@ -2,7 +2,7 @@ extends BaseProjectile
 class_name WindProjectile
 
 # ── Paramètres de knockback ───────────────────────────
-@export var knockback_force := 80.0   # pixels reculés sur le chemin
+@export var knockback_force := 40.0   # pixels reculés sur le chemin
 
 # ── Visuels rafale de vent ────────────────────────────
 var _age := 0.0

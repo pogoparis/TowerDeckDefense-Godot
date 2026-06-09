@@ -117,13 +117,14 @@ func apply_knockback(force: float):
 	if not (pf is PathFollow2D):
 		return
 
-	# Recul progressif : tween sur le progress pour éviter la téléportation
-	var target_progress: float = max(0.0, pf.progress - force)
-	var tween := create_tween()
-	tween.tween_property(pf, "progress", target_progress, 0.4)\
-		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	# Recul instantané sur le progress (pas de tween : _physics_process
+	# ajoute progress chaque frame et annulerait le tween)
+	pf.progress = max(0.0, pf.progress - force)
 
-	# Shake du visuel pendant le recul
+	# Gèle le mouvement pendant 0.3s le temps que le recul soit visible
+	apply_slow(0.0, 0.3)
+
+	# Shake du visuel
 	_shake_visual(0.4)
 
 	# Déclenche le cooldown
@@ -153,12 +154,24 @@ func _shake_visual(duration: float):
 	shake_tween.tween_property(visual, "position", origin, 0.05)
 
 
+var _wet_tick_timer := 0.0
+const WET_TICK_INTERVAL := 1.0
+
 func _process(delta):
 
 	update_statuses(delta)
 
 	if _knockback_cooldown > 0.0:
 		_knockback_cooldown -= delta
+
+	# Flaque Toxique : WET inflige des dégâts si le bonus est actif
+	if has_status(StatusIds.WET):
+		var wet_dmg := RunBonuses.get_wet_tick_damage()
+		if wet_dmg > 0:
+			_wet_tick_timer -= delta
+			if _wet_tick_timer <= 0.0:
+				_wet_tick_timer = WET_TICK_INTERVAL
+				take_damage(wet_dmg)
 
 	if slow_timer > 0:
 

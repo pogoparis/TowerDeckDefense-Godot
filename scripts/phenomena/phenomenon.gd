@@ -63,6 +63,12 @@ func refresh():
 func _process(delta):
 	age += delta
 
+	# ── Cooldowns cross-shock par ennemi ──────────────
+	for key in _cross_shock_timers.keys():
+		_cross_shock_timers[key] -= delta
+		if _cross_shock_timers[key] <= 0.0:
+			_cross_shock_timers.erase(key)
+
 	# ── Contamination (statut sur ennemis) ────────────
 	contamination_timer -= delta
 	if contamination_timer <= 0.0:
@@ -115,6 +121,10 @@ func apply_contamination():
 			continue
 		if not enemy.has_status(status_id):
 			enemy.add_status(status_id, 3.0)
+
+		# Réaction croisée : Water Pool + CHARGED → électrocution immédiate
+		if phenomenon_type == PhenomenonType.Type.WATER_POOL and enemy.has_status(StatusIds.CHARGED):
+			_trigger_cross_electrocution(enemy)
 
 
 # ══════════════════════════════════════════════════════
@@ -234,6 +244,75 @@ func _draw():
 			draw_circle(Vector2.ZERO, radius, Color(0.4, 0.9, 1.0, 0.22))
 			draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 48,
 				Color(0.5, 1.0, 1.0, 0.85), 3.0)
+
+
+# ══════════════════════════════════════════════════════
+# RÉACTION CROISÉE — Water Pool + CHARGED = électrocution
+# ══════════════════════════════════════════════════════
+const CROSS_SHOCK_DAMAGE     := 35
+const CROSS_STUN_DURATION    := 2.5
+const CROSS_SHOCK_COOLDOWN   := 4.0
+var _cross_shock_timers: Dictionary = {}   # enemy → cooldown restant
+
+func _trigger_cross_electrocution(enemy: Node2D):
+	# Cooldown par ennemi pour éviter le spam
+	var enemy_id := enemy.get_instance_id()
+	if _cross_shock_timers.get(enemy_id, 0.0) > 0.0:
+		return
+	_cross_shock_timers[enemy_id] = CROSS_SHOCK_COOLDOWN
+
+	var stun: float = CROSS_STUN_DURATION + RunBonuses.get_stun_duration_bonus()
+	var dmg: int    = int(CROSS_SHOCK_DAMAGE * RunBonuses.get_electrocution_damage_mult())
+
+	enemy.take_damage(dmg)
+	enemy.apply_slow(0.0, stun)
+	enemy.add_status(StatusIds.STUNNED, stun)
+
+	# Flash visuel sur l'ennemi
+	_spawn_cross_shock_flash(enemy.global_position)
+
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(0, -65),
+		"⚡ COURT-CIRCUIT !",
+		Color(0.4, 0.9, 1.0),
+		1.4
+	)
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(0, -45),
+		str(dmg) + " DMG — STUN " + str(snapped(stun, 0.1)) + "s",
+		Color(0.85, 0.95, 1.0),
+		1.1
+	)
+
+
+func _spawn_cross_shock_flash(pos: Vector2):
+	var flash := Node2D.new()
+	get_parent().add_child(flash)
+	flash.global_position = pos
+	flash.z_index = 50
+
+	var d := Node2D.new()
+	flash.add_child(d)
+	d.draw.connect(func():
+		d.draw_circle(Vector2.ZERO, 36.0, Color(0.5, 0.9, 1.0, 0.8))
+		d.draw_circle(Vector2.ZERO, 18.0, Color(1.0, 1.0, 1.0, 1.0))
+		# Arcs courts
+		for i in 6:
+			var a: float = (TAU / 6.0) * i
+			d.draw_line(Vector2.ZERO,
+				Vector2(cos(a) * 30.0, sin(a) * 30.0),
+				Color(0.6, 1.0, 1.0, 0.9), 2.0)
+	)
+	d.queue_redraw()
+
+	var tween := flash.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(flash, "scale", Vector2(1.6, 1.6), 0.2)\
+		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	tween.tween_property(flash, "modulate:a", 0.0, 0.25)
+	tween.chain().tween_callback(flash.queue_free)
 
 
 # ══════════════════════════════════════════════════════
