@@ -19,12 +19,24 @@ func find_target() -> Node2D:
 			func(p): return p.phenomenon_type == PhenomenonType.Type.ELECTRIC_FIELD
 		)
 		if not electric_fields.is_empty():
+			# Priorité 1a : ennemi dans le field, en portée, PAS déjà stun
 			for enemy in enemies:
 				if not is_instance_valid(enemy):
 					continue
 				if global_position.distance_to(enemy.global_position) > attack_range:
 					continue
-				# Est-il physiquement dans un Electric Field ?
+				if enemy.has_status(StatusIds.STUNNED):
+					continue
+				for field in electric_fields:
+					if field.global_position.distance_to(enemy.global_position) <= field.radius:
+						return enemy
+
+			# Priorité 1b : ennemi dans le field (tous déjà stun)
+			for enemy in enemies:
+				if not is_instance_valid(enemy):
+					continue
+				if global_position.distance_to(enemy.global_position) > attack_range:
+					continue
 				for field in electric_fields:
 					if field.global_position.distance_to(enemy.global_position) <= field.radius:
 						return enemy
