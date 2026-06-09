@@ -8,8 +8,9 @@ var tower_container: Node2D
 var refill_hand_size := 3
 var max_hand_size := 4
 
-var draw_pile : Array[CardData] = []
-var hand : Array[CardData] = []
+var draw_pile   : Array[CardData] = []
+var hand        : Array[CardData] = []
+var discard_pile: Array[CardData] = []
 
 # ==================================================
 # CONSUME STATE
@@ -31,7 +32,8 @@ func start_consume_placement(card: CardData):
 	if not card.can_consume():
 		return
 
-	if Player.caps < card.consume_cost:
+	var real_cost: int = max(0, card.consume_cost - RunBonuses.get_consume_cost_reduction())
+	if Player.caps < real_cost:
 		print("NOT ENOUGH CAPS TO CONSUME")
 		return
 
@@ -79,7 +81,8 @@ func confirm_consume(world_position: Vector2):
 	if not is_consuming():
 		return
 
-	if not Player.spend_caps(_consume_card.consume_cost):
+	var real_cost: int = max(0, _consume_card.consume_cost - RunBonuses.get_consume_cost_reduction())
+	if not Player.spend_caps(real_cost):
 		cancel_consume()
 		return
 
@@ -166,6 +169,7 @@ func setup_starting_deck(cards: Array):
 
 	draw_pile.clear()
 	hand.clear()
+	discard_pile.clear()
 
 	mulligan_used = false
 
@@ -185,11 +189,15 @@ func draw_to_hand(amount: int):
 
 	for i in amount:
 
+		# Si la pioche est vide, on recycle la défausse
 		if draw_pile.is_empty():
-			return
+			if discard_pile.is_empty():
+				return
+			draw_pile = discard_pile.duplicate()
+			discard_pile.clear()
+			draw_pile.shuffle()
 
 		var card = draw_pile.pop_back()
-
 		hand.append(card)
 
 
@@ -232,8 +240,8 @@ func consume_card(card: CardData):
 		return
 
 	if hand.has(card):
-
 		hand.erase(card)
+		discard_pile.append(card)
 
 
 # ==================================================

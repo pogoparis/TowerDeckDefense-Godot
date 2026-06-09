@@ -115,6 +115,11 @@ func start_wave():
 			card_manager.draw_to_hand(min(draw_bonus, available_slots))
 			get_tree().current_scene.refresh_hand_ui()
 
+	# Dernière vague : pas de prep phase, on affiche juste la victoire
+	if current_wave_index >= waves.size():
+		wave_timer_label.text = "VICTOIRE !"
+		return
+
 	RewardManager.show_rewards()
 
 	while not RewardManager.reward_selected:
