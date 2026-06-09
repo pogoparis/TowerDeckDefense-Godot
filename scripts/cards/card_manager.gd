@@ -8,9 +8,8 @@ var tower_container: Node2D
 var refill_hand_size := 3
 var max_hand_size := 4
 
-var draw_pile   : Array[CardData] = []
-var hand        : Array[CardData] = []
-var discard_pile: Array[CardData] = []
+var draw_pile: Array[CardData] = []
+var hand     : Array[CardData] = []
 
 # ==================================================
 # CONSUME STATE
@@ -169,7 +168,6 @@ func setup_starting_deck(cards: Array):
 
 	draw_pile.clear()
 	hand.clear()
-	discard_pile.clear()
 
 	mulligan_used = false
 
@@ -189,13 +187,8 @@ func draw_to_hand(amount: int):
 
 	for i in amount:
 
-		# Si la pioche est vide, on recycle la défausse
 		if draw_pile.is_empty():
-			if discard_pile.is_empty():
-				return
-			draw_pile = discard_pile.duplicate()
-			discard_pile.clear()
-			draw_pile.shuffle()
+			return
 
 		var card = draw_pile.pop_back()
 		hand.append(card)
@@ -241,7 +234,6 @@ func consume_card(card: CardData):
 
 	if hand.has(card):
 		hand.erase(card)
-		discard_pile.append(card)
 
 
 # ==================================================

@@ -8,5 +8,5 @@
 [resource]
 script = ExtResource("2_50f57")
 deck_name = "Ironclad Starter"
-cards = Array[ExtResource("1_4ihr5")]([ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6")])
+cards = Array[ExtResource("1_4ihr5")]([ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("2_3r8ju"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6")])
 metadata/_custom_type_script = "uid://cturi3aifg006"
