@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bf4hf4srdwe86"]
+﻿[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bf4hf4srdwe86"]
 
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_2g46x"]
 [ext_resource type="Texture2D" uid="uid://ruwfmjkdjrku" path="res://assets/cards/VEGA256.png" id="1_ylls1"]
@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("1_2g46x")
 card_name = "Vega"
-description = "Tireur d'élite. Marque les cibles. Dégâts bonus si guidé laser."
+description = "Tireur d'Ã©lite. Marque les cibles. DÃ©gÃ¢ts bonus si guidÃ© laser."
 card_texture = ExtResource("1_ylls1")
-mana_cost = 2
+mana_cost = 4
 tower_id = "TowerVega"
 tower_scene = ExtResource("3_ylls1")
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

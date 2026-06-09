@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://beuo2iiyajb35"]
+﻿[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://beuo2iiyajb35"]
 
 [ext_resource type="Texture2D" uid="uid://cld0osj5vm8me" path="res://assets/cards/CardAirTower512.png" id="1_23fxp"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_xsd1k"]
@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("2_xsd1k")
 card_name = "Industrial Fan Tower"
-description = "Repousse les ennemis et les ralentit. Knockback toutes les 3 secondes."
+description = "Ralentit les ennemis et applique WINDMARK. En CONSUME, crée une zone de vent qui repousse."
 card_texture = ExtResource("1_23fxp")
-mana_cost = 2
+mana_cost = 4
 tower_id = "TowerIndustrialFan"
 tower_scene = ExtResource("3_0wbu5")
 consume_phenomenon_type = 5
