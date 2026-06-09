@@ -17,6 +17,11 @@ var damage_timer := 0.0
 const ELECTRIC_DAMAGE_INTERVAL := 0.25
 const ELECTRIC_TICK_DAMAGE     := 5
 
+# Knockback (Wind Current uniquement)
+const WIND_KNOCKBACK_FORCE    := 55.0   # pixels reculés
+const WIND_KNOCKBACK_INTERVAL := 3.0    # secondes entre deux poussées
+var _wind_knockback_timer := 0.0
+
 var power := 1
 var age   := 0.0
 var visual: Node2D = null
@@ -87,6 +92,13 @@ func _process(delta):
 		if _arc_timer <= 0.0:
 			_arc_timer = ARC_FLICKER
 			_regenerate_arcs()
+
+	# ── Knockback Wind Current ────────────────────────
+	if phenomenon_type == PhenomenonType.Type.WIND_CURRENT:
+		_wind_knockback_timer -= delta
+		if _wind_knockback_timer <= 0.0:
+			_wind_knockback_timer = WIND_KNOCKBACK_INTERVAL
+			_apply_wind_knockback()
 
 	queue_redraw()
 
@@ -244,6 +256,52 @@ func _draw():
 			draw_circle(Vector2.ZERO, radius, Color(0.4, 0.9, 1.0, 0.22))
 			draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 48,
 				Color(0.5, 1.0, 1.0, 0.85), 3.0)
+
+
+# ══════════════════════════════════════════════════════
+# WIND CURRENT — repousse les ennemis dans la zone
+# ══════════════════════════════════════════════════════
+func _apply_wind_knockback():
+	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
+	if enemy_manager == null:
+		return
+	for enemy in enemy_manager.get_all_enemies():
+		if not is_instance_valid(enemy):
+			continue
+		if global_position.distance_to(enemy.global_position) > radius:
+			continue
+		enemy.apply_knockback(WIND_KNOCKBACK_FORCE)
+		# Petite rafale visuelle sur chaque ennemi repoussé
+		_spawn_wind_puff(enemy.global_position)
+
+
+func _spawn_wind_puff(pos: Vector2):
+	var root := Node2D.new()
+	get_parent().add_child(root)
+	root.global_position = pos
+	root.z_index = 20
+	for i in 4:
+		var streak := Node2D.new()
+		root.add_child(streak)
+		streak.position = Vector2(randf_range(-12.0, 12.0), randf_range(-20.0, 20.0))
+		var length: float = randf_range(22.0, 50.0)
+		var d := Node2D.new()
+		streak.add_child(d)
+		var c := Color(0.5, 1.0, 1.0, randf_range(0.55, 0.85))
+		d.draw.connect(func():
+			d.draw_line(Vector2.ZERO, Vector2(-length, 0), c, 2.0)
+			d.draw_line(Vector2.ZERO, Vector2(-length * 0.6, 0), Color(c.r, c.g, c.b, c.a * 0.3), 5.0)
+		)
+		d.queue_redraw()
+		var tw := streak.create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(streak, "position:x", streak.position.x - randf_range(15.0, 30.0), 0.3)\
+			.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		tw.tween_property(streak, "modulate:a", 0.0, 0.3)
+		tw.chain().tween_callback(streak.queue_free)
+	var cleanup := create_tween()
+	cleanup.tween_interval(0.4)
+	cleanup.tween_callback(root.queue_free)
 
 
 # ══════════════════════════════════════════════════════

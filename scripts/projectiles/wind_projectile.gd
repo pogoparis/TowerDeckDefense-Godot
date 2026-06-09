@@ -68,9 +68,8 @@ func _draw():
 func on_hit(target):
 	target.take_damage(damage)
 	if target is EnemyBase:
-		target.apply_knockback(knockback_force)
 		target.add_status(StatusIds.WINDMARK, 1.5)
-		target.apply_slow(0.4, 1.5)
+		target.apply_slow(0.35, 1.5)   # Ralentissement 65% — pas de knockback
 
 	_spawn_wind_hit(target.global_position)
 
