@@ -76,8 +76,7 @@ func setup(card: CardData):
 	if card.can_consume():
 		var ph_name := _phenomenon_name(card.consume_phenomenon_type)
 		var ph_color := _phenomenon_color(card.consume_phenomenon_type)
-		consume_info = "\n[color=%s]⚡ Défausser → %s[/color]\n  Rayon : %.0fpx — Durée : %.0fs" % [
-			ph_color,
+		consume_info = "\n⚡ Défausser → %s\n  Rayon : %.0fpx — Durée : %.0fs" % [
 			ph_name,
 			card.consume_radius,
 			card.consume_duration
@@ -89,9 +88,9 @@ func setup(card: CardData):
 	for synergy in SynergyLibrary.get_all():
 		if not synergy.required_towers.has(card.tower_id):
 			continue
-		synergy_text += "[b]⚙ SYNERGIE[/b] — " + synergy.synergy_name + "\n"
+		synergy_text += "⚙ SYNERGIE — " + synergy.synergy_name + "\n"
 		synergy_text += "  " + " + ".join(synergy.required_tower_names) + "\n"
-		synergy_text += "  [i]" + synergy.description + "[/i]\n"
+		synergy_text += "  " + synergy.description + "\n"
 	synergy_label.text = synergy_text
 	synergy_label.visible = synergy_text != ""
 

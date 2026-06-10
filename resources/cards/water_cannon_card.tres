@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_0y8in")
 card_name = "Canon a Eau"
-description = "Arrose les ennemis et applique WET. Cible en prioritÃ© les zones Ã©lectriques."
+description = "Arrose les ennemis et applique WET. Cible en priorite les zones electriques."
 card_texture = ExtResource("1_725cy")
 mana_cost = 2
 tower_id = "TowerWaterCannon"
