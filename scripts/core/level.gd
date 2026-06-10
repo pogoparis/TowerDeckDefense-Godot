@@ -68,6 +68,7 @@ func _ready():
 	Player.caps_changed.connect(_on_caps_changed)
 	Player.base_hp_changed.connect(_on_base_hp_changed)
 	Player.wave_changed.connect(_on_wave_changed)
+	Player.ferraille_changed.connect(_on_ferraille_changed)
 
 	_on_wave_changed(Player.current_wave)
 	_on_caps_changed(Player.caps)
@@ -342,3 +343,8 @@ func _on_caps_changed(value: int):
 
 func _on_base_hp_changed(value: int):
 	$UI/RootUI/TopBar/BaseHpLabel.text = "Base : %d" % value
+
+func _on_ferraille_changed(value: int):
+	var label := $UI/RootUI/TopBar.get_node_or_null("FerrailleLabel")
+	if label:
+		label.text = "Ferraille : %d" % value

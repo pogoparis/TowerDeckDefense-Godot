@@ -4,10 +4,12 @@ extends Node
 signal caps_changed(new_caps)
 signal base_hp_changed(new_hp)
 signal wave_changed(new_wave)
+signal ferraille_changed(new_ferraille)
 
 var current_wave := 1
 var caps := 4
 var base_hp := 100
+var ferraille := 0
 
 func set_wave(value:int):
 
@@ -28,6 +30,11 @@ func spend_caps(amount:int) -> bool:
 	caps_changed.emit(caps)
 
 	return true
+
+func add_ferraille(amount: int):
+	ferraille += amount
+	ferraille_changed.emit(ferraille)
+
 
 func damage_base(amount:int):
 

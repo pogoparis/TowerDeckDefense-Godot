@@ -217,6 +217,9 @@ func die():
 
 		explosion.global_position = global_position
 
+	if scrap_reward > 0:
+		Player.add_ferraille(scrap_reward)
+
 	if enemy_manager:
 		enemy_manager.unregister_enemy(self)
 
