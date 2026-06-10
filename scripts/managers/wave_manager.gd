@@ -63,6 +63,10 @@ func force_start_wave():
 
 	prep_running = false
 
+	for i in range(5, 0, -1):
+		wave_timer_label.text = "Début dans : " + str(i)
+		await get_tree().create_timer(1.0).timeout
+
 	start_wave()
 
 
