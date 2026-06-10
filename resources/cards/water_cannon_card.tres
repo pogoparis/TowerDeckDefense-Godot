@@ -13,4 +13,6 @@ mana_cost = 2
 tower_id = "TowerWaterCannon"
 tower_scene = ExtResource("3_u0dlg")
 consume_phenomenon_type = 1
+consume_radius = 150.0
+consume_duration = 10.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"
