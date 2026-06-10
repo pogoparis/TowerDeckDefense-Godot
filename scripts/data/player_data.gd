@@ -6,7 +6,7 @@ signal base_hp_changed(new_hp)
 signal wave_changed(new_wave)
 
 var current_wave := 1
-var caps := 15
+var caps := 4
 var base_hp := 100
 
 func set_wave(value:int):
