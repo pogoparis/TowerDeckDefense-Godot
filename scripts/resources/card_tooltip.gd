@@ -1,63 +1,16 @@
 extends Panel
+## Tooltip détaillé d'une carte (nom, coûts, description, synergies).
+##
+## Le style vient de junkriot_theme.tres (variations TooltipPanel,
+## CardNameLabel, StatusText, TooltipBody, SynergyText) —
+## aucun style dans ce script.
 
-@onready var name_label      : Label        = $VBoxContainer/NameLabel
-@onready var cost_label      : Label        = $VBoxContainer/CostLabel
-@onready var description_label : RichTextLabel = $VBoxContainer/DescriptionLabel
-@onready var synergy_label   : RichTextLabel = $VBoxContainer/SynergyLabel
-
-
-func _ready():
-	_apply_panel_style()
-	_apply_label_styles()
-
-
-# ══════════════════════════════════════════════════════
-# STYLE DU PANNEAU
-# ══════════════════════════════════════════════════════
-func _apply_panel_style():
-	var style := StyleBoxFlat.new()
-	style.bg_color          = Color(0.08, 0.08, 0.12, 0.96)
-	style.border_color      = Color(0.75, 0.55, 0.15, 1.0)   # bordure dorée
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(10)
-	# Ombre portée
-	style.shadow_color  = Color(0.0, 0.0, 0.0, 0.6)
-	style.shadow_size   = 8
-	style.shadow_offset = Vector2(3, 4)
-	# Padding interne
-	style.content_margin_left   = 14
-	style.content_margin_right  = 14
-	style.content_margin_top    = 12
-	style.content_margin_bottom = 12
-	add_theme_stylebox_override("panel", style)
-
-	custom_minimum_size = Vector2(280, 0)
+@onready var name_label: Label = $VBoxContainer/NameLabel
+@onready var cost_label: Label = $VBoxContainer/CostLabel
+@onready var description_label: RichTextLabel = $VBoxContainer/DescriptionLabel
+@onready var synergy_label: RichTextLabel = $VBoxContainer/SynergyLabel
 
 
-# ══════════════════════════════════════════════════════
-# STYLE DES LABELS
-# ══════════════════════════════════════════════════════
-func _apply_label_styles():
-	# Nom de la carte — grand, doré
-	name_label.add_theme_font_size_override("font_size", 20)
-	name_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.35))
-
-	# Coût — petit, gris clair
-	cost_label.add_theme_font_size_override("font_size", 13)
-	cost_label.add_theme_color_override("font_color", Color(0.75, 0.75, 0.85))
-
-	# Description — blanc doux
-	description_label.add_theme_font_size_override("normal_font_size", 14)
-	description_label.add_theme_color_override("default_color", Color(0.92, 0.92, 0.95))
-
-	# Synergies — accent cyan
-	synergy_label.add_theme_font_size_override("normal_font_size", 13)
-	synergy_label.add_theme_color_override("default_color", Color(0.4, 0.9, 1.0))
-
-
-# ══════════════════════════════════════════════════════
-# DONNÉES
-# ══════════════════════════════════════════════════════
 func setup(card: CardData):
 	# ── Nom ──────────────────────────────────────────
 	name_label.text = card.card_name.to_upper()
@@ -75,7 +28,6 @@ func setup(card: CardData):
 	var consume_info := ""
 	if card.can_consume():
 		var ph_name := _phenomenon_name(card.consume_phenomenon_type)
-		var ph_color := _phenomenon_color(card.consume_phenomenon_type)
 		consume_info = "\n⚡ Défausser → %s\n  Rayon : %.0fpx — Durée : %.0fs" % [
 			ph_name,
 			card.consume_radius,

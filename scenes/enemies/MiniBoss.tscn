@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bminiboss001"]
+
+[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_yasrm"]
+[ext_resource type="PackedScene" uid="uid://ccvpbgxa3hkma" path="res://scenes/impacts/DeathExplosion.tscn" id="2_rikg4"]
+[ext_resource type="Texture2D" uid="uid://cj522lt3chpud" path="res://assets/ennemies/TankSympa256.png" id="2_yasrm"]
+[ext_resource type="Script" uid="uid://n37wabgxja8j" path="res://scripts/status/status_icon_container.gd" id="4_rikg4"]
+
+[node name="MiniBoss" type="Node2D" unique_id=1717610810 groups=["enemies", "level"]]
+z_index = 10
+scale = Vector2(1.6, 1.6)
+script = ExtResource("1_yasrm")
+max_hp = 800
+speed = 40.0
+scrap_reward = 10
+leak_damage = 999
+death_explosion_scene = ExtResource("2_rikg4")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=691156621]
+z_index = 10
+position = Vector2(0, -20)
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388889]
+z_index = 10
+position = Vector2(0, -5.499997)
+scale = Vector2(0.4, 0.455)
+texture = ExtResource("2_yasrm")
+
+[node name="HPBarContainer" type="Node2D" parent="." unique_id=592377227]
+z_index = 10
+position = Vector2(-30, -82)
+
+[node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162575]
+z_index = 11
+offset_right = 60.0
+offset_bottom = 7.0
+color = Color(0.85, 0.1, 0.1, 1)
+
+[node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=131817911]
+z_index = 10
+offset_right = 60.0
+offset_bottom = 7.0
+color = Color(0.09, 0.09, 0.09, 1)
+
+[node name="StatusIcons" type="Node2D" parent="." unique_id=247430250]
+z_index = 20
+position = Vector2(35, -80)
+script = ExtResource("4_rikg4")

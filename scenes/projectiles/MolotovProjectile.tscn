@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bo8q0uoy81wua"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/molotov_projectile.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://doblf2bixo4oo" path="res://scenes/impacts/ExplosionImpactFire.tscn" id="2_impact"]
+[ext_resource type="Texture2D" path="res://assets/towers/punks/CocktailMolotv.png" id="3_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m"]
+
+[node name="MolotovProjectile" type="Node2D"]
+z_index = 40
+script = ExtResource("1_script")
+impact_scene = ExtResource("2_impact")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 40
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("3_tex")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_m")

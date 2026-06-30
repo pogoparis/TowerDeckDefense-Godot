@@ -16,6 +16,10 @@ var current_mouse_world := Vector2.ZERO
 var path: Path2D
 var selected_card : CardData = null
 
+# Tutoriel : si actif, la pose n'est autorisée QUE sur cette case.
+var forced_cell_active := false
+var forced_cell := Vector2i.ZERO
+
 
 func _process(_delta):
 
@@ -101,13 +105,18 @@ func try_place_tower(mouse_world: Vector2):
 
 	var cell = grid.world_to_cell(mouse_world)
 
+	# Tutoriel : pose interdite hors de la case imposée.
+	if forced_cell_active and cell != forced_cell:
+		return
+
 	if not grid.can_place(cell):
 		return
 
 	if selected_card:
 
 		if not Player.spend_caps(selected_card.mana_cost):
-			print("NOT ENOUGH CAPS")
+			if card_manager:
+				card_manager.alert_not_enough_caps()
 			return
 
 	var final_tower = tower_manager.create_tower(
@@ -138,6 +147,11 @@ func update_ghost(grid: GridManager, mouse_world: Vector2):
 
 	var cell = grid.world_to_cell(mouse_world)
 	ghost_tower.global_position = grid.cell_to_world(cell)
+
+	# Tutoriel : seul l'emplacement imposé apparaît valide.
+	if forced_cell_active:
+		ghost_tower.modulate = VALID_COLOR if (cell == forced_cell and grid.can_place(cell)) else INVALID_COLOR
+		return
 
 	if grid.can_place(cell):
 		ghost_tower.modulate = VALID_COLOR

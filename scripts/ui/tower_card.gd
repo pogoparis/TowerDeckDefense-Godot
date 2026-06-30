@@ -31,6 +31,25 @@ func set_selected(value: bool):
 		scale = Vector2(1.0, 1.0)
 
 
+var _tuto_tween: Tween
+
+## Surbrillance pulsée pour le tutoriel : montre quelle carte jouer.
+func set_tutorial_highlight(value: bool):
+	if value:
+		if _tuto_tween and _tuto_tween.is_valid():
+			return
+		modulate = Color(1.6, 1.6, 0.7)
+		_tuto_tween = create_tween().set_loops()
+		_tuto_tween.tween_property(self, "scale", Vector2(1.18, 1.18), 0.5).set_trans(Tween.TRANS_SINE)
+		_tuto_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_SINE)
+	else:
+		if _tuto_tween and _tuto_tween.is_valid():
+			_tuto_tween.kill()
+		_tuto_tween = null
+		modulate = Color.WHITE
+		scale = Vector2.ONE
+
+
 func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)

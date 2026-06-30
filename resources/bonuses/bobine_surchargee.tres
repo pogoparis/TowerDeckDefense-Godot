@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://bonus_bobsurch01"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+
+[resource]
+script = ExtResource("1_bonus")
+rarity = "EPIC"
+title = "Bobine Surchargée"
+description = "Le Mini Shock se déclenche 2× plus souvent."
+mini_shock_cooldown_mult = 0.5
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

@@ -5,6 +5,8 @@ var selected_tower: BaseTower = null
 var tower_container: Node2D
 var towers: Array[BaseTower] = []
 signal towers_changed
+signal tower_selected(tower: BaseTower)
+signal tower_deselected
 
 
 func setup(new_tower_container: Node2D):
@@ -131,6 +133,7 @@ func select_tower(tower: BaseTower):
 
 	if selected_tower:
 		selected_tower.set_selected(true)
+		tower_selected.emit(selected_tower)
 
 func deselect_current_tower():
 
@@ -138,6 +141,7 @@ func deselect_current_tower():
 		selected_tower.set_selected(false)
 
 	selected_tower = null
+	tower_deselected.emit()
 
 func apply_bonus_to_all_towers(bonus: BonusData):
 

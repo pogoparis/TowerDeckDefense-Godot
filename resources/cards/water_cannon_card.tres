@@ -1,18 +1,18 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjuu8xpxy48c5"]
 
-[ext_resource type="Texture2D" uid="uid://bmpdg7406xgku" path="res://assets/cards/CardCanonEau512.png" id="1_725cy"]
+[ext_resource type="Texture2D" path="res://assets/cards/Card_Requin_Cracheur_900x1511.png" id="1_725cy"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_0y8in"]
 [ext_resource type="PackedScene" uid="uid://bor8wbjduq2b7" path="res://scenes/towers/TowerWaterCannon.tscn" id="3_u0dlg"]
 
 [resource]
 script = ExtResource("2_0y8in")
-card_name = "Canon a Eau"
-description = "Arrose les ennemis et applique WET. Cible en priorite les zones electriques."
+card_name = "Requin"
+description = "Le requin punk arrose les ennemis : applique WET et ralentit. Cible en priorite les zones electriques."
 card_texture = ExtResource("1_725cy")
 mana_cost = 2
 tower_id = "TowerWaterCannon"
 tower_scene = ExtResource("3_u0dlg")
 consume_phenomenon_type = 1
 consume_radius = 150.0
-consume_duration = 10.0
+consume_duration = 7.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

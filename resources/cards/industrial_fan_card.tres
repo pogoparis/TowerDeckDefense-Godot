@@ -1,16 +1,18 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://beuo2iiyajb35"]
 
-[ext_resource type="Texture2D" uid="uid://cld0osj5vm8me" path="res://assets/cards/CardAirTower512.png" id="1_23fxp"]
+[ext_resource type="Texture2D" path="res://assets/cards/Card_Souffle_Chouette_1006X1472.png" id="1_23fxp"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_xsd1k"]
 [ext_resource type="PackedScene" uid="uid://bdovl6yaysw4e" path="res://scenes/towers/TowerIndustrialFan.tscn" id="3_0wbu5"]
 
 [resource]
 script = ExtResource("2_xsd1k")
-card_name = "Industrial Fan Tower"
-description = "Ralentit les ennemis et applique WINDMARK. En CONSUME, crée une zone de vent qui repousse."
+card_name = "Chouette"
+description = "La chouette souffle l'air : ralentit et applique WINDMARK. En CONSUME, crée une bourrasque qui repousse."
 card_texture = ExtResource("1_23fxp")
 mana_cost = 2
 tower_id = "TowerIndustrialFan"
 tower_scene = ExtResource("3_0wbu5")
 consume_phenomenon_type = 5
+consume_radius = 150.0
+consume_duration = 8.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

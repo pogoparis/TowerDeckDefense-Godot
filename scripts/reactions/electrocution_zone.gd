@@ -32,11 +32,14 @@ func _trigger_entry():
 	# 1) Flash blanc-jaune instantané
 	_spawn_entry_flash()
 
+	# Image GRANDIOSE "ELECTROCHOC !!!" (au-dessus de tout, tenue + secousse).
+	OnomatopoeiaPop.spawn(get_parent(), global_position + Vector2(0, -40), "electrocution", 280.0, 0.8)
+	Juice.shake(22.0, 0.4)
+
 	# 2) Burst damage + stun sur TOUS les ennemis dans le rayon
 	if enemy_manager == null:
 		return
 
-	var hit_count := 0
 	for enemy in enemy_manager.get_all_enemies():
 		if not is_instance_valid(enemy):
 			continue
@@ -45,30 +48,10 @@ func _trigger_entry():
 
 		var burst: int = int(BURST_DAMAGE_BASE * RunBonuses.get_electrocution_damage_mult())
 		var stun: float = STUN_DURATION_BASE + RunBonuses.get_stun_duration_bonus()
-		enemy.take_damage(burst)
+		enemy.take_damage(burst, "silent")
 		enemy.apply_slow(0.0, stun)
 		enemy.add_status(StatusIds.STUNNED, stun)
 		enemy.add_status(StatusIds.CHARGED, stun)
-		hit_count += 1
-
-	# 3) Texte flottant spectaculaire
-	if hit_count > 0:
-		FloatingTextService.spawn(
-			get_tree().current_scene,
-			global_position + Vector2(0, -80),
-			"⚡ ÉLECTROCUTION ! ⚡",
-			Color(1.0, 1.0, 0.0),
-			2.2
-		)
-		var burst_shown: int = int(BURST_DAMAGE_BASE * RunBonuses.get_electrocution_damage_mult())
-		var stun_shown: float = STUN_DURATION_BASE + RunBonuses.get_stun_duration_bonus()
-		FloatingTextService.spawn(
-			get_tree().current_scene,
-			global_position + Vector2(0, -50),
-			str(burst_shown) + " DMG — STUN " + str(snapped(stun_shown, 0.1)) + "s",
-			Color(0.9, 0.9, 1.0),
-			1.6
-		)
 
 
 # ══════════════════════════════════════════════════════
@@ -103,18 +86,9 @@ func _damage_tick():
 			continue
 		if enemy.global_position.distance_to(global_position) > radius:
 			continue
-		enemy.take_damage(damage)
+		enemy.take_damage(damage, "silent")
 		# Maintient le stun
 		enemy.apply_slow(0.0, STUN_DURATION_BASE * 0.5)
-
-		# Mini FloatingText sur chaque ennemi touché
-		FloatingTextService.spawn(
-			get_tree().current_scene,
-			enemy.global_position + Vector2(randf_range(-20, 20), -45),
-			"⚡" + str(damage),
-			Color(1.0, 1.0, 0.3),
-			0.9
-		)
 
 
 # ══════════════════════════════════════════════════════

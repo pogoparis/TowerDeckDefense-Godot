@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://nnos0os1hd3j"]
+
+[ext_resource type="Script" uid="uid://om4ocje6yr3v" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://dn4aa4q2ksk01" path="res://assets/ui/Menu1920x1080.webp" id="3_iwbf0"]
+[ext_resource type="Theme" uid="uid://8q0s5yhxwuwt" path="res://resources/themes/junkriot_theme.tres" id="3_theme"]
+
+[node name="MainMenu" type="Control" unique_id=1892998403]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_menu")
+game_scene_path = "res://scenes/ui/WorldMap.tscn"
+
+[node name="Background" type="TextureRect" parent="." unique_id=869757730]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_iwbf0")
+stretch_mode = 0
+
+[node name="ImageAnchor" type="AspectRatioContainer" parent="." unique_id=682733089]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+ratio = 1.7778
+stretch_mode = 1
+
+[node name="Buttons" type="Control" parent="ImageAnchor" unique_id=978445129]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BtnPlay" type="Button" parent="ImageAnchor/Buttons" unique_id=1424788654]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.345
+anchor_right = 0.43
+anchor_bottom = 0.48
+theme_type_variation = &"GhostButton"
+
+[node name="BtnConnect" type="Button" parent="ImageAnchor/Buttons" unique_id=276578323]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.515
+anchor_right = 0.43
+anchor_bottom = 0.65
+theme_type_variation = &"GhostButton"
+
+[node name="BtnOptions" type="Button" parent="ImageAnchor/Buttons" unique_id=1880004806]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.67
+anchor_right = 0.43
+anchor_bottom = 0.81
+theme_type_variation = &"GhostButton"
+
+[node name="BtnQuit" type="Button" parent="ImageAnchor/Buttons" unique_id=1646744780]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.84
+anchor_right = 0.43
+anchor_bottom = 0.955
+theme_type_variation = &"GhostButton"
+
+[node name="PanelOptions" type="Panel" parent="." unique_id=1854757460]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -140.0
+offset_right = 240.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DarkPanel"
+
+[node name="VBox" type="VBoxContainer" parent="PanelOptions" unique_id=1965262810]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = -28.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="PanelOptions/VBox" unique_id=1021389249]
+layout_mode = 2
+theme_type_variation = &"TitleGold"
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="SFXRow" type="HBoxContainer" parent="PanelOptions/VBox" unique_id=2040380166]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="SFXLabel" type="Label" parent="PanelOptions/VBox/SFXRow" unique_id=1758054737]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_type_variation = &"FormLabel"
+text = "EFFETS SONORES"
+
+[node name="SFXSlider" type="HSlider" parent="PanelOptions/VBox/SFXRow" unique_id=1262827481]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="MusicRow" type="HBoxContainer" parent="PanelOptions/VBox" unique_id=731939675]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="MusicLabel" type="Label" parent="PanelOptions/VBox/MusicRow" unique_id=2146795451]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_type_variation = &"FormLabel"
+text = "MUSIQUE"
+
+[node name="MusicSlider" type="HSlider" parent="PanelOptions/VBox/MusicRow" unique_id=1172306699]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Spacer" type="Control" parent="PanelOptions/VBox" unique_id=2019826100]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnBack" type="Button" parent="PanelOptions/VBox" unique_id=2019826165]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RETOUR"
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1940573331]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

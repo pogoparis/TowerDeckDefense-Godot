@@ -1,45 +1,90 @@
 [gd_scene format=3 uid="uid://cdk4dk7llwlp1"]
 
-[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_yasrm"]
+[ext_resource type="Script" path="res://scripts/enemies/tank_mob.gd" id="1_tankmob"]
 [ext_resource type="PackedScene" uid="uid://ccvpbgxa3hkma" path="res://scenes/impacts/DeathExplosion.tscn" id="2_rikg4"]
-[ext_resource type="Texture2D" uid="uid://cj522lt3chpud" path="res://assets/ennemies/TankSympa256.png" id="2_yasrm"]
 [ext_resource type="Script" uid="uid://n37wabgxja8j" path="res://scripts/status/status_icon_container.gd" id="4_rikg4"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/TankDroite1.png" id="5_walk1"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/TankDroite2.png" id="7_walk3"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/tank4-1.png" id="8_land"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/rouletank1.png" id="9_roll1"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/rouletank2.png" id="10_roll2"]
+[ext_resource type="Texture2D" path="res://assets/ennemies/Boules/rouletank3.png" id="11_roll3"]
 
-[node name="TankMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_tank"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_roll1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_roll2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_roll3")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_land")
+}],
+"loop": false,
+"name": &"roll_end",
+"speed": 1.0
+}]
+
+[node name="TankMob" type="Node2D" groups=["enemies", "level"]]
 z_index = 10
-script = ExtResource("1_yasrm")
-max_hp = 300
+script = ExtResource("1_tankmob")
+max_hp = 600
 speed = 60.0
 scrap_reward = 3
+leak_damage = 3
 death_explosion_scene = ExtResource("2_rikg4")
+death_boom_scale = 1.8
+death_shake = 18.0
 
-[node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
+[node name="VisualRoot" type="Node2D" parent="."]
 z_index = 10
 position = Vector2(0, -20)
 
-[node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot"]
 z_index = 10
-position = Vector2(0, -5.499997)
-scale = Vector2(0.4, 0.45499998)
-texture = ExtResource("2_yasrm")
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_tank")
+animation = &"walk"
+autoplay = "walk"
 
-[node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
+[node name="HPBarContainer" type="Node2D" parent="."]
 z_index = 10
 position = Vector2(-16, -80)
 
-[node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
+[node name="HPFill" type="ColorRect" parent="HPBarContainer"]
 z_index = 11
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)
 
-[node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=131817910]
+[node name="HPBackground" type="ColorRect" parent="HPBarContainer"]
 z_index = 10
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(0.09009846, 0.09009849, 0.09009848, 1)
 
-[node name="StatusIcons" type="Node2D" parent="." unique_id=247430249]
+[node name="StatusIcons" type="Node2D" parent="."]
 z_index = 20
 position = Vector2(40, -78)
 script = ExtResource("4_rikg4")

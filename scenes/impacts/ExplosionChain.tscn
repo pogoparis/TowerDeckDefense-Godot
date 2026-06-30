@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b_explosionchain"]
+
+[ext_resource type="Script" path="res://scripts/impacts/explosion_chain.gd" id="1_ecfx"]
+
+[node name="ExplosionChain" type="Node2D"]
+script = ExtResource("1_ecfx")

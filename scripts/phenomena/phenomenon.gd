@@ -35,7 +35,7 @@ const ARC_FLICKER := 0.07
 func _ready():
 	create_visual()
 	if phenomenon_type == PhenomenonType.Type.ELECTRIC_FIELD:
-		duration = max(duration, 10.0)
+		duration = max(duration, 7.0)
 		_spawn_entry_flash()
 		# Frappe immédiate : pas d'attente du premier tick
 		apply_contamination()
@@ -61,7 +61,7 @@ func refresh():
 	age = 0.0
 	power    = min(power + 1, 5)
 	radius   = min(radius + 4.0, 96.0)
-	duration = min(duration + 0.5, 12.0)
+	duration = min(duration + 0.5, 8.0)
 	update_visual_scale()
 
 
@@ -131,8 +131,13 @@ func apply_contamination():
 			continue
 		if global_position.distance_to(enemy.global_position) > radius:
 			continue
-		if not enemy.has_status(status_id):
-			enemy.add_status(status_id, 3.0)
+
+		# Renouvelle le statut à chaque tick (pas seulement à la première application)
+		enemy.add_status(status_id, 3.0)
+
+		# Water Pool : ralentit fortement les ennemis dans la flaque
+		if phenomenon_type == PhenomenonType.Type.WATER_POOL:
+			enemy.apply_slow(0.25, CONTAMINATION_INTERVAL + 0.1)
 
 		# Réaction croisée : Water Pool + CHARGED → électrocution immédiate
 		if phenomenon_type == PhenomenonType.Type.WATER_POOL and enemy.has_status(StatusIds.CHARGED):
@@ -151,27 +156,21 @@ func _apply_electric_damage():
 			continue
 		if global_position.distance_to(enemy.global_position) > radius:
 			continue
-		enemy.take_damage(ELECTRIC_TICK_DAMAGE)
+		enemy.take_damage(ELECTRIC_TICK_DAMAGE, "tick")
 
-		# Si l'ennemi est WET : stun 2 secondes + texte spécial
+		# Si l'ennemi est WET : stun 2 secondes + texte spécial (affiché une seule fois)
 		if enemy.has_status(StatusIds.WET):
+			var was_stunned: bool = enemy.has_status(StatusIds.STUNNED)
 			enemy.apply_slow(0.0, 2.0)
 			enemy.add_status(StatusIds.STUNNED, 2.0)
-			FloatingTextService.spawn(
-				get_tree().current_scene,
-				enemy.global_position + Vector2(randf_range(-15, 15), -55),
-				"⚡ PARALYSÉ !",
-				Color(1.0, 1.0, 0.0),
-				1.2
-			)
-		else:
-			FloatingTextService.spawn(
-				get_tree().current_scene,
-				enemy.global_position + Vector2(randf_range(-15, 15), -40),
-				"⚡" + str(ELECTRIC_TICK_DAMAGE),
-				Color(1.0, 1.0, 0.3),
-				0.8
-			)
+			if not was_stunned:
+				FloatingTextService.spawn(
+					get_tree().current_scene,
+					enemy.global_position + Vector2(randf_range(-15, 15), -55),
+					"⚡ PARALYSÉ !",
+					Color(1.0, 1.0, 0.0),
+					1.2
+				)
 
 
 # ══════════════════════════════════════════════════════
@@ -322,7 +321,7 @@ func _trigger_cross_electrocution(enemy: Node2D):
 	var stun: float = CROSS_STUN_DURATION + RunBonuses.get_stun_duration_bonus()
 	var dmg: int    = int(CROSS_SHOCK_DAMAGE * RunBonuses.get_electrocution_damage_mult())
 
-	enemy.take_damage(dmg)
+	enemy.take_damage(dmg, "silent")
 	enemy.apply_slow(0.0, stun)
 	enemy.add_status(StatusIds.STUNNED, stun)
 
@@ -335,13 +334,6 @@ func _trigger_cross_electrocution(enemy: Node2D):
 		"⚡ COURT-CIRCUIT !",
 		Color(0.4, 0.9, 1.0),
 		1.4
-	)
-	FloatingTextService.spawn(
-		get_tree().current_scene,
-		enemy.global_position + Vector2(0, -45),
-		str(dmg) + " DMG — STUN " + str(snapped(stun, 0.1)) + "s",
-		Color(0.85, 0.95, 1.0),
-		1.1
 	)
 
 
@@ -381,13 +373,13 @@ func _spawn_entry_flash():
 	add_child(flash)
 	flash.z_index = 10
 
-	var draw := Node2D.new()
-	flash.add_child(draw)
-	draw.draw.connect(func():
-		draw.draw_circle(Vector2.ZERO, radius * 1.1, Color(0.9, 1.0, 0.4, 0.7))
-		draw.draw_circle(Vector2.ZERO, radius * 0.5,  Color(1.0, 1.0, 0.7, 0.9))
+	var draw_node := Node2D.new()
+	flash.add_child(draw_node)
+	draw_node.draw.connect(func():
+		draw_node.draw_circle(Vector2.ZERO, radius * 1.1, Color(0.9, 1.0, 0.4, 0.7))
+		draw_node.draw_circle(Vector2.ZERO, radius * 0.5,  Color(1.0, 1.0, 0.7, 0.9))
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := flash.create_tween()
 	tween.set_parallel(true)

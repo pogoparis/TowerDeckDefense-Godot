@@ -1,384 +1,391 @@
-# JUNKRIOT 2.0 — Bible de jeu
-> Document de référence — mis à jour le 09/06/2026
-> À modifier librement pour définir la direction future.
+# BIBLE JUNKRIOT 2.0
+> Document de référence complet — état du projet au 2026-06-10  
+> Destination : transmettre le contexte à un autre IA ou collaborateur
 
 ---
 
-## 0. PRINCIPES FONDATEURS
+## 0. VISION & PRINCIPES FONDATEURS
 
-> Ces règles protègent le concept. Si l'une d'elles est violée, Junkriot redevient un Tower Defense classique.
+**Junkriot 2.0** est un tower defense avec mécanique de deck building.  
+Chaque carte a une double utilité :
+- **BUILD (poser)** : déploie une tour permanente sur la grille
+- **CONSUME (défausser)** : détruit la carte pour créer un phénomène de zone temporaire
 
+### Hiérarchie de puissance
 ```
-UN PHÉNOMÈNE DOIT ÊTRE PLUS PUISSANT QU'UNE TOUR.
-UNE RÉACTION MAJEURE DOIT ÊTRE PLUS PUISSANTE QU'UN PHÉNOMÈNE.
-```
-
-```
-TOUR  <  PHÉNOMÈNE  <  RÉACTION MAJEURE
-```
-
-```
-Si le joueur ne consomme jamais ses cartes → le design a échoué.
-Si le joueur consomme parfois ses cartes  → le concept fonctionne.
-Si le joueur hésite constamment entre BUILD et CONSUME → le cœur du jeu est trouvé.
+TOUR (dégâts continus) < PHÉNOMÈNE (zone, durée) < RÉACTION MAJEURE (burst dévastateur)
 ```
 
-La vraie question du prototype n'est pas *"combien d'éléments avons-nous ?"* mais :
-**"BUILD / CONSUME crée-t-il une décision réellement intéressante ?"**
+### ADN du jeu
+> *"Le but de Junkriot n'est pas de pousser le joueur à BUILD.*  
+> *Le but de Junkriot n'est pas de pousser le joueur à CONSUME.*  
+> *Le but de Junkriot est de créer une hésitation permanente entre BUILD et CONSUME."*
+
+Le joueur consomme ses cartes **parce que les réactions sont incroyables**, pas parce que BUILD est trop cher. La décision a du poids parce que **les deux options coûtent une carte définitivement**.
+
+### Philosophie économique validée
+- BUILD = 2 caps, CONSUME = 2 caps — **même coût intentionnel**
+- Le poids de la décision vient du fait que la **carte est brûlée**, pas du coût en caps
+- Les phénomènes et réactions sont **volontairement forts** pour donner envie de CONSUME
+- Ne jamais forcer CONSUME par la contrainte économique — le séduire par la puissance
+
+### Règle absolue
+- Toute carte **jouée** (BUILD) est **brûlée** — retirée définitivement du jeu
+- Toute carte **défaussée** (CONSUME) est **brûlée** — aucun recyclage
+- Il n'y a pas de défausse, pas de cimetière : la pioche se vide et c'est tout
 
 ---
 
-## 1. CONCEPT GÉNÉRAL
+## 1. TECHNOLOGIES
 
-Deck Tower Defense. Le joueur pose des tours et gère une main de cartes. Chaque carte a deux usages :
-
-```
-Carte
-├─ BUILD   → pose une tour (dégâts continus, statut sur les ennemis)
-└─ CONSUME → défausse la carte, crée un phénomène de zone (plus puissant)
-```
-
-```
-Tour → applique un Statut
-Carte consommée → crée un Phénomène
-Statut A + Statut B → déclenche une Réaction
-```
-
-Le CONSUME est encouragé : il est moins cher que le BUILD, mais on perd la carte.
-La tension vient de ce choix constant : poser une tour durable ou déclencher un effet immédiat décisif ?
+- **Moteur** : Godot 4.6
+- **Langage** : GDScript (typage statique préféré)
+- **Plateforme cible** : PC (prototype), mobile envisagé
+- **Architecture** : `level.gd` est le chef d'orchestre — il instancie et connecte les managers, ne contient pas de logique métier
 
 ---
 
-## 2. SYSTÈME DE CARTES
+## 2. ÉCONOMIE
 
-### Main & Pioche
-| Paramètre | Valeur |
-|---|---|
-| Taille de main max | 4 cartes |
-| Refill post-vague | 3 cartes |
-| Deck de départ | 9 cartes (Ironclad Starter) |
+| Ressource | Départ | Gain par vague | Source autre |
+|-----------|--------|----------------|--------------|
+| **Caps** | 4 | +3 après chaque vague | RunBonuses (Ferrailleur) |
+| **Ferraille** | 0 | — | +1 par SimpleMob/ExplosiveMob tué, +3 par TankMob, +10 par MiniBoss |
 
-### Composition du deck de départ (Ironclad Starter)
-- Canon à Eau × 3
-- Bobine Tesla × 3
-
-*Industrial Fan, Vega : hors du prototype V1. Ni dans le deck, ni dans les récompenses.*
-
-### Actions sur une carte
-- **BUILD** (coût : **4 caps**) → pose la tour sur la grille, carte retirée
-- **CONSUME** (coût : **2 caps**) → défausse la carte, crée un phénomène, carte retirée
-
-> BUILD est plus cher que CONSUME : on encourage l'expérimentation des phénomènes.
-
-### Phase de mulligan / échange
-- **Vague 1** : Mulligan complet — échanger jusqu'à **3 cartes** avant la vague
-- **Vague 2+** : Échange simple — échanger **1 seule carte** entre les vagues
-- Les cartes sont remplacées par des cartes de la pioche
-- L'échange se confirme via le bouton "Valider"
-
-### Économie (Caps)
-- Démarrage : **15 caps** (permet d'expérimenter dès le début)
-- Après chaque vague : **+3 caps automatiques**
-- Bonus Ferrailleur : +3 caps supplémentaires par vague
+- **Poser une tour** : 2 caps
+- **Consommer une carte** : 2 caps
+- La ferraille est une monnaie future pour les améliorations de tour (non implémenté)
 
 ---
 
-## 3. LES TOURS (CARTES BUILD)
+## 3. DECK DE DÉPART — Ironclad Starter
+
+10 cartes totales, toutes brûlées à l'usage :
+- **Canon à Eau** × 5 (`water_cannon_card.tres`)
+- **Bobine Tesla** × 5 (`tesla_coil_card.tres`)
+
+Fichier : `resources/decks/ironclad_starter.tres`
+
+---
+
+## 4. CARTES
 
 ### Canon à Eau
-| Stat | Valeur |
-|---|---|
-| Dégâts | 10 (base) |
-| Cadence | 0.8s |
-| Portée | 200 |
-| Élément | WATER |
-| Phénomène CONSUME | WATER_POOL (rayon 96, durée 6s) |
-| Coût BUILD | 4 caps |
+| Propriété | Valeur |
+|-----------|--------|
+| Coût BUILD | 2 caps |
 | Coût CONSUME | 2 caps |
-
-**Comportement spécial** : Cible en priorité les ennemis à l'intérieur d'un Electric Field actif.
-**Statut appliqué** : WET
-
----
+| Tour déployée | TowerWaterCannon |
+| Phénomène créé | WATER_POOL |
+| Rayon phénomène | 150 px |
+| Durée phénomène | 10 s |
 
 ### Bobine Tesla
-| Stat | Valeur |
-|---|---|
-| Dégâts | 5 (base) |
-| Cadence | 0.8s |
-| Portée | 180 |
-| Élément | ELECTRIC |
-| Phénomène CONSUME | ELECTRIC_FIELD (rayon 96, durée min 10s) |
-| Coût BUILD | 4 caps |
+| Propriété | Valeur |
+|-----------|--------|
+| Coût BUILD | 2 caps |
 | Coût CONSUME | 2 caps |
-
-**Statut appliqué** : CHARGED
-**Déclencheur** : Mini Shock si la cible est WET (via ReactionManager)
-
----
-
-### Industrial Fan
-| Stat | Valeur |
-|---|---|
-| Dégâts | 10 (base) |
-| Cadence | 0.8s |
-| Portée | 180 |
-| Élément | NATURE |
-| Phénomène CONSUME | WIND_CURRENT (rayon 96, durée 6s) |
-| Coût BUILD | 4 caps |
-| Coût CONSUME | 2 caps |
-
-**Comportement** : La tour **ralentit** les ennemis (slow 35% pendant 1.5s) + applique WINDMARK.
-Le knockback appartient **exclusivement** au phénomène Wind Current, pas à la tour.
+| Tour déployée | TowerTeslaCoil |
+| Phénomène créé | ELECTRIC_FIELD |
+| Rayon phénomène | 150 px |
+| Durée phénomène | 10 s (forcée dans `_ready`) |
 
 ---
 
-### Vega *(à réévaluer)*
-| Stat | Valeur |
-|---|---|
-| Dégâts | à définir |
-| Cadence | 1.3s |
-| Portée | 250 |
-| Élément | AIR |
-| Phénomène CONSUME | **aucun** |
-| Coût BUILD | 4 caps |
+## 5. TOURS
 
-**Problème** : Vega n'est pas lisible dans le concept BUILD/CONSUME. Canon à Eau, Bobine Tesla, Industrial Fan ont chacun un phénomène évident. Vega est un vestige de l'ancien projet.
+### Architecture commune (`base_tower.gd`)
+- `base_damage`, `base_fire_rate = 0.8s`, `base_range = 120px`
+- `element_type` (WATER / ELECTRIC / NONE…)
+- `find_target()` → retourne le premier ennemi en portée (override possible)
 
-**Options à trancher** :
-- Donner à Vega un phénomène CONSUME clair (ex : zone de snipe, marque de zone)
-- Le remplacer par une tour qui s'inscrit mieux dans la logique élémentaire
-- Le garder comme tour "pure DPS" sans phénomène, si cette niche est utile
+### TowerWaterCannon
+**Ciblage prioritaire** (ordre décroissant) :
+1. Ennemi dans un Electric Field, **pas WET**, **pas stun** — le plus avancé
+2. Ennemi dans un Electric Field, **pas stun** (même WET — pour déclencher COURT-CIRCUIT)
+3. Ennemi en portée, **pas WET** — le plus avancé
+4. Fallback : n'importe quel ennemi en portée
 
----
-
-## 4. LES PHÉNOMÈNES (CARTES CONSUME)
-
-> Rappel : un phénomène DOIT être plus puissant qu'une tour.
-
-Les phénomènes sont des zones temporaires créées en défaussant une carte.
-Rayon et durée sont modifiables par les bonus (Zone Étendue, Persistance).
-
-### 🟢 WATER_POOL — validé
-- **Durée** : 6s
-- **Rayon** : 96
-- **Effet** : applique WET toutes les 0.5s aux ennemis dans la zone
-- **Réaction croisée** : ennemi CHARGED dans la zone → **⚡ COURT-CIRCUIT !** (35 dégâts, stun 2.5s, cooldown 4s/ennemi)
-
-### 🟢 ELECTRIC_FIELD — validé
-- **Durée** : minimum 10s
-- **Rayon** : 96
-- **Effet** : applique CHARGED + 5 dégâts toutes les 0.25s à tous les ennemis
-- **Réaction croisée** : ennemi WET dans la zone → stun 2s + "⚡ PARALYSÉ !"
-- Flash d'entrée spectaculaire, arcs électriques animés
-
-> ⚠️ Ces deux phénomènes sont à valider en priorité. Sont-ils amusants ? Est-ce que leur interaction crée un moment "AH OUAIS" ?
-
-### 🟡 WIND_CURRENT — implémenté, à évaluer
-- **Durée** : 6s
-- **Rayon** : 96
-- **Effet** : applique WINDMARK toutes les 0.5s
-- **Knockback** : toutes les 3 secondes, repousse de 55px + rafale visuelle cyan
-
-### 🔴 FIRE_ZONE — non implémenté
-- Applique BURNING *(statut sans effet pour l'instant)*
-
-### 🔴 THORN_PATCH — non implémenté
-- Applique ROOTED *(statut sans effet pour l'instant)*
-
-> Recommandation : se concentrer sur Water Pool + Electric Field jusqu'à validation du fun. Ajouter Wind/Fire/Thorn ensuite seulement.
+### TowerTeslaCoil
+**Ciblage prioritaire** :
+1. Ennemi en portée **pas STUNNED**
+2. Fallback : n'importe quel ennemi en portée
 
 ---
 
-## 5. LES RÉACTIONS
-
-> Rappel : une réaction majeure DOIT être plus puissante qu'un phénomène.
-> Le joueur doit dire "AH OUAIS." quand ça se déclenche.
-
-### Mini Shock (automatique, faible)
-- **Condition** : ennemi WET + CHARGED simultanément
-- **Dégâts** : 8 base (+ bonus Court-Circuit)
-- **Cooldown** : 1.0s par ennemi
-- **Rôle** : réaction de base, lisible, compréhensible même sans lire les règles
-
-### Électrocution (majeure, via ElectrocutionZone)
-- **Condition** : déclenchée explicitement (carte CONSUME ou mécanique future)
-- **Burst initial** : 100 dégâts (× Électrocution Fatale) + stun 4s — volontairement abusé pour le prototype
-- **Ticks** : 20 dégâts / 0.35s pendant 3.5s
-- **Rayon** : 112
-- **Visuel** : arcs électriques, rayons depuis le centre, flash d'entrée
-- **Ambition** : doit être le moment où la vague bascule
-
-### Court-Circuit (Water Pool + ennemi CHARGED)
-- **Condition** : ennemi CHARGED dans une zone Water Pool
-- **Dégâts** : 80 (× Électrocution Fatale) — volontairement abusé pour le prototype
-- **Stun** : 3s (+ Paralysie Prolongée)
-- **Cooldown** : 4s par ennemi
-- **Visuel** : flash cyan, arcs courts
-
-### PARALYSÉ (Electric Field + ennemi WET)
-- **Condition** : ennemi WET dans un Electric Field
-- **Stun** : 2s supplémentaires
-- **Visuel** : texte "⚡ PARALYSÉ !"
-
----
-
-## 6. LES STATUTS
-
-| Statut | ID | Effet actuel | État |
-|---|---|---|---|
-| WET | `wet` | Permet Mini Shock si CHARGED. Tick dégâts si Flaque Toxique. | ✅ |
-| CHARGED | `charged` | Permet Mini Shock si WET. Court-Circuit si dans Water Pool. | ✅ |
-| STUNNED | `stunned` | Vitesse = 0 pendant la durée. | ✅ |
-| WINDMARK | `windmark` | Appliqué par Industrial Fan. Effet synergique à définir. | 🟡 |
-| BURNING | `burning` | Statut codé, aucun effet pour l'instant. | 🔴 |
-| ROOTED | `rooted` | Statut codé, aucun effet pour l'instant. | 🔴 |
-
----
-
-## 7. LES ENNEMIS
+## 6. ENNEMIS
 
 ### SimpleMob
-| Stat | Valeur |
-|---|---|
-| HP | 50 |
-| Vitesse | 150 px/s |
-| Vague | 1 |
+- HP : ~30, Vitesse : 200, Ferraille : 1 (défaut)
 
 ### TankMob
-| Stat | Valeur |
-|---|---|
-| HP | 300 |
-| Vitesse | 60 px/s |
-| Vague | 2 |
+- HP : 260, Vitesse : 60, Ferraille : 3
 
-### ExplosiveMob *(comportement à définir)*
-| Stat | Valeur |
-|---|---|
-| HP | 100 |
-| Vitesse | 150 px/s |
-| Vague | 3 |
+### ExplosiveMob
+- HP : 100, Vitesse : 150, Ferraille : 1
+- Scale racine : 0.6 (plus petit visuellement)
 
-**Knockback** : cooldown de 3s par ennemi. Recul instantané de N pixels + freeze 0.3s.
+### MiniBoss (vague 3)
+- HP : 800, Vitesse : 40, Ferraille : 10
+- Scale racine : 1.6 (visuellement grand)
+- Barre de vie **rouge**
+- Spawn 3s après le dernier mob de la vague 3
 
----
-
-## 8. LES VAGUES
-
-| Vague | Ennemi | Nombre | Intervalle | Vitesse |
-|---|---|---|---|---|
-| 1 | SimpleMob | 6 | 3.0s | 200 px/s |
-| 2 | TankMob | 3 | 5.0s | 80 px/s |
-| 3 | ExplosiveMob | 6 | 3.0s | 100 px/s |
-
-**Design vague 2** : 3 tanks très lents et très résistants. Avec 2 tours seules, le joueur passe tout juste. Il faut utiliser au moins un CONSUME pour s'en sortir confortablement. Cette vague valide la mécanique BUILD/CONSUME.
-
-**Temps de préparation** : 20 secondes entre chaque vague.
+Tous les ennemis héritent de `enemy_base.gd` et utilisent `PathFollow2D.progress` pour avancer sur le chemin.
 
 ---
 
-## 9. LES BONUS (RÉCOMPENSES INTER-VAGUES)
+## 7. STATUTS (`status_ids.gd`)
 
-Après chaque vague, le joueur choisit 1 bonus parmi une sélection.
+| Constante | Valeur string | Icône | Couleur tint |
+|-----------|--------------|-------|-------------|
+| `WET` | "wet" | WaterIcon64.png | blanc |
+| `CHARGED` | "charged" | ThunderIcon64.png | jaune |
+| `STUNNED` | "stunned" | WindIcon64.png | bleu clair |
+| `BURNING` | "burning" | FireIcon64.png | blanc |
+| `ROOTED` | "rooted" | NatureIcon64.png | blanc |
+| `WINDMARK` | "windmark" | WindIcon64.png | blanc |
 
-### Bonus Tours
-| Titre | Rareté | Effet |
-|---|---|---|
-| Munitions Renforcées | COMMON | +8 dégâts à toutes les tours |
-| Canon Long | COMMON | +40 portée à toutes les tours |
-| Mécanisme Huilé | RARE | Cadence de tir +25% |
-
-### Bonus Eau
-| Titre | Rareté | Effet |
-|---|---|---|
-| Canon à Eau Modifié | RARE | Statut WET dure 2s de plus |
-| Flaque Toxique | RARE | Les ennemis WET subissent 3 dégâts/s |
-
-### Bonus Électricité
-| Titre | Rareté | Effet |
-|---|---|---|
-| Court-Circuit | COMMON | Mini Shock inflige +10 dégâts |
-| Bobine Surchargée | EPIC | Mini Shock se déclenche 2× plus souvent |
-| Électrocution Fatale | EPIC | Dégâts d'Électrocution × 1.5 |
-| Paralysie Prolongée | RARE | Durée du stun +1.5s |
-
-### Bonus Phénomènes
-| Titre | Rareté | Effet |
-|---|---|---|
-| Zone Étendue | RARE | Rayon de tous les phénomènes × 1.3 |
-| Persistance | RARE | Tous les phénomènes durent +4s |
-
-### Bonus Économie / Cartes
-| Titre | Rareté | Effet |
-|---|---|---|
-| Sacrifice Économique | EPIC | CONSUME coûte 1 cap de moins |
-| Ferrailleur | COMMON | +3 caps au début de chaque vague |
-| Fouille des Décombres | RARE | Pioche 1 carte supplémentaire après vague (max 4) |
+Gérés dans `enemy_base.gd` → `status_effects: Dictionary`  
+Affichage : `StatusIconContainer` attaché à chaque ennemi (scripts/status/status_icon_container.gd)
 
 ---
 
-## 10. SYNERGIES CONFIRMÉES
+## 8. PHÉNOMÈNES
 
-| Combo | Résultat |
-|---|---|
-| Tour Eau + Tour Électrique | Mini Shock automatique (WET + CHARGED) |
-| Electric Field + ennemi WET | Stun 2s + PARALYSÉ |
-| Water Pool + ennemi CHARGED | Court-Circuit (35 dégâts + stun 2.5s) |
-| Tour Eau placée près d'un Electric Field | Cible en priorité les ennemis dans le champ |
-| CONSUME Industrial Fan | Le phénomène repousse, la tour ralentit |
+Créés par CONSUME d'une carte. Gérés par `PhenomenonManager`.  
+Script principal : `scripts/phenomena/phenomenon.gd`
 
----
+### WATER_POOL
+- Durée : 10s, Rayon : 150px
+- Applique **WET** (3s) à chaque ennemi dans la zone toutes les 0.5s (renouvelé à chaque tick)
+- **Ralentit à 25% de vitesse** (`apply_slow(0.25, ...)`) tant que l'ennemi est dans la flaque
+- Réaction croisée : si ennemi est CHARGED → **COURT-CIRCUIT** (cooldown 4s par ennemi)
 
-## 11. À FAIRE / À DÉCIDER
+### ELECTRIC_FIELD
+- Durée : 10s (forcée dans `_ready`), Rayon : 150px
+- Inflige **5 dmg/tick** (toutes les 0.25s)
+- Applique **CHARGED** (3s)
+- Réaction : si ennemi WET → **PARALYSÉ** (stun 2s + slow total, 0 vitesse)
+  - Texte "⚡ PARALYSÉ !" affiché **une seule fois** par nouvelle application de stun
 
-### Priorité 1 — valider le fun
-- [ ] **BUILD = 4 / CONSUME = 2 / 15 caps** : implémenter et tester
-- [ ] **La vague 2 valide-t-elle BUILD/CONSUME ?** Jouer sans CONSUME, puis avec. Est-ce décisif ?
-- [ ] **Water Pool + Electric Field** : sont-ils assez puissants pour créer un "AH OUAIS" ?
-
-### Priorité 2 — design en attente
-- [ ] **Vega** : garder, refondre ou supprimer ? Doit avoir un phénomène CONSUME ou une niche claire
-- [ ] **WINDMARK** : quel effet synergique ? (ex : les ennemis marqués subissent plus de dégâts ?)
-- [ ] **ExplosiveMob** : explose à la mort ? dégâts de zone ?
-- [ ] **BURNING / ROOTED** : statuts à connecter à des phénomènes futurs (Fire Zone, Thorn Patch)
-
-### Priorité 3 — contenu futur
-- [ ] **Nouvelles tours** liées aux phénomènes Fire et Thorn
-- [ ] **Cartes récompenses** : créer les CardData pour distribuer les 14 bonus
-- [ ] **Vague 4+** : progression et boss
-
-### Technique
-- [ ] **Anciens bonus** (sharpened_ammo, long_barrel, etc.) : à nettoyer ou remplacer par les 14 nouveaux
-- [ ] **base_damage de Vega** : null dans le .tscn, à fixer
-- [ ] **Description industrial_fan_card** : dit encore "Knockback toutes les 3s" — à corriger
+### WIND_CURRENT
+- Knockback périodique (toutes les 3s, force 55)
+- Knockback instantané : `pf.progress -= force` + `apply_slow(0.0, 0.3)`
+- La **tour Industrial Fan** ralentit uniquement (pas de knockback direct)
 
 ---
 
-## 12. ARCHITECTURE TECHNIQUE (RÉFÉRENCE RAPIDE)
+## 9. RÉACTIONS
 
-| Script | Rôle |
-|---|---|
-| `card_manager.gd` | Main, pioche, BUILD, CONSUME |
-| `wave_manager.gd` | Spawn des vagues, prep phase, récompenses |
-| `reaction_manager.gd` | Vérifie WET+CHARGED → Mini Shock chaque frame |
-| `phenomenon_manager.gd` | Crée et suit les phénomènes actifs |
-| `phenomenon.gd` | Logique d'une zone (contamination, dégâts, knockback) |
-| `enemy_base.gd` | HP, statuts, slow, knockback, mort |
-| `base_tower.gd` | Stats, cadence, ciblage, bonus de run |
-| `run_bonuses.gd` | Autoload — getters agrégés sur tous les bonus possédés |
-| `player_data.gd` | Autoload Player — caps, HP de base, numéro de vague |
+### Mini Shock (automatique, passif)
+- **Déclencheur** : ennemi possède WET + CHARGED simultanément
+- **Dégâts** : 8 + `RunBonuses.get_mini_shock_damage_bonus()`
+- **Cooldown** : 1s normal, **2s si ennemi déjà STUNNED** (évite le spam sur mob paralysé)
+- Vérifié chaque frame dans `ReactionManager._process()` → `check_contamination_reactions()`
 
-### Règles de la main
+### PARALYSÉ (Electric Field + ennemi WET)
+- Stun 2s + vitesse 0
+- Texte flottant unique par application
+- Géré dans `phenomenon.gd → _apply_electric_damage()`
+
+### COURT-CIRCUIT (Water Pool + ennemi CHARGED)
+- **Dégâts** : 80 × `RunBonuses.get_electrocution_damage_mult()`
+- **Effet** : stun 3s + vitesse 0
+- Cooldown 4s par ennemi
+- Texte : "⚡ COURT-CIRCUIT !"
+- Géré dans `phenomenon.gd → _trigger_cross_electrocution()`
+
+### ÉLECTROCUTION (Water Pool + Electric Field qui se chevauchent)
+- Deux phénomènes proches → fusionnent en `ElectrocutionZone`
+- Burst 100 dmg + tick 20 dmg + stun
+- Les deux phénomènes sont **détruits** à la réaction
+- Géré dans `ReactionManager → trigger_electrocution()`
+
+---
+
+## 10. PHASE DE JEU — DÉROULEMENT
+
 ```
-max_hand_size    = 4
-refill_hand_size = 3   (pioche automatique fin de vague)
-mulligan vague 1 = max 3 cartes échangées
-échange vague 2+ = max 1 carte échangée
+[MULLIGAN] → [COMPTE À REBOURS 5s] → [VAGUE] → [ATTENTE FIN VAGUE]
+    → [+3 caps] → [draw jusqu'à main pleine] → [RÉCOMPENSE] → [MULLIGAN suivant]
 ```
 
-### Coûts
+### Mulligan
+- **Avant vague 1** : échange jusqu'à 3 cartes
+- **Inter-vague** : échange 1 carte maximum
+- Overlay : "PHASE DE MULLIGAN" / "ÉCHANGE INTER-VAGUE" selon la vague
+- Après validation : compte à rebours 5s avant le début de la vague
+
+### Main & Pioche
+- `max_hand_size = 4`, `refill_hand_size = 3`
+- Pas de défausse — les cartes brûlées sont retirées définitivement
+- `draw_to_hand()` : si pioche vide → stop, pas de recyclage
+
+---
+
+## 11. VAGUES
+
+| Vague | Ennemis | Nombre | Intervalle | Vitesse | Boss |
+|-------|---------|--------|------------|---------|------|
+| 1 | SimpleMob | 6 | 3s | 200 | — |
+| 2 | TankMob | 3 | 5s | 80 | — |
+| 3 | ExplosiveMob | 6 | 3s | 100 | MiniBoss (+3s délai) |
+
+**WaveData** (`scripts/resources/wave_data.gd`) :
+```gdscript
+@export var enemy_scene: PackedScene
+@export var enemy_count := 10
+@export var spawn_interval := 1.0
+@export var enemy_speed := 70.0
+@export var boss_scene: PackedScene = null   # optionnel
+@export var boss_delay := 3.0
 ```
-BUILD   = 4 caps  (pose une tour permanente)
-CONSUME = 2 caps  (phénomène temporaire mais plus puissant)
-Caps de départ = 15
+Le boss spawn après le dernier mob. Le WaveTimerLabel affiche "MINIBOSS !" pendant 1.5s.
+
+---
+
+## 12. ARCHITECTURE CODE
+
+### Chef d'orchestre : `level.gd`
+- Instancie et connecte tous les managers via `setup()`
+- Ne contient pas de logique métier
+- Connecte les signaux Player (caps, HP, wave, ferraille) aux fonctions HUD
+- Aucun style en code : tout le style UI vient de `resources/themes/junkriot_theme.tres` (voir `docs/UI_STYLE_GUIDE.md`)
+
+### Autoloads
+| Nom | Fichier | Rôle |
+|-----|---------|------|
+| `Player` | `scripts/data/player_data.gd` | caps, HP base, ferraille, vague — signaux |
+| `RunBonuses` | `scripts/core/run_bonuses.gd` | multiplicateurs bonus de run |
+| `FloatingTextService` | — | textes flottants à l'écran |
+| `RewardManager` | — | panneau de récompenses inter-vague |
+| `SynergyLibrary` | — | catalogue des synergies de tours |
+| `StatusIds` | `scripts/data/status_ids.gd` | constantes string des statuts |
+| `PhenomenonType` | — | enum des types de phénomènes |
+| `ElementType` | — | enum des éléments |
+
+### Managers
+| Manager | Fichier | Rôle |
+|---------|---------|------|
+| `WaveManager` | `scripts/managers/wave_manager.gd` | Spawn vagues, prep phase, mulligan, boss |
+| `CardManager` | `scripts/cards/card_manager.gd` | Main, pioche, BUILD/CONSUME |
+| `PlacementManager` | `scripts/managers/placement_manager.gd` | Placement tours sur grille |
+| `TowerManager` | `scripts/managers/tower_manager.gd` | Tours actives, synergies |
+| `PhenomenonManager` | `scripts/phenomena/phenomenon_manager.gd` | Phénomènes actifs |
+| `ReactionManager` | `scripts/reactions/reaction_manager.gd` | Mini Shock, Électrocution |
+| `EnemyManager` | `scripts/managers/enemy_manager.gd` | Liste ennemis vivants |
+| `GridManager` | `scripts/managers/grid_manager.gd` | Cellules constructibles |
+
+---
+
+## 13. BARRE DE VIE — SYSTÈME GÉNÉRIQUE
+
+Dans `enemy_base.gd` :
+```gdscript
+@onready var hp_fill: ColorRect = get_node_or_null("HPBarContainer/HPFill")
+@onready var hp_background: ColorRect = get_node_or_null("HPBarContainer/HPBackground")
+
+func update_hp_bar():
+    var ratio := float(hp) / float(max_hp)
+    var bar_width := hp_background.offset_right if hp_background else 40.0
+    hp_fill.offset_right = bar_width * ratio
 ```
+- Largeur lue depuis `HPBackground.offset_right` → générique, fonctionne pour tous les ennemis
+- Couleur : vert > 60%, orange > 30%, rouge sinon
+- MiniBoss : barre rouge fixe définie dans la scène
+
+---
+
+## 14. HUD
+
+**Tout le style UI vient de `resources/themes/junkriot_theme.tres`** — un seul Theme Godot,
+éditable dans l'éditeur, appliqué à la racine de chaque scène UI.
+Les nœuds utilisent des `theme_type_variation` (DarkPanel, GhostButton, TitleGold…).
+Règles complètes : `docs/UI_STYLE_GUIDE.md`.
+
+### TopHUD (`scenes/ui/TopHUD.tscn` + `scripts/ui/top_hud.gd`)
+- Vague, kills, PV base (code couleur via @export), caps, bouton vitesse, bouton ⚙
+- Barre de vague : se remplit au fil des spawns (ou du countdown en prep)
+
+### Bouton vitesse
+- `▶▶ x2` → `Engine.time_scale = 2.0`
+- `▶ x1` → `Engine.time_scale = 1.0`
+
+### Barre du bas
+- `CardBarBackground` (PanelContainer, variation `CardBarPanel`) dans `level.tscn`, derrière les cartes
+
+---
+
+## 15. CONVENTIONS & PIÈGES TECHNIQUES
+
+| Problème | Solution |
+|---------|---------|
+| BOM UTF-8 sur `.tres` (PowerShell) | Utiliser Write/Edit tools Godot, jamais `Set-Content` |
+| Tween sur `pf.progress` → conflit `_physics_process` | Assignation directe : `pf.progress -= force` |
+| `draw` est un signal de `CanvasItem` | Renommer : `draw_node`, `burst_draw`, `drop_draw` |
+| `get_parent()` non typé → erreur inférence | `var pf := enemy.get_parent() as PathFollow2D` |
+| `has_status()` retourne Variant | `var x: bool = enemy.has_status(...)` |
+| Style UI en code (StyleBoxFlat.new()…) | INTERDIT — tout passe par `junkriot_theme.tres` |
+| Texte flottant spam sur stun | `var was_stunned: bool = enemy.has_status(...)` avant `add_status` |
+| Encodage mojibake descriptions cartes | Écrire en ASCII dans les `.tres`, accents dans l'éditeur Godot |
+
+---
+
+## 16. CE QUI EST VALIDÉ (phase prototype terminée)
+
+Le cœur du jeu fonctionne. Ne plus modifier ces éléments sans raison forte :
+
+| Élément | Statut |
+|---------|--------|
+| BUILD / CONSUME dual-use | ✅ validé |
+| WET + CHARGED + MINI SHOCK | ✅ validé |
+| COURT-CIRCUIT (Water Pool + CHARGED) | ✅ validé |
+| ÉLECTROCUTION (deux phénomènes) | ✅ validé |
+| PARALYSÉ (Electric Field + WET) | ✅ validé |
+| Cartes brûlées définitivement | ✅ validé |
+| Deck qui se vide (pas de recyclage) | ✅ validé |
+| Boucle de vague + mulligan + récompenses | ✅ validé |
+
+---
+
+## 17. FEUILLE DE ROUTE — ENRICHISSEMENT
+
+### Règle d'or pour tout nouvel élément
+```
+1 élément = 1 tour + 1 phénomène + 1 réaction majeure
+```
+Ne jamais ajouter du contenu sans réaction. C'est la réaction qui vend la décision CONSUME.
+
+### Priorité 1 : AIR (coût faible, base existante)
+- Industrial Fan et Wind Current existent déjà dans le code
+- **Tour** : Industrial Fan → applique WINDMARK / AIRFLOW
+- **Phénomène** : Wind Current → repousse, regroupe, ralentit
+- **Réaction majeure** : Electric Field + Wind Current → THUNDERSTORM (éclairs aléatoires, stun, gros dégâts)
+
+### Priorité 2 : FEU
+- **Tour** : Fire Turret → applique BURNING
+- **Phénomène** : Fire Zone
+- **Réaction mineure** : BURNING + WET → STEAM
+- **Réaction majeure** : Fire Zone + Wind Current → FIRE TORNADO
+
+### Priorité 3 : NATURE
+- Plus abstrait, à garder pour après validation FEU
+- ROOTED est déjà dans StatusIds
+
+### À NE PAS FAIRE
+- Ajouter 10 tours sans réactions associées
+- Ajouter un élément avant que le précédent soit testé
+- Diluer la mécanique BUILD/CONSUME avec du contenu passif
+
+---
+
+## 18. CE QUI N'EST PAS ENCORE FAIT (technique)
+
+- Système d'amélioration de tour avec ferraille (UI + mécanique)
+- Label ferraille dans le TopBar (code prêt, nœud à ajouter dans l'éditeur Godot)
+- Plus de vagues (actuellement 3)
+- Menu principal / écran de game over propre
+- Sauvegarde de run
+- Icône dédiée pour STUNNED (actuellement WindIcon teinté bleu)
+- Industrial Fan déplacé en "contenu futur" — ne pas documenter dans la bible principale tant qu'AIR n'est pas développé proprement

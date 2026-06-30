@@ -1,8 +1,8 @@
 extends BaseProjectile
 class_name WindProjectile
 
-# ── Paramètres de knockback ───────────────────────────
-@export var knockback_force := 40.0   # pixels reculés sur le chemin
+@export var knockback_force := 40.0
+@export var wind_hit_scene: PackedScene
 
 # ── Visuels rafale de vent ────────────────────────────
 var _age := 0.0
@@ -65,76 +65,14 @@ func _draw():
 		draw_circle(Vector2(px, py), pr, Color(0.8, 0.95, 1.0, pa))
 
 
-func on_hit(target):
-	target.take_damage(damage)
-	if target is EnemyBase:
-		target.add_status(StatusIds.WINDMARK, 1.5)
-		target.apply_slow(0.35, 1.5)   # Ralentissement 65% — pas de knockback
+func on_hit(hit_target):
+	hit_target.take_damage(damage)
+	if hit_target is EnemyBase:
+		# PAF ! seulement quand l'ennemi prend WINDMARK (pas s'il l'a déjà).
+		hit_target.apply_debuff(StatusIds.WINDMARK, 1.5, "paf")
+		hit_target.apply_slow(0.35, 1.5)
 
-	_spawn_wind_hit(target.global_position)
-
-
-func _spawn_wind_hit(hit_pos: Vector2):
-	var root := Node2D.new()
-	get_parent().add_child(root)
-	root.global_position = hit_pos
-	root.z_index = 30
-
-	# ── Lignes de vent qui filent vers la gauche (recul) ──
-	var streak_count := 6
-	for i in streak_count:
-		var streak := Node2D.new()
-		root.add_child(streak)
-		streak.position = Vector2(
-			randf_range(-10.0, 20.0),
-			randf_range(-28.0, 28.0)
-		)
-
-		var length: float = randf_range(30.0, 70.0)
-		var draw := Node2D.new()
-		streak.add_child(draw)
-		var c := Color(0.75, 0.95, 1.0, randf_range(0.6, 0.9))
-		draw.draw.connect(func():
-			# Ligne principale
-			draw.draw_line(Vector2(0, 0), Vector2(-length, 0), c, 2.5)
-			# Halo
-			draw.draw_line(Vector2(0, 0), Vector2(-length * 0.7, 0),
-				Color(c.r, c.g, c.b, c.a * 0.3), 6.0)
-		)
-		draw.queue_redraw()
-
-		var travel: float = randf_range(18.0, 40.0)
-		var lifetime: float = randf_range(0.2, 0.38)
-		var delay_val: float = randf_range(0.0, 0.08)
-
-		var tween := streak.create_tween()
-		tween.set_parallel(true)
-		tween.tween_property(streak, "position:x", streak.position.x - travel, lifetime)\
-			.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT).set_delay(delay_val)
-		tween.tween_property(streak, "modulate:a", 0.0, lifetime * 0.7).set_delay(delay_val + lifetime * 0.3)
-		tween.chain().tween_callback(streak.queue_free)
-
-	# ── Anneau de souffle ──────────────────────────────
-	var ring := Node2D.new()
-	root.add_child(ring)
-	ring.scale = Vector2(0.1, 0.1)
-
-	var rdraw := Node2D.new()
-	ring.add_child(rdraw)
-	rdraw.draw.connect(func():
-		rdraw.draw_arc(Vector2.ZERO, 32.0, -PI * 0.7, PI * 0.7, 24,
-			Color(0.6, 0.9, 1.0, 0.8), 3.5)
-	)
-	rdraw.queue_redraw()
-
-	var rtween := ring.create_tween()
-	rtween.set_parallel(true)
-	rtween.tween_property(ring, "scale", Vector2(1.5, 0.8), 0.28)\
-		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	rtween.tween_property(ring, "modulate:a", 0.0, 0.28)
-	rtween.chain().tween_callback(ring.queue_free)
-
-	# Auto-free
-	var t := create_tween()
-	t.tween_interval(0.5)
-	t.tween_callback(root.queue_free)
+	if wind_hit_scene:
+		var fx := wind_hit_scene.instantiate()
+		get_parent().add_child(fx)
+		fx.global_position = target.global_position

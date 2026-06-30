@@ -41,7 +41,7 @@ func damage_enemies():
 		if enemy.global_position.distance_to(global_position) > radius:
 			continue
 
-		enemy.take_damage(damage)
+		enemy.take_damage(damage, "tick")
 
 
 func _draw():

@@ -8,5 +8,13 @@ script = ExtResource("1_wau5l")
 enemy_scene = ExtResource("1_a1cx8")
 enemy_count = 3
 spawn_interval = 5.0
-enemy_speed = 80.0
+enemy_speed = 0.0
+tutorial_title = "LES TANKS ARRIVENT !"
+tutorial_text = "Ces TANKS sont coriaces. Avec tes 3 tours tu en élimineras la plupart... mais pas tous.
+
+LE BON RÉFLEXE : pose un PHÉNOMÈNE au bon endroit, au bon moment !
+
+Un phénomène bien placé + tes tours = tu les EXPLOSES TOUS d'un coup.
+
+Consomme une carte pour créer un phénomène sur leur passage !"
 metadata/_custom_type_script = "uid://c2spfgpqk8kgx"

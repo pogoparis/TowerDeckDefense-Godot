@@ -2,6 +2,10 @@ extends BaseTower
 class_name ProjectileTower
 
 @export var projectile_scene: PackedScene
+## Son joué à chaque tir — assigné dans la scène de chaque tour.
+@export var shot_sound: AudioStream
+## Volume du tir en décibels (0 = volume du fichier, négatif = plus faible).
+@export var shot_volume_db: float = -10.0
 @onready var shoot_point: Marker2D = $ShootPoint
 
 func _ready():
@@ -23,11 +27,16 @@ func _on_timer_timeout():
 	var valid_target = find_target()
 
 	if valid_target == null:
+		reset_aim()
 		return
 
 	fire_projectile(valid_target)
 
 func fire_projectile(target: Node2D):
+
+	face_target(target.global_position)
+	play_fire_frame()
+	Audio.play_sfx(shot_sound, shot_volume_db, 0.12)
 
 	var projectile = projectile_scene.instantiate()
 

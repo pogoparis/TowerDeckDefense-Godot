@@ -75,7 +75,7 @@ func _draw():
 					pos,
 					Vector2.ONE * cell_size
 				),
-				Color(0, 1, 0, 0.25),
+				Color(0, 1, 0, 0.1),
 				false,
 				2.0
 			)
@@ -94,7 +94,7 @@ func _draw():
 				pos,
 				Vector2.ONE * cell_size
 			),
-			Color(0, 1, 0, 0.25),
+			Color(0, 1, 0, 0.1),
 			false,
 			2.0
 		)

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cicepunkcard01"]
+
+[ext_resource type="Texture2D" path="res://assets/cards/TestPinkPunks.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://bicepunk0001a" path="res://scenes/towers/TowerIcePunk.tscn" id="3_tower"]
+
+[resource]
+script = ExtResource("2_script")
+card_name = "Punk Rose"
+description = "Tour de base : tir simple, dégâts modestes. Aucun phénomène (pour l'instant)."
+card_texture = ExtResource("1_tex")
+mana_cost = 2
+tower_id = "TowerIcePunk"
+tower_scene = ExtResource("3_tower")
+consume_phenomenon_type = 0
+consume_radius = 150.0
+consume_duration = 8.0
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

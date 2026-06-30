@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://bv7wk3sb5b3ch"]
 
 [ext_resource type="Script" uid="uid://dqlfjtmb2wchm" path="res://scripts/core/level.gd" id="1_4br2k"]
-[ext_resource type="Script" uid="uid://c3xactl8gcgd8" path="res://scripts/core/path_follow_2d.gd" id="2_wxwm4"]
-[ext_resource type="Texture2D" uid="uid://cmmsnhtfrpq6c" path="res://assets/background/Map_level1.png" id="4_88h5y"]
+[ext_resource type="Texture2D" uid="uid://cmmsnhtfrpq6c" path="res://assets/background/1920x1080Map_level1.webp" id="4_88h5y"]
 [ext_resource type="PackedScene" uid="uid://cna3k2ab41t4b" path="res://scenes/ui/card_action_panel.tscn" id="5_j4slr"]
 [ext_resource type="PackedScene" uid="uid://v3lqus8xkamh" path="res://scenes/ui/mulligan_overlay.tscn" id="6_1c6l3"]
 [ext_resource type="Resource" uid="uid://c4afbo8f0oque" path="res://resources/maps/map_level1.tres" id="6_kv7s7"]
@@ -20,6 +19,15 @@
 [ext_resource type="Script" uid="uid://deud6v2qigaj1" path="res://scripts/phenomena/phenomenon_manager.gd" id="17_qswml"]
 [ext_resource type="Script" uid="uid://chtjx5lhmojke" path="res://scripts/managers/synergy_manager.gd" id="18_03itj"]
 [ext_resource type="Script" uid="uid://bc6u1fsswudqr" path="res://scripts/reactions/reaction_manager.gd" id="18_j4slr"]
+[ext_resource type="Script" uid="uid://b1eglntp42fmc" path="res://scripts/ui/wave_preview.gd" id="19_wprev"]
+[ext_resource type="PackedScene" path="res://scenes/impacts/LightningFlash.tscn" id="20_lfx"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TopHUD.tscn" id="21_tophud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="22_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/GameOverScreen.tscn" id="23_gameover"]
+[ext_resource type="Theme" uid="uid://8q0s5yhxwuwt" path="res://resources/themes/junkriot_theme.tres" id="24_theme"]
+[ext_resource type="Texture2D" uid="uid://oakwat852u6o" path="res://assets/icons/horde_incoming.png" id="25_horde"]
+[ext_resource type="PackedScene" uid="uid://bc87n7yt3cja5" path="res://scenes/ui/tutorial_overlay.tscn" id="25_tutorial"]
+[ext_resource type="Script" uid="uid://dvr7krjfaccgs" path="res://scripts/ui/tutorial_director.gd" id="26_tutdir"]
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
@@ -47,7 +55,6 @@ position = Vector2(207, -1)
 rotation = 0.013028579
 rotates = false
 loop = false
-script = ExtResource("2_wxwm4")
 
 [node name="PathLine" type="Line2D" parent="World/Path2D" unique_id=926539895]
 z_index = 3
@@ -83,84 +90,121 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("24_theme")
+
+[node name="CardBarBackground" type="PanelContainer" parent="UI/RootUI" unique_id=632741507]
+z_index = 9
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -265.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"CardBarPanel"
 
 [node name="TowerCards" type="HBoxContainer" parent="UI/RootUI" unique_id=797298285]
 z_index = 12
 z_as_relative = false
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -300.0
-offset_top = -175.0
-offset_right = 300.0
+offset_left = -390.0
+offset_top = -250.0
+offset_right = 390.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
-alignment = 1
 theme_override_constants/separation = 12
+alignment = 1
 
-[node name="WaveTimerLabel" type="Label" parent="UI/RootUI" unique_id=397391247]
-layout_mode = 0
-offset_left = 850.0
-offset_top = 20.0
-offset_right = 905.0
-offset_bottom = 87.0
-theme_override_font_sizes/font_size = 48
-text = "20"
-
-[node name="RewardPanel" type="Panel" parent="UI/RootUI" unique_id=827083462]
-visible = false
+[node name="TopHUD" parent="UI/RootUI" unique_id=397391247 instance=ExtResource("21_tophud")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -200.0
-offset_right = 250.0
-offset_bottom = 200.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_28yk4")
 
-[node name="RewardContainer" type="BoxContainer" parent="UI/RootUI/RewardPanel" unique_id=526870908]
-custom_minimum_size = Vector2(320, 200)
+[node name="RewardPanel" type="ColorRect" parent="UI/RootUI" unique_id=827083462]
+visible = false
+z_index = 50
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.04, 0.03, 0.06, 0.92)
+mouse_filter = 0
+
+[node name="VBox" type="VBoxContainer" parent="UI/RootUI/RewardPanel" unique_id=827083463]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
 alignment = 1
 
-[node name="TopBar" type="HBoxContainer" parent="UI/RootUI" unique_id=2068027213]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -113.5
-offset_right = 113.5
-offset_bottom = 40.0
+[node name="Title" type="Label" parent="UI/RootUI/RewardPanel/VBox" unique_id=827083464]
+layout_mode = 2
+theme_type_variation = &"TitleGold"
+text = "CHOISIS TON BONUS"
+horizontal_alignment = 1
+
+[node name="RewardContainer" type="BoxContainer" parent="UI/RootUI/RewardPanel/VBox" unique_id=526870908]
+custom_minimum_size = Vector2(320, 380)
+layout_mode = 2
+theme_override_constants/separation = 40
 grow_horizontal = 2
-theme_override_constants/separation = 50
+grow_vertical = 2
+alignment = 1
 
-[node name="CapsLabel" type="Label" parent="UI/RootUI/TopBar" unique_id=166418280]
-layout_mode = 2
-text = "Gold : 100"
+[node name="WavePreview" type="PanelContainer" parent="UI/RootUI" unique_id=1928374650]
+z_index = 10
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 90.0
+grow_horizontal = 0
+theme_type_variation = &"PreviewPanel"
+script = ExtResource("19_wprev")
 
-[node name="WaveLabel" type="Label" parent="UI/RootUI/TopBar" unique_id=1050984302]
+[node name="VBox" type="VBoxContainer" parent="UI/RootUI/WavePreview" unique_id=1928374651]
 layout_mode = 2
-text = "Wave : 1"
 
-[node name="BaseHpLabel" type="Label" parent="UI/RootUI/TopBar" unique_id=816799327]
+[node name="HordeIcon" type="TextureRect" parent="UI/RootUI/WavePreview/VBox" unique_id=1855117883]
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-text = "Base : 100"
+texture = ExtResource("25_horde")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="UI/RootUI/WavePreview/VBox" unique_id=1928374652]
+layout_mode = 2
+theme_type_variation = &"PreviewTitle"
+text = "PROCHAINE VAGUE"
+
+[node name="ContentLabel" type="Label" parent="UI/RootUI/WavePreview/VBox" unique_id=1928374653]
+layout_mode = 2
+theme_type_variation = &"PreviewText"
+text = "..."
+
+[node name="BossLabel" type="Label" parent="UI/RootUI/WavePreview/VBox" unique_id=1928374654]
+visible = false
+layout_mode = 2
+theme_type_variation = &"AlertText"
+text = "⚠ MINIBOSS"
 
 [node name="DeckDebugLabel" type="Label" parent="UI/RootUI" unique_id=820343091]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -185,8 +229,38 @@ z_index = 30
 layout_mode = 0
 
 [node name="MulliganOverlay" parent="UI/RootUI" unique_id=1414977688 instance=ExtResource("6_1c6l3")]
+layout_mode = 1
+
+[node name="PauseMenu" parent="UI/RootUI" unique_id=983618493 instance=ExtResource("22_pause")]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverScreen" parent="UI/RootUI" unique_id=961502971 instance=ExtResource("23_gameover")]
 visible = false
 layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TutorialOverlay" parent="UI/RootUI" unique_id=2121527434 instance=ExtResource("25_tutorial")]
+layout_mode = 1
+
+[node name="TutorialBanner" type="Label" parent="UI/RootUI" unique_id=1896870953]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -460.0
+offset_top = 120.0
+offset_right = 460.0
+offset_bottom = 170.0
+grow_horizontal = 2
+theme_type_variation = &"OverlayTitle"
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="GridManager" type="Node2D" parent="." unique_id=1837278033]
 script = ExtResource("6_lwybd")
@@ -219,3 +293,12 @@ script = ExtResource("17_qswml")
 
 [node name="ReactionManager" type="Node2D" parent="." unique_id=13537425]
 script = ExtResource("18_j4slr")
+lightning_flash_scene = ExtResource("20_lfx")
+
+[node name="TutorialDirector" type="Node2D" parent="." unique_id=2095051740]
+z_index = 2
+script = ExtResource("26_tutdir")
+wave2_mob_hp = 45
+tank_hp = 140
+tutorial_boss_hp = 650
+tuto_spawn_interval = 0.6

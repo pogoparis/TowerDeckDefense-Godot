@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b5d4ilpmbyndc"]
 
-[ext_resource type="Texture2D" uid="uid://bblpi3ik4y5hp" path="res://assets/cards/CardBobineTesla512.png" id="1_2osfq"]
+[ext_resource type="Texture2D" uid="uid://culuqcxhjmmm4" path="res://assets/cards/Card_Ours_Eclair_1000x1489.png" id="1_2osfq"]
 [ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_0oqic"]
 [ext_resource type="PackedScene" uid="uid://7d0spyyowrme" path="res://scenes/towers/TowerTeslaCoil.tscn" id="3_8ely1"]
 
@@ -9,8 +9,8 @@ metadata/__load_path__ = "res://assets/cards/FROSTWICKDECOUPE.png"
 
 [resource]
 script = ExtResource("2_0oqic")
-card_name = "Bobine Tesla"
-description = "Electrise les ennemis et applique CHARGED. Mini Shock si la cible est WET."
+card_name = "Ours Eclair"
+description = "L'ours electrique : applique CHARGED et envoie des arcs. Mini Shock si la cible est WET."
 card_texture = ExtResource("1_2osfq")
 mana_cost = 2
 tower_id = "TowerTesla"

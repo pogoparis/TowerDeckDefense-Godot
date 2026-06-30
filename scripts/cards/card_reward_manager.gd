@@ -1,6 +1,8 @@
 extends Node
 class_name CardRewardManager
 
+signal reward_chosen
+
 var reward_panel: Control
 var reward_container
 
@@ -69,6 +71,7 @@ func select_reward(index: int):
 
 	reward_selected = true
 	reward_panel.visible = false
+	reward_chosen.emit()
 
 
 

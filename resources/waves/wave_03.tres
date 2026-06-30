@@ -2,11 +2,23 @@
 
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="1_7voic"]
 [ext_resource type="PackedScene" uid="uid://cmjod41xbfvxr" path="res://scenes/enemies/ExplosiveMob.tscn" id="1_eds23"]
+[ext_resource type="PackedScene" uid="uid://bminiboss001" path="res://scenes/enemies/MiniBoss.tscn" id="2_boss"]
 
 [resource]
 script = ExtResource("1_7voic")
 enemy_scene = ExtResource("1_eds23")
 enemy_count = 6
 spawn_interval = 3.0
-enemy_speed = 100.0
+enemy_speed = 0.0
+boss_scene = ExtResource("2_boss")
+boss_delay = 3.0
+tutorial_title = "DERNIÈRE VAGUE !"
+tutorial_text = "Une nuée de petits ennemis arrive — tes TOURS devraient suffire à les nettoyer.
+
+Mais juste après débarque un MINIBOSS : il ENCAISSE les tirs des tours.
+Seuls les PHÉNOMÈNES peuvent l'arrêter !
+
+LE SECRET : superpose une FLAQUE D'EAU et un CHAMP ÉLECTRIQUE au même endroit → ÉLECTROCUTION = dégâts ÉNORMES !
+
+(Tu as de quoi déclencher deux phénomènes. Consomme tes cartes !)"
 metadata/_custom_type_script = "uid://c2spfgpqk8kgx"

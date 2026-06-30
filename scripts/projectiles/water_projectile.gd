@@ -1,6 +1,11 @@
 extends BaseProjectile
 class_name WaterProjectile
 
+## Ralentissement léger appliqué à l'impact (1.0 = aucun, 0.85 = -15 % de vitesse).
+@export var slow_multiplier := 0.85
+## Durée du ralentissement (secondes).
+@export var slow_duration := 2.0
+
 @onready var glow_sprite: Sprite2D = $GlowSprite
 
 # ── Visuels jet d'eau ─────────────────────────────────
@@ -62,15 +67,19 @@ func _draw_ellipse(center: Vector2, rx: float, ry: float, color: Color):
 	draw_colored_polygon(points, color)
 
 
-func on_hit(target):
+func on_hit(hit_target):
 	var final_damage: int = damage
 
 	if (
 		source_tower != null
 		and source_tower.laser_guide_active
-		and target.has_status(SynergyIds.VEGA_MARK)
+		and hit_target.has_status(SynergyIds.VEGA_MARK)
 	):
 		final_damage = int(final_damage * 1.5)
 
-	target.take_damage(final_damage)
-	target.add_status(StatusIds.WET, 3.0)
+	hit_target.take_damage(final_damage)
+	hit_target.apply_debuff(StatusIds.WET, 3.0 + RunBonuses.get_wet_duration_bonus())
+
+	# Léger ralentissement — sans écraser un ralentissement plus fort (stun, etc.).
+	if hit_target.slow_multiplier > slow_multiplier:
+		hit_target.apply_slow(slow_multiplier, slow_duration)

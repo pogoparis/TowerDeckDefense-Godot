@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StartingDeckData" format=3 uid="uid://ctutdeck0001"]
+
+[ext_resource type="Script" uid="uid://cturi3aifg006" path="res://scripts/cards/starting_deck_data.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/water_cannon_card.tres" id="2_water"]
+[ext_resource type="Resource" uid="uid://b5d4ilpmbyndc" path="res://resources/cards/tesla_coil_card.tres" id="3_tesla"]
+
+[resource]
+script = ExtResource("1_script")
+deck_name = "Tutoriel (scripté)"
+cards = [ExtResource("3_tesla"), ExtResource("2_water"), ExtResource("2_water"), ExtResource("3_tesla"), ExtResource("2_water"), ExtResource("3_tesla"), ExtResource("2_water"), ExtResource("3_tesla")]
+scripted_order = true
+metadata/_custom_type_script = "uid://cturi3aifg006"

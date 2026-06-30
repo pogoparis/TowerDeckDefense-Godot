@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://bonus_zoneetendu01"]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+
+[resource]
+script = ExtResource("1_bonus")
+rarity = "RARE"
+title = "Zone Étendue"
+description = "Le rayon de tous les phénomènes est augmenté de 30%."
+phenomenon_radius_mult = 1.3
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

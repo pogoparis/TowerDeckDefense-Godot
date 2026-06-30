@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://meoy4vhmvqmx" path="res://scripts/impacts/explosion_fire.gd" id="1_pox3w"]
 
 [node name="ExplosionImpactFire" type="Node2D" unique_id=1080931226]
+z_index = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1287260712]
 scale = Vector2(0.25, 0.25)

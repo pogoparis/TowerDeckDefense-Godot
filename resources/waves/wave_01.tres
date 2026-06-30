@@ -1,12 +1,19 @@
 [gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://cx08iuoryrq5u"]
 
 [ext_resource type="Script" uid="uid://c2spfgpqk8kgx" path="res://scripts/resources/wave_data.gd" id="1_3rrbu"]
-[ext_resource type="PackedScene" uid="uid://ugub6d0kpt13" path="res://scenes/enemies/SimpleMob.tscn" id="1_we5xl"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/ExplosiveMob.tscn" id="1_we5xl"]
 
 [resource]
 script = ExtResource("1_3rrbu")
 enemy_scene = ExtResource("1_we5xl")
 enemy_count = 6
 spawn_interval = 3.0
-enemy_speed = 200.0
+enemy_speed = 0.0
+enemy_hp_override = 40
+tutorial_title = "BIENVENUE !"
+tutorial_text = "Construis tes défenses ! GLISSE une carte depuis ta main vers le terrain pour poser une TOUR.
+
+Commence par une TOUR À EAU et une TOUR TESLA — tu en auras besoin plus tard.
+
+Les tours tirent toutes seules sur les ennemis. Place-les le long du chemin !"
 metadata/_custom_type_script = "uid://c2spfgpqk8kgx"

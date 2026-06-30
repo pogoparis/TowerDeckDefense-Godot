@@ -1,58 +1,45 @@
-extends Control
 class_name MulliganOverlay
+extends Control
+## Overlay de la phase de mulligan (sélection des cartes à remplacer).
+##
+## Le fond et l'overlay ne bloquent pas les clics (mouse_filter = IGNORE
+## dans la scène) afin que les cartes en main restent cliquables.
+## Tout le style vient de junkriot_theme.tres — rien dans ce script.
 
 signal validated
+
+## Titre affiché pour le mulligan complet de début de partie.
+@export var full_mulligan_title: String = "PHASE DE MULLIGAN"
+## Titre affiché pour l'échange d'une carte entre les vagues.
+@export var exchange_title: String = "ÉCHANGE INTER-VAGUE"
+
+var _max_cards: int = 3
 
 @onready var title_label: Label = $Content/TitleLabel
 @onready var sub_label: Label = $Content/SubLabel
 @onready var validate_button: Button = $Content/ValidateButton
-@onready var content: VBoxContainer = $Content
 
 
-func _ready():
-	validate_button.pressed.connect(func(): validated.emit())
-
-	# Le fond ne bloque pas les clics → les cartes restent cliquables
-	$Background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	# Taille et style du contenu
-	content.custom_minimum_size = Vector2(420, 0)
-	content.add_theme_constant_override("separation", 16)
-
-	title_label.add_theme_font_size_override("font_size", 32)
-	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-
-	sub_label.add_theme_font_size_override("font_size", 18)
-	sub_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-
-	validate_button.custom_minimum_size = Vector2(200, 56)
-	validate_button.add_theme_font_size_override("font_size", 22)
-
-	title_label.text = "PHASE DE MULLIGAN"
-	sub_label.text = "Sélectionnez les cartes à remplacer (max 3)"
-
+func _ready() -> void:
 	visible = false
+	validate_button.pressed.connect(func() -> void: validated.emit())
+	validate_button.pressed.connect(Audio.ui_click)
 
 
-var _max_cards := 3
-
-
-func show_phase(max_cards: int = 3):
+## Affiche l'overlay. [param max_cards] = nombre maximum de cartes échangeables.
+func show_phase(max_cards: int = 3) -> void:
 	_max_cards = max_cards
-	if max_cards >= 3:
-		title_label.text = "PHASE DE MULLIGAN"
-	else:
-		title_label.text = "ÉCHANGE INTER-VAGUE"
+	title_label.text = full_mulligan_title if max_cards >= 3 else exchange_title
 	update_count(0)
 	visible = true
 
 
-func hide_phase():
+func hide_phase() -> void:
 	visible = false
 
 
-func update_count(count: int):
+## Met à jour le compteur de cartes sélectionnées.
+func update_count(count: int) -> void:
 	if count == 0:
 		sub_label.text = "Sélectionnez jusqu'à %d carte(s) à remplacer" % _max_cards
 	else:

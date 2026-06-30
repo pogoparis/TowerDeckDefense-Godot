@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://dnxlyqef6eutu" path="res://scripts/impacts/water_splash.gd" id="1_wsplash"]
 
 [node name="WaterSplash" type="Node2D" unique_id=2128492736]
+z_index = 20
 script = ExtResource("1_wsplash")

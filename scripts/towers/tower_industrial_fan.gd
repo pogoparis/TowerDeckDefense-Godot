@@ -6,6 +6,6 @@ class_name TowerIndustrialFan
 
 func _ready():
 
-	element_type = ElementType.Type.NATURE
+	element_type = ElementType.Type.AIR
 
 	super._ready()

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b_windhiteffect"]
+
+[ext_resource type="Script" path="res://scripts/impacts/wind_hit_effect.gd" id="1_whfx"]
+
+[node name="WindHitEffect" type="Node2D"]
+script = ExtResource("1_whfx")

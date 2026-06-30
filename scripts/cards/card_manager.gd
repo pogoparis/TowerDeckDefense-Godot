@@ -18,6 +18,11 @@ var hand     : Array[CardData] = []
 var _consume_card: CardData = null
 var _consume_ghost: Node2D = null
 
+# Tutoriel : si actif, la consommation n'est valide que dans cette zone.
+var forced_consume_active := false
+var forced_consume_center := Vector2.ZERO
+var forced_consume_radius := 0.0
+
 signal consume_mode_started(card_data)
 signal consume_mode_cancelled
 signal consume_resolved(card_data, position)
@@ -33,7 +38,7 @@ func start_consume_placement(card: CardData):
 
 	var real_cost: int = max(0, card.consume_cost - RunBonuses.get_consume_cost_reduction())
 	if Player.caps < real_cost:
-		print("NOT ENOUGH CAPS TO CONSUME")
+		alert_not_enough_caps()
 		return
 
 	_consume_card = card
@@ -78,6 +83,11 @@ func update_consume_ghost(world_position: Vector2):
 func confirm_consume(world_position: Vector2):
 
 	if not is_consuming():
+		return
+
+	# Tutoriel : consommation refusée hors de la zone imposée.
+	if forced_consume_active and world_position.distance_to(forced_consume_center) > forced_consume_radius:
+		Audio.error()
 		return
 
 	var real_cost: int = max(0, _consume_card.consume_cost - RunBonuses.get_consume_cost_reduction())
@@ -164,7 +174,7 @@ func setup(
 	phenomenon_manager = new_phenomenon_manager
 
 
-func setup_starting_deck(cards: Array):
+func setup_starting_deck(cards: Array, shuffle: bool = true):
 
 	draw_pile.clear()
 	hand.clear()
@@ -174,7 +184,12 @@ func setup_starting_deck(cards: Array):
 	for card in cards:
 		draw_pile.append(card)
 
-	draw_pile.shuffle()
+	if shuffle:
+		draw_pile.shuffle()
+	else:
+		# Ordre scripté : draw_to_hand tire avec pop_back (la fin du tableau).
+		# On inverse pour que le 1er élément du deck soit tiré en premier.
+		draw_pile.reverse()
 
 	draw_to_hand(3)
 
@@ -248,7 +263,7 @@ func play_card(card: CardData):
 
 			if Player.caps < card.mana_cost:
 
-				print("NOT ENOUGH CAPS")
+				alert_not_enough_caps()
 
 				return
 
@@ -277,3 +292,22 @@ func play_card(card: CardData):
 		CardData.CardType.RELIC:
 
 			print("TODO RELIC:", card.card_name)
+
+
+# ==================================================
+# FEEDBACK
+# ==================================================
+
+## Son d'erreur + alerte rouge au curseur quand le joueur manque de Caps.
+func alert_not_enough_caps() -> void:
+	Audio.error()
+
+	var scene := get_tree().current_scene
+	if scene is Node2D:
+		FloatingTextService.spawn(
+			scene,
+			scene.get_global_mouse_position() + Vector2(0, -40),
+			"PAS ASSEZ DE CAPS !",
+			Color(1, 0.3, 0.3),
+			1.4
+		)

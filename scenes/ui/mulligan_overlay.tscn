@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://v3lqus8xkamh"]
+[gd_scene load_steps=3 format=3 uid="uid://v3lqus8xkamh"]
 
 [ext_resource type="Script" uid="uid://iavunwm1lwst" path="res://scripts/ui/mulligan_overlay.gd" id="1_nicgi"]
+[ext_resource type="Theme" path="res://resources/themes/junkriot_theme.tres" id="2_theme"]
 
 [node name="MulliganOverlay" type="Control" unique_id=1414977688]
 layout_mode = 3
@@ -9,6 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_theme")
 script = ExtResource("1_nicgi")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1414437327]
@@ -19,8 +22,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Content" type="VBoxContainer" parent="." unique_id=768549899]
+custom_minimum_size = Vector2(420, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -33,13 +38,22 @@ offset_right = 210.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 16
 
 [node name="TitleLabel" type="Label" parent="Content" unique_id=945432545]
 layout_mode = 2
+theme_type_variation = &"OverlayTitle"
+text = "PHASE DE MULLIGAN"
+horizontal_alignment = 1
 
 [node name="SubLabel" type="Label" parent="Content" unique_id=1062512044]
 layout_mode = 2
+theme_type_variation = &"OverlaySub"
+text = "Sélectionnez les cartes à remplacer (max 3)"
+horizontal_alignment = 1
 
 [node name="ValidateButton" type="Button" parent="Content" unique_id=831775087]
+custom_minimum_size = Vector2(200, 56)
 layout_mode = 2
+theme_override_font_sizes/font_size = 22
 text = "CONFIRMER"

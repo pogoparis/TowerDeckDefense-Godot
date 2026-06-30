@@ -14,14 +14,14 @@ func _spawn_flash():
 	var flash := Node2D.new()
 	add_child(flash)
 
-	var draw := Node2D.new()
-	flash.add_child(draw)
-	draw.draw.connect(func():
-		draw.draw_circle(Vector2.ZERO, 30.0, Color(0.9, 1.0, 0.5, 0.9))
-		draw.draw_circle(Vector2.ZERO, 16.0, Color(1.0, 1.0, 0.8, 1.0))
-		draw.draw_circle(Vector2.ZERO, 7.0,  Color(1.0, 1.0, 1.0, 1.0))
+	var draw_node := Node2D.new()
+	flash.add_child(draw_node)
+	draw_node.draw.connect(func():
+		draw_node.draw_circle(Vector2.ZERO, 30.0, Color(0.9, 1.0, 0.5, 0.9))
+		draw_node.draw_circle(Vector2.ZERO, 16.0, Color(1.0, 1.0, 0.8, 1.0))
+		draw_node.draw_circle(Vector2.ZERO, 7.0,  Color(1.0, 1.0, 1.0, 1.0))
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := create_tween()
 	tween.tween_property(flash, "modulate:a", 0.0, 0.1)
@@ -48,14 +48,14 @@ func _spawn_arcs():
 			var angle: float = base_angle + deg_to_rad(deviation * 0.5)
 			points.append(Vector2(cos(angle) * r, sin(angle) * r))
 
-		var draw := Node2D.new()
-		arc_node.add_child(draw)
-		draw.draw.connect(func():
-			draw.draw_polyline(points, Color(0.4, 0.7, 1.0, 0.4), 5.0, true)
-			draw.draw_polyline(points, Color(0.9, 1.0, 0.4, 0.9), 2.0, true)
-			draw.draw_polyline(points, Color(1.0, 1.0, 1.0, 0.7), 0.8, true)
+		var draw_node := Node2D.new()
+		arc_node.add_child(draw_node)
+		draw_node.draw.connect(func():
+			draw_node.draw_polyline(points, Color(0.4, 0.7, 1.0, 0.4), 5.0, true)
+			draw_node.draw_polyline(points, Color(0.9, 1.0, 0.4, 0.9), 2.0, true)
+			draw_node.draw_polyline(points, Color(1.0, 1.0, 1.0, 0.7), 0.8, true)
 		)
-		draw.queue_redraw()
+		draw_node.queue_redraw()
 
 		var delay: float = randf_range(0.0, 0.06)
 		var lifetime: float = randf_range(0.12, 0.22)
@@ -71,12 +71,12 @@ func _spawn_ring():
 	add_child(ring)
 	ring.scale = Vector2(0.1, 0.1)
 
-	var draw := Node2D.new()
-	ring.add_child(draw)
-	draw.draw.connect(func():
-		draw.draw_arc(Vector2.ZERO, 35.0, 0.0, TAU, 48, Color(0.8, 1.0, 0.3, 0.8), 3.0)
+	var draw_node := Node2D.new()
+	ring.add_child(draw_node)
+	draw_node.draw.connect(func():
+		draw_node.draw_arc(Vector2.ZERO, 35.0, 0.0, TAU, 48, Color(0.8, 1.0, 0.3, 0.8), 3.0)
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := create_tween()
 	tween.set_parallel(true)

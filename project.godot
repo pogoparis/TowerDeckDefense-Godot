@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="DeckTowerDefense"
-run/main_scene="uid://bv7wk3sb5b3ch"
-config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/name="JunkRiot"
+run/main_scene="res://scenes/ui/SplashScreen.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://assets/ui/JunkRiotLogo.png"
 
 [autoload]
 
@@ -23,14 +23,18 @@ RewardManager="*uid://dah8ytkok5nlg"
 RunDeck="*uid://cvdot5vjlnodg"
 RewardDB="*uid://53rf7p6jsqdf"
 Player="*uid://bqkkdnoe8et57"
+Audio="*res://scripts/managers/audio_manager.gd"
+Progress="*res://scripts/managers/progress_manager.gd"
+Juice="*res://scripts/managers/juice_manager.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/resizable=false
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/handheld/orientation=2
 
 [layer_names]
 

@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bicepunk0001a"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/projectile_tower.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cbasicproj0001" path="res://scenes/projectiles/BasicProjectile.tscn" id="2_proj"]
+[ext_resource type="AudioStream" uid="uid://bqesjh34ylcg0" path="res://assets/audio/sfx/shot_water.wav" id="3_sfx"]
+[ext_resource type="Texture2D" path="res://assets/towers/punk/PinkPunk/punk_rose_sud.png" id="4_sud"]
+[ext_resource type="Texture2D" path="res://assets/towers/punk/PinkPunk/punk_rose_est.png" id="5_est"]
+[ext_resource type="Texture2D" path="res://assets/towers/punk/PinkPunk/punk_rose_ouest.png" id="6_ouest"]
+[ext_resource type="Texture2D" path="res://assets/towers/punk/PinkPunk/punk_rose_nord.png" id="7_nord"]
+
+[node name="TowerIcePunk" type="Node2D"]
+z_index = 8
+script = ExtResource("1_script")
+projectile_scene = ExtResource("2_proj")
+shot_sound = ExtResource("3_sfx")
+base_damage = 5
+base_fire_rate = 0.8
+base_range = 220.0
+element_type = 0
+max_aim_degrees = 0.0
+display_height = 150.0
+tex_east = ExtResource("5_est")
+tex_south = ExtResource("4_sud")
+tex_west = ExtResource("6_ouest")
+tex_north = ExtResource("7_nord")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 8
+position = Vector2(0, -35)
+texture = ExtResource("4_sud")
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+position = Vector2(0, 40)

@@ -15,13 +15,13 @@ func _spawn_ring():
 	add_child(ring)
 	ring.scale = Vector2(0.1, 0.1)
 
-	var draw := Node2D.new()
-	ring.add_child(draw)
+	var draw_node := Node2D.new()
+	ring.add_child(draw_node)
 	var color := Color(0.3, 0.75, 1.0, 0.8)
-	draw.draw.connect(func():
-		draw.draw_arc(Vector2.ZERO, 40.0, 0.0, TAU, 48, color, 4.0)
+	draw_node.draw.connect(func():
+		draw_node.draw_arc(Vector2.ZERO, 40.0, 0.0, TAU, 48, color, 4.0)
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := create_tween()
 	tween.set_parallel(true)
@@ -47,13 +47,12 @@ func _spawn_droplets():
 		var vel := Vector2(cos(angle) * speed, sin(angle) * speed - randf_range(80.0, 140.0))
 
 		var size: float = randf_range(3.0, 7.0)
-		var draw := Node2D.new()
-		drop.add_child(draw)
+		var drop_draw := Node2D.new()
+		drop.add_child(drop_draw)
 		var c := Color(randf_range(0.1, 0.3), randf_range(0.6, 0.9), 1.0, 0.9)
-		draw.draw.connect(func(): draw.draw_circle(Vector2.ZERO, size, c))
-		draw.queue_redraw()
+		drop_draw.draw.connect(func(): drop_draw.draw_circle(Vector2.ZERO, size, c))
+		drop_draw.queue_redraw()
 
-		# Simule la gravité via deux tweens enchaînés
 		var tween := drop.create_tween()
 		tween.set_parallel(true)
 		tween.tween_property(drop, "position",
@@ -69,14 +68,14 @@ func _spawn_center_burst():
 	add_child(burst)
 	burst.scale = Vector2(0.3, 0.3)
 
-	var draw := Node2D.new()
-	burst.add_child(draw)
-	draw.draw.connect(func():
-		draw.draw_circle(Vector2.ZERO, 22.0, Color(0.5, 0.85, 1.0, 0.7))
-		draw.draw_circle(Vector2.ZERO, 13.0, Color(0.8, 0.95, 1.0, 0.9))
-		draw.draw_circle(Vector2.ZERO, 6.0,  Color(1.0, 1.0,  1.0, 1.0))
+	var burst_draw := Node2D.new()
+	burst.add_child(burst_draw)
+	burst_draw.draw.connect(func():
+		burst_draw.draw_circle(Vector2.ZERO, 22.0, Color(0.5, 0.85, 1.0, 0.7))
+		burst_draw.draw_circle(Vector2.ZERO, 13.0, Color(0.8, 0.95, 1.0, 0.9))
+		burst_draw.draw_circle(Vector2.ZERO, 6.0,  Color(1.0, 1.0,  1.0, 1.0))
 	)
-	draw.queue_redraw()
+	burst_draw.queue_redraw()
 
 	var tween := create_tween()
 	tween.set_parallel(true)

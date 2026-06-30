@@ -10,8 +10,11 @@ var wave_started := false
 var current_wave_index := 0
 var prep_running := false
 
+# Vagues dont le tutoriel a déjà été montré (clé = index de vague).
+var _tutorials_shown := {}
+
 var path: Path2D
-var wave_timer_label: Label
+var top_hud: TopHUD
 var enemy_manager: EnemyManager
 var tower_manager: TowerManager
 
@@ -20,39 +23,61 @@ const ENEMY_SCENE = preload("res://scenes/enemies/SimpleMob.tscn")
 
 func setup(
 	new_path: Path2D,
-	new_wave_timer_label: Label,
+	new_top_hud: TopHUD,
 	new_enemy_manager: EnemyManager,
 	new_tower_manager: TowerManager
 ):
-
 	tower_manager = new_tower_manager
 	path = new_path
-	wave_timer_label = new_wave_timer_label
+	top_hud = new_top_hud
 	enemy_manager = new_enemy_manager
 
 
-func start_prep_phase():
+func start_prep_phase(do_mulligan: bool = true):
 	var level = get_tree().current_scene
 
-	if level and level.has_method("start_mulligan_phase"):
-		# Première vague : mulligan complet (max 3 cartes)
-		# Vagues suivantes : échange simple (max 1 carte)
+	# Niveau tutoriel scripté ? (lecture sûre du flag sur le niveau)
+	var scripted := false
+	if level and "scripted_tutorial" in level:
+		scripted = level.scripted_tutorial
+
+	# Tutoriel data-driven : uniquement sur le niveau tutoriel, si la vague à
+	# venir porte un texte, on l'affiche en pause (une seule fois par vague).
+	if scripted and current_wave_index < waves.size() and level and level.has_method("show_tutorial"):
+		var wave: WaveData = waves[current_wave_index]
+		if wave.tutorial_text != "" and not _tutorials_shown.has(current_wave_index):
+			_tutorials_shown[current_wave_index] = true
+			await level.show_tutorial(wave.tutorial_title, wave.tutorial_text)
+			if not is_inside_tree():
+				return
+
+	# Mulligan désactivé en tutoriel scripté (séquence de cartes imposée).
+	if do_mulligan and not scripted and level and level.has_method("start_mulligan_phase"):
 		var max_cards := 3 if current_wave_index == 0 else 1
 		level.start_mulligan_phase(max_cards)
+
+	if level and level.has_method("show_wave_preview") and current_wave_index < waves.size():
+		level.show_wave_preview(current_wave_index, waves[current_wave_index])
 
 	wave_started = false
 	prep_running = true
 
-	for i in range(prep_time, 0, -1):
+	if top_hud:
+		top_hud.set_wave(current_wave_index + 1, waves.size())
+		top_hud.set_wave_total(0)
 
+	for i in range(prep_time, 0, -1):
 		if not prep_running:
 			return
-
-		wave_timer_label.text = "Prep : " + str(i)
-
+		if top_hud:
+			top_hud.set_prep_countdown(i)
+		if not is_inside_tree():
+			return
 		await get_tree().create_timer(1.0).timeout
+		if not is_inside_tree():
+			return
 
-	if prep_running:
+	if prep_running and Player.base_hp > 0:
 		start_wave()
 
 
@@ -64,15 +89,18 @@ func force_start_wave():
 	prep_running = false
 
 	for i in range(5, 0, -1):
-		wave_timer_label.text = "Début dans : " + str(i)
+		if top_hud:
+			top_hud.set_prep_countdown(i)
+		if not is_inside_tree():
+			return
 		await get_tree().create_timer(1.0).timeout
+		if not is_inside_tree():
+			return
 
 	start_wave()
 
 
 func start_wave():
-
-	print("START_WAVE CALLED")
 
 	if wave_started:
 		return
@@ -80,15 +108,20 @@ func start_wave():
 	prep_running = false
 	wave_started = true
 
-	wave_timer_label.text = "WAVE !"
+	if top_hud:
+		top_hud.set_wave_status("⚔  VAGUE EN COURS")
+
+	var level := get_tree().current_scene
+	if level and level.has_method("hide_wave_preview"):
+		level.hide_wave_preview()
 
 	if waves.is_empty():
 		push_error("Aucune wave configurée")
 		return
 
 	if current_wave_index >= waves.size():
-
-		wave_timer_label.text = "ALL WAVES CLEARED"
+		if top_hud:
+			top_hud.set_wave_status("— TOUTES LES VAGUES TERMINÉES —")
 		return
 
 	var wave_data = waves[current_wave_index]
@@ -96,8 +129,12 @@ func start_wave():
 	Player.set_wave(current_wave_index + 1)
 
 	await spawn_wave_data(wave_data)
+	if not is_inside_tree():
+		return
 
 	await wait_for_wave_clear()
+	if not is_inside_tree():
+		return
 
 	# Bonus Ferrailleur : caps supplémentaires après la vague
 	var caps_bonus := RunBonuses.get_caps_per_wave()
@@ -119,34 +156,102 @@ func start_wave():
 			card_manager.draw_to_hand(min(draw_bonus, available_slots))
 			get_tree().current_scene.refresh_hand_ui()
 
-	# Dernière vague : pas de prep phase, on affiche juste la victoire
+	# Annuler si game over (ex: miniboss passé)
+	if Player.base_hp <= 0:
+		return
+
+	# Dernière vague : victoire
 	if current_wave_index >= waves.size():
-		wave_timer_label.text = "VICTOIRE !"
+		_record_level_result()
+		var lvl = get_tree().current_scene
+		if lvl and lvl.has_method("show_victory"):
+			lvl.show_victory()
+		elif top_hud:
+			top_hud.set_wave_status("VICTOIRE !")
 		return
 
 	RewardManager.show_rewards()
 
 	while not RewardManager.reward_selected:
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
 
 	start_prep_phase()
 
 
-func spawn_wave_data(wave_data: WaveData) -> void:
+## Attribue 1 à 3 étoiles selon les PV restants de la base :
+## 3 si ≥ 90 %, 2 si ≥ 50 %, 1 sinon.
+func _record_level_result() -> void:
+	var ratio := float(Player.base_hp) / float(Player.MAX_BASE_HP)
+	var stars := 1
+	if ratio >= 0.9:
+		stars = 3
+	elif ratio >= 0.5:
+		stars = 2
+	Progress.complete_level(Progress.current_level_id, stars)
 
-	spawn_wave(
-		wave_data.enemy_count,
-		wave_data.spawn_interval,
-		wave_data.enemy_speed,
-		wave_data.enemy_scene
-	)
+
+## Tutoriel : lance une vague et attend qu'elle soit nettoyée, SANS le flux
+## normal (pas de mulligan, récompenses ni enchaînement). Piloté par le TutorialDirector.
+func tutorial_spawn_and_wait(wave_data: WaveData) -> void:
+	wave_started = true
+	prep_running = false
+
+	if top_hud:
+		top_hud.set_wave_status("⚔  VAGUE EN COURS")
+
+	await spawn_wave_data(wave_data)
+	if not is_inside_tree():
+		return
+
+	while enemy_manager.get_all_enemies().size() > 0:
+		if not is_inside_tree():
+			return
+		await get_tree().process_frame
+
+
+func spawn_wave_data(wave_data: WaveData) -> void:
+	var total := wave_data.total_count() + (1 if wave_data.boss_scene else 0)
+	if top_hud:
+		top_hud.set_wave_total(total)
+
+	if wave_data.groups.size() > 0:
+		# Vague mixée : on enchaîne chaque groupe (type/nombre propres).
+		for g in wave_data.groups:
+			if g == null or g.enemy_scene == null:
+				continue
+			await spawn_wave(g.count, g.spawn_interval, g.enemy_scene, g.hp_override, g.speed_override)
+	else:
+		# Vague mono-type (legacy).
+		await spawn_wave(
+			wave_data.enemy_count,
+			wave_data.spawn_interval,
+			wave_data.enemy_scene,
+			wave_data.enemy_hp_override,
+			wave_data.enemy_speed
+		)
+
+	if wave_data.boss_scene:
+		await get_tree().create_timer(wave_data.boss_delay).timeout
+		var pf := _spawn_enemy_instance(wave_data.boss_scene)
+		if pf:
+			path.add_child(pf)
+			pf.progress = 0
+			if top_hud:
+				top_hud.on_enemy_spawned()
+				top_hud.set_wave_status("⚠  MINIBOSS !")
+			await get_tree().create_timer(1.5).timeout
+			if top_hud:
+				top_hud.set_wave_status("⚔  VAGUE EN COURS")
 
 
 func spawn_wave(
 	count: int,
 	interval: float,
-	speed_override: float,
-	enemy_scene: PackedScene
+	enemy_scene: PackedScene,
+	hp_override: int = 0,
+	speed_override: float = 0.0
 ):
 
 	if not path:
@@ -158,12 +263,27 @@ func spawn_wave(
 
 		if pf:
 
-			if speed_override > 0:
-				pf.speed = speed_override
+			# Override de vitesse AVANT _ready : la vitesse vient de enemy.speed
+			# (lue en direct par le PathFollow). 0 = on garde la vitesse de la scène.
+			# Avant _ready pour que TankMob capture la bonne _base_speed.
+			if speed_override > 0.0 and pf.get_child_count() > 0:
+				var e0 = pf.get_child(0)
+				if e0 is EnemyBase:
+					e0.speed = speed_override
 
 			path.add_child(pf)
-
 			pf.progress = 0
+
+			# Override des PV APRÈS _ready (qui fait hp = max_hp) pour être sûr.
+			if hp_override > 0 and pf.get_child_count() > 0:
+				var enemy = pf.get_child(0)
+				if enemy is EnemyBase:
+					enemy.max_hp = hp_override
+					enemy.hp = hp_override
+					enemy.update_hp_bar()
+
+			if top_hud:
+				top_hud.on_enemy_spawned()
 
 		await get_tree().create_timer(interval).timeout
 
@@ -198,7 +318,12 @@ func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
 func wait_for_wave_clear():
 
 	while enemy_manager.get_all_enemies().size() > 0:
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
+
+	if not is_inside_tree():
+		return
 
 	Player.add_caps(3)
 

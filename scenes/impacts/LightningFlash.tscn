@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b_lightningflash"]
+
+[ext_resource type="Script" path="res://scripts/impacts/lightning_flash.gd" id="1_lfx"]
+
+[node name="LightningFlash" type="Node2D"]
+script = ExtResource("1_lfx")

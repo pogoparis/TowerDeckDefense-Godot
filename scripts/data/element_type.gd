@@ -7,5 +7,6 @@ enum Type {
 	WATER,
 	ELECTRIC,
 	NATURE,
-	AIR
+	AIR,
+	ICE
 }

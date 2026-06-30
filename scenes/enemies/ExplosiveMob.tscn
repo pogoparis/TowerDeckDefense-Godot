@@ -1,46 +1,148 @@
 [gd_scene format=3 uid="uid://cmjod41xbfvxr"]
 
-[ext_resource type="Script" uid="uid://cfawlmkj6rjr6" path="res://scripts/enemies/enemy_base.gd" id="1_ssm5u"]
+[ext_resource type="Script" uid="uid://blg7aqbw4rh64" path="res://scripts/enemies/enemy_explosive.gd" id="1_ssm5u"]
 [ext_resource type="PackedScene" uid="uid://ccvpbgxa3hkma" path="res://scenes/impacts/DeathExplosion.tscn" id="2_m4lua"]
-[ext_resource type="Texture2D" uid="uid://cbog4hkyyccn2" path="res://assets/ennemies/ExplosiveMob256.png" id="3_ssm5u"]
 [ext_resource type="Script" uid="uid://n37wabgxja8j" path="res://scripts/status/status_icon_container.gd" id="4_m4lua"]
+[ext_resource type="PackedScene" path="res://scenes/impacts/ExplosionChain.tscn" id="5_exchain"]
+[ext_resource type="Texture2D" uid="uid://bd4wayrpcggxr" path="res://assets/ennemies/Boule1Test.png" id="6_fire1"]
+[ext_resource type="Texture2D" uid="uid://bdfq28jo38lml" path="res://assets/ennemies/Boule2Test.png" id="7_fire2"]
+[ext_resource type="Texture2D" uid="uid://blo061qkyk1tm" path="res://assets/ennemies/Boule3Test.png" id="8_fire3"]
+[ext_resource type="Texture2D" uid="uid://coufk3l52qg02" path="res://assets/FX/FireParticle.png" id="9_fxtex"]
+[ext_resource type="Texture2D" uid="uid://dccj2k58g6d38" path="res://assets/FX/SparkParticle.png" id="10_spark"]
+
+[sub_resource type="Gradient" id="Gradient_flame"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(1, 0.95, 0.5, 1, 1, 0.45, 0.05, 0.7, 0.6, 0.1, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_flame"]
+gradient = SubResource("Gradient_flame")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticlesMaterial_trail"]
+emission_shape = 3
+emission_box_extents = Vector3(4, 2, 1)
+direction = Vector3(-1, 0, 0)
+spread = 8.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.18
+color_ramp = SubResource("GradientTexture1D_flame")
+
+[sub_resource type="Gradient" id="Gradient_spark"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 0.8, 1, 1, 0.6, 0.1, 0.9, 0.8, 0.1, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_spark"]
+gradient = SubResource("Gradient_spark")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticlesMaterial_spark"]
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector3(-1, -0.3, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 140, 0)
+damping_min = 20.0
+damping_max = 60.0
+scale_min = 0.3
+scale_max = 0.8
+color_ramp = SubResource("GradientTexture1D_spark")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticlesMaterial_flame"]
+emission_shape = 1
+emission_sphere_radius = 12.0
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 20.0
+initial_velocity_max = 45.0
+gravity = Vector3(0, -60, 0)
+scale_min = 0.06
+scale_max = 0.13
+color_ramp = SubResource("GradientTexture1D_flame")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fire"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_fire1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_fire2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fire3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="ExplosiveMob" type="Node2D" unique_id=1717610809 groups=["enemies", "level"]]
-z_index = 10
-scale = Vector2(0.6, 0.6)
+z_index = 8
+scale = Vector2(0.4, 0.4)
 script = ExtResource("1_ssm5u")
+explosion_chain_scene = ExtResource("5_exchain")
 max_hp = 100
-speed = 150.0
+speed = 180.0
 death_explosion_scene = ExtResource("2_m4lua")
 
-[node name="VisualRoot" type="Node2D" parent="." unique_id=691156620]
-z_index = 10
+[node name="VisualRoot" type="Node2D" parent="." unique_id=2109537931]
+z_index = 7
 position = Vector2(0, -20)
 
-[node name="Sprite2D" type="Sprite2D" parent="VisualRoot" unique_id=2133388888]
-z_index = 10
+[node name="FireTrail" type="GPUParticles2D" parent="VisualRoot" unique_id=1138598099]
+z_index = 7
+scale = Vector2(0.8, 0.8)
+amount = 12
+texture = ExtResource("9_fxtex")
+lifetime = 0.5
+randomness = 0.6
+process_material = SubResource("ParticlesMaterial_trail")
+
+[node name="Sparks" type="GPUParticles2D" parent="VisualRoot" unique_id=870312724]
+z_index = 7
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("3_ssm5u")
+amount = 14
+texture = ExtResource("10_spark")
+lifetime = 0.6
+randomness = 1.0
+process_material = SubResource("ParticlesMaterial_spark")
 
-[node name="HPBarContainer" type="Node2D" parent="." unique_id=592377226]
+[node name="Flames" type="GPUParticles2D" parent="VisualRoot" unique_id=1962631030]
+z_index = 7
+amount = 12
+texture = ExtResource("9_fxtex")
+lifetime = 0.35
+randomness = 0.7
+local_coords = true
+process_material = SubResource("ParticlesMaterial_flame")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=1269603551]
+z_index = 8
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_fire")
+autoplay = "default"
+
+[node name="HPBarContainer" type="Node2D" parent="." unique_id=1546459265]
 z_index = 10
-position = Vector2(-18, -40)
-scale = Vector2(1.5, 1.5)
+position = Vector2(-60, -130)
+scale = Vector2(2, 2)
 
-[node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=2138162574]
+[node name="HPFill" type="ColorRect" parent="HPBarContainer" unique_id=403185032]
 z_index = 11
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(1.5161187e-06, 0.6575475, 0.11722829, 1)
 
-[node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=131817910]
+[node name="HPBackground" type="ColorRect" parent="HPBarContainer" unique_id=334447835]
 z_index = 10
 offset_right = 40.0
 offset_bottom = 5.0
 color = Color(0.09009846, 0.09009849, 0.09009848, 1)
 
-[node name="StatusIcons" type="Node2D" parent="." unique_id=73008534]
+[node name="StatusIcons" type="Node2D" parent="." unique_id=21026694]
 z_index = 20
-position = Vector2(40, -40)
-scale = Vector2(1.2, 1.2)
+position = Vector2(30, -128)
+scale = Vector2(1.4, 1.4)
 script = ExtResource("4_m4lua")
