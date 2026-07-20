@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b_tophud001"]
+[gd_scene load_steps=8 format=3 uid="uid://b_tophud001"]
 
 [ext_resource type="Script" path="res://scripts/ui/top_hud.gd" id="1_tophud"]
 [ext_resource type="Theme" path="res://resources/themes/junkriot_theme.tres" id="2_theme"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/icons/flag256.png" id="4_flag"]
 [ext_resource type="Texture2D" path="res://assets/icons/TDM256.png" id="5_skull"]
 [ext_resource type="Texture2D" path="res://assets/icons/Coeur256.png" id="6_heart"]
+[ext_resource type="Texture2D" path="res://assets/ui/Caps_icon_256.png" id="7_caps"]
 
 [node name="TopHUD" type="Control"]
 layout_mode = 3
@@ -99,10 +100,12 @@ modulate = Color(0.4, 0.4, 0.5, 0.6)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="CapsIcon" type="Label" parent="Panel/VBox/StatsRow/CapsSection"]
+[node name="CapsIcon" type="TextureRect" parent="Panel/VBox/StatsRow/CapsSection"]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-theme_type_variation = &"HUDStatTitle"
-text = "CAPS"
+texture = ExtResource("7_caps")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CapsCount" type="Label" parent="Panel/VBox/StatsRow/CapsSection"]
 layout_mode = 2

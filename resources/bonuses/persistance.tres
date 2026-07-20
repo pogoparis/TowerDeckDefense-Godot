@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://bonus_persist01"]
 
 [ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+[ext_resource type="Texture2D" path="res://assets/rewards/Bonus_Persistance.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_bonus")
 rarity = "RARE"
 title = "Persistance"
-description = "Tous les phénomènes durent 4 secondes de plus."
-phenomenon_duration_bonus = 4.0
+description = "Tous les phénomènes durent 2 secondes de plus."
+phenomenon_duration_bonus = 2.0
+icon = ExtResource("2_icon")
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"

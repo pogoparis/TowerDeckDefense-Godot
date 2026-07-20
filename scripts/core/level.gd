@@ -76,6 +76,7 @@ const LEVEL_MAPS := {
 
 func _ready():
 	Player.reset()
+	RewardDB.reset_taken()
 	Audio.play_game_music()
 
 	# Fond spécifique au niveau (le niveau 1 garde celui de la scène).

@@ -21,6 +21,9 @@ class_name EnemyBase
 @onready var hp_background: ColorRect = get_node_or_null("HPBarContainer/HPBackground")
 
 var hp := 0
+## Vrai dès que l'ennemi entame sa mort — évite les dégâts/die() en double
+## (ex : explosions en chaîne d'ExplosiveMob → récursion infinie).
+var _is_dying := false
 var slow_multiplier := 1.0
 var slow_timer := 0.0
 
@@ -126,6 +129,10 @@ func has_status(status_id: String) -> bool:
 ##   "silent" = aucun chiffre (l'appelant affiche déjà son propre texte)
 func take_damage(amount: int, kind: String = "normal"):
 
+	# Déjà en train de mourir → on ignore (stoppe les explosions en chaîne récursives).
+	if _is_dying:
+		return
+
 	hp -= amount
 
 	if hp < 0:
@@ -137,6 +144,7 @@ func take_damage(amount: int, kind: String = "normal"):
 		_spawn_damage_number(amount, kind)
 
 	if hp <= 0:
+		_is_dying = true
 		die()
 
 
@@ -201,6 +209,17 @@ func apply_knockback(force: float):
 	# Déclenche le cooldown
 	_knockback_cooldown = KNOCKBACK_COOLDOWN
 
+## WET : le mob dérape et se bloque net un court instant (sol glissant).
+func _do_wet_slip() -> void:
+	apply_slow(0.0, WET_SLIP_STOP)
+	var visual := get_node_or_null("VisualRoot")
+	if visual:
+		var t := create_tween()
+		t.tween_property(visual, "rotation_degrees", 14.0, 0.1).set_trans(Tween.TRANS_SINE)
+		t.tween_property(visual, "rotation_degrees", 0.0, 0.3) \
+			.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+
 func _shake_visual(duration: float):
 	var visual := get_node_or_null("VisualRoot")
 	if not visual:
@@ -233,6 +252,12 @@ var _burn_tick_timer := 0.0
 const BURN_TICK_INTERVAL := 0.5
 const BURN_TICK_DAMAGE := 4
 
+# WET = sol glissant : de temps en temps (rare) le mob dérape et se bloque net.
+var _wet_slip_timer := 0.0
+const WET_SLIP_INTERVAL := 1.0   # on tente un dérapage ~chaque seconde
+const WET_SLIP_CHANCE := 0.15    # 15% → rare mais visible
+const WET_SLIP_STOP := 0.45      # durée du blocage
+
 func _process(delta):
 
 	update_statuses(delta)
@@ -243,7 +268,7 @@ func _process(delta):
 	if _onomatopoeia_cooldown > 0.0:
 		_onomatopoeia_cooldown -= delta
 
-	# Flaque Toxique : WET inflige des dégâts si le bonus est actif
+	# WET : sol glissant + Flaque Toxique (dégâts si bonus actif)
 	if has_status(StatusIds.WET):
 		var wet_dmg := RunBonuses.get_wet_tick_damage()
 		if wet_dmg > 0:
@@ -251,6 +276,13 @@ func _process(delta):
 			if _wet_tick_timer <= 0.0:
 				_wet_tick_timer = WET_TICK_INTERVAL
 				take_damage(wet_dmg, "tick")
+
+		# Dérapage : de temps en temps le mob glisse et se bloque net.
+		_wet_slip_timer -= delta
+		if _wet_slip_timer <= 0.0:
+			_wet_slip_timer = WET_SLIP_INTERVAL
+			if randf() < WET_SLIP_CHANCE:
+				_do_wet_slip()
 
 	# BURNING : dégâts sur la durée (toujours actifs, pas besoin de bonus)
 	if has_status(StatusIds.BURNING):

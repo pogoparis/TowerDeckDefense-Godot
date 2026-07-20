@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://b2ftxxbxa12dg"]
-
-[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_f2dcg"]
-
-[resource]
-script = ExtResource("1_f2dcg")
-title = "Long Barrels"
-range_bonus = 30.0
-metadata/_custom_type_script = "uid://cvmye0l22qsy1"

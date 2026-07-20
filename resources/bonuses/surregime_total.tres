@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BonusData" format=3]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+
+[resource]
+script = ExtResource("1_bonus")
+rarity = "LEGENDARY"
+title = "Surrégime Total"
+description = "Toutes les tours : +8 dégâts, cadence +66% et +30 portée."
+damage_bonus = 8
+range_bonus = 30
+fire_rate_mult = 0.6
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

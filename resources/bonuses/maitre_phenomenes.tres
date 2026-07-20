@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BonusData" format=3]
+
+[ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+
+[resource]
+script = ExtResource("1_bonus")
+rarity = "LEGENDARY"
+title = "Maître des Phénomènes"
+description = "Rayon des phénomènes ×1.5, durée +4s, et CONSUME coûte 1 cap de moins."
+phenomenon_radius_mult = 1.5
+phenomenon_duration_bonus = 4.0
+consume_cost_reduction = 1
+metadata/_custom_type_script = "uid://cvmye0l22qsy1"

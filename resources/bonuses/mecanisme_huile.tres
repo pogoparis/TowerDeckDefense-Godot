@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://bonus_mechhuile01"]
 
 [ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+[ext_resource type="Texture2D" path="res://assets/rewards/Bonus_Mechanisme_Huile.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_bonus")
 rarity = "RARE"
 title = "Mécanisme Huilé"
 description = "Cadence de tir +25% pour toutes les tours."
-fire_rate_mult = 0.75
+fire_rate_mult = 0.8
+icon = ExtResource("2_icon")
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"

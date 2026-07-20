@@ -40,57 +40,6 @@ func recalculate_synergies():
 
 		tower.recalculate_stats()
 
-	# ==============================
-	# MAMA COG
-	# ==============================
-
-	for tower in tower_manager.get_all_towers():
-
-		if not is_instance_valid(tower):
-			continue
-
-		if not tower is TowerIndustrialFan:
-			continue
-
-		var adjacent_cells = [
-			tower.grid_cell + Vector2i.LEFT,
-			tower.grid_cell + Vector2i.RIGHT,
-			tower.grid_cell + Vector2i.UP,
-			tower.grid_cell + Vector2i.DOWN
-		]
-
-		for cell in adjacent_cells:
-
-			var neighbor = tower_manager.get_tower_at_cell(cell)
-
-			if neighbor == null:
-				continue
-
-			if neighbor == tower:
-				continue
-
-			neighbor.adjacency_damage_mult = tower.damage_bonus_mult
-			neighbor.recalculate_stats()
-
-			var pair_id = (
-				str(tower.get_instance_id())
-				+ "_"
-				+ str(neighbor.get_instance_id())
-			)
-
-			neighbor.set_buff_visual(true)
-
-			if not active_mama_pairs.has(pair_id):
-
-				active_mama_pairs[pair_id] = true
-
-				FloatingTextService.spawn(
-					get_tree().current_scene,
-					neighbor.global_position + Vector2(0, -40),
-					"+10% DAMAGE",
-					Color("#FFD54A"),
-					1.4
-				)
 
 	# ==============================
 	# LASER GUIDE

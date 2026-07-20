@@ -74,6 +74,12 @@ var phenomenon_buffed := false
 @export var tex_west: Texture2D
 @export var tex_north: Texture2D
 
+## Animation jouée UNIQUEMENT quand la tour regarde le Sud (repos).
+## Vide = sprite Sud statique. (ex : la chouette qui bat des ailes)
+@export var south_anim_frames: Array[Texture2D] = []
+@export var south_anim_fps := 6.0
+var _anim_time := 0.0
+
 # Direction affichée : 0=Est, 1=Sud, 2=Ouest, 3=Nord. Défaut Sud (face caméra).
 var _facing_dir := 1
 var _pending_dir := 1
@@ -177,6 +183,7 @@ func _process(delta: float) -> void:
 	# Mode 4 directions (E/S/O/N) avec stabilisation.
 	if _has_4dir():
 		_update_4dir_facing(delta)
+		_update_south_anim(delta)
 		return
 
 	# Mode personnage 2 frames : oriente vers l'ennemi qui approche, sinon repos.
@@ -484,6 +491,18 @@ func _update_4dir_facing(delta: float) -> void:
 	if _pending_time >= FACING_DEBOUNCE:
 		_set_facing_dir(desired)
 		_pending_time = 0.0
+
+
+## Anime la face Sud (bat d'ailes…) seulement quand la tour regarde le Sud.
+func _update_south_anim(delta: float) -> void:
+	if south_anim_frames.is_empty() or _facing_dir != 1 or sprite == null:
+		return
+	_anim_time += delta
+	var frame := int(_anim_time * south_anim_fps) % south_anim_frames.size()
+	var tex: Texture2D = south_anim_frames[frame]
+	if sprite.texture != tex:
+		sprite.texture = tex
+		_apply_display_height()
 
 
 func _set_facing_dir(dir: int) -> void:

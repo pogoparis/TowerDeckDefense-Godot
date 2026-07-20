@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_y0jip")
-title = "Radioactive Scope"
-description = "+100 Range to all towers"
-range_bonus = 100
+title = "Viseur Radioactif"
+description = "+40 portée à toutes les tours."
+range_bonus = 40
 rarity = "EPIC"
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"

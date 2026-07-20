@@ -15,6 +15,12 @@ const MINI_SHOCK_COOLDOWN_STUNNED := 2.0
 
 var mini_shock_cooldowns := {}
 
+# Réactions auto entre statuts (mix d'éléments posés en tours).
+# Volontairement FAIBLES : un coup de pouce qui récompense le mix, PAS un
+# remplaçant des phénomènes (qui restent les gros plays du CONSUME).
+const CONTAM_COOLDOWN := 1.6
+var _contam_cooldowns := {}
+
 func _process(delta):
 
 	update_cooldowns(delta)
@@ -22,6 +28,12 @@ func _process(delta):
 	check_electrocution()
 
 	check_thunderstorm()
+
+	# Nouvelles réactions de superposition de phénomènes (matrice complète)
+	_check_pair_reaction(PhenomenonType.Type.WATER_POOL, PhenomenonType.Type.FIRE_ZONE, _trigger_vapeur)
+	_check_pair_reaction(PhenomenonType.Type.FIRE_ZONE, PhenomenonType.Type.WIND_CURRENT, _trigger_tornade)
+	_check_pair_reaction(PhenomenonType.Type.WATER_POOL, PhenomenonType.Type.WIND_CURRENT, _trigger_tempete)
+	_check_pair_reaction(PhenomenonType.Type.ELECTRIC_FIELD, PhenomenonType.Type.FIRE_ZONE, _trigger_surcharge)
 
 	check_contamination_reactions()
 
@@ -41,6 +53,15 @@ func update_cooldowns(delta):
 
 		mini_shock_cooldowns.erase(enemy_id)
 
+	# Cooldowns des réactions de contamination (couples de statuts)
+	var contam_expired := []
+	for key in _contam_cooldowns.keys():
+		_contam_cooldowns[key] -= delta
+		if _contam_cooldowns[key] <= 0.0:
+			contam_expired.append(key)
+	for key in contam_expired:
+		_contam_cooldowns.erase(key)
+
 
 func check_contamination_reactions():
 
@@ -50,6 +71,29 @@ func check_contamination_reactions():
 			continue
 
 		check_wet_charged(enemy)
+
+		# Synergies passives entre éléments posés en tours (couples de statuts).
+		_check_contam(enemy, StatusIds.WET, StatusIds.BURNING, 8, "VAPEUR", Color(0.85, 0.92, 0.98))
+		_check_contam(enemy, StatusIds.BURNING, StatusIds.CHARGED, 8, "SURCHAUFFE", Color(1.0, 0.4, 1.0))
+		_check_contam(enemy, StatusIds.WINDMARK, StatusIds.BURNING, 7, "ATTISÉ", Color(1.0, 0.55, 0.1))
+		_check_contam(enemy, StatusIds.WINDMARK, StatusIds.CHARGED, 7, "DÉCHARGE", Color(0.5, 0.8, 1.0))
+		_check_contam(enemy, StatusIds.WET, StatusIds.WINDMARK, 6, "ÉCLABOUSSURE", Color(0.6, 0.85, 1.0))
+
+
+## Réaction auto quand un ennemi porte deux statuts élémentaires (mix de tours).
+func _check_contam(enemy: EnemyBase, a: String, b: String, dmg: int, label: String, color: Color) -> void:
+	if not (enemy.has_status(a) and enemy.has_status(b)):
+		return
+	var key := str(enemy.get_instance_id(), "_", a, b)
+	if _contam_cooldowns.has(key):
+		return
+	_contam_cooldowns[key] = CONTAM_COOLDOWN
+	enemy.take_damage(dmg, "tick")
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(randf_range(-12, 12), -45),
+		label, color, 1.0
+	)
 
 
 func check_wet_charged(enemy: EnemyBase):
@@ -255,3 +299,97 @@ func _spawn_lightning_flash(pos: Vector2):
 	effects_container.add_child(fx)
 	fx.global_position = pos
 	Audio.play_sfx(preload("res://assets/audio/sfx/lightning.wav"), -6.0, 0.1)
+
+
+# =====================================================
+# RÉACTIONS DE SUPERPOSITION (matrice complète)
+# Détecteur générique : deux phénomènes de types donnés qui se chevauchent
+# déclenchent la réaction (une seule fois), puis sont consommés.
+# =====================================================
+
+func _check_pair_reaction(type_a: int, type_b: int, trigger: Callable) -> void:
+	var phenomena: Array = phenomenon_manager.get_active_phenomena()
+	for a in phenomena:
+		if not is_instance_valid(a) or a.phenomenon_type != type_a:
+			continue
+		if a.age < a.min_reaction_age:
+			continue
+		for b in phenomena:
+			if not is_instance_valid(b) or b == a or b.phenomenon_type != type_b:
+				continue
+			if b.age < b.min_reaction_age:
+				continue
+			if a.global_position.distance_to(b.global_position) > a.radius + b.radius:
+				continue
+			var pair_id := str(a.get_instance_id(), "_", b.get_instance_id())
+			if processed_pairs.has(pair_id):
+				continue
+			processed_pairs[pair_id] = true
+			trigger.call(a, b)
+
+
+## Ennemis dans un cercle (centre + rayon).
+func _enemies_in_radius(center: Vector2, radius: float) -> Array:
+	var result: Array = []
+	for e in enemy_manager.get_all_enemies():
+		if is_instance_valid(e) and e.global_position.distance_to(center) <= radius:
+			result.append(e)
+	return result
+
+
+## Texte flottant + consomme les deux phénomènes (fin de réaction).
+func _finish_reaction(a, b, center: Vector2, label: String, color: Color) -> void:
+	FloatingTextService.spawn(get_tree().current_scene, center + Vector2(0, -40), label, color, 1.5)
+	Juice.shake(14.0, 0.3)
+	phenomenon_manager.remove_phenomenon(a)
+	phenomenon_manager.remove_phenomenon(b)
+
+
+# ── VAPEUR : Flaque d'Eau + Zone de Feu ──────────────
+# Choc thermique : burst modéré + gros ralentissement, nettoie le feu.
+func _trigger_vapeur(a, b) -> void:
+	var center: Vector2 = (a.global_position + b.global_position) * 0.5
+	var radius: float = maxf(a.radius, b.radius) + 40.0
+	for e in _enemies_in_radius(center, radius):
+		# Choc thermique : burst fixe + % des PV max (efficace même sur les tanks)
+		e.take_damage(80 + int(e.max_hp * 0.15), "silent")
+		e.apply_slow(0.2, 5.0)   # ralentissement fort et long → tes tours finissent le travail
+		e.remove_status(StatusIds.BURNING)
+	_finish_reaction(a, b, center, "VAPEUR !", Color(0.85, 0.92, 0.98))
+
+
+# ── TORNADE DE FEU : Zone de Feu + Bourrasque ────────
+# Gros vortex : applique BURNING long + burst sur large zone.
+func _trigger_tornade(a, b) -> void:
+	var center: Vector2 = (a.global_position + b.global_position) * 0.5
+	var radius: float = a.radius + b.radius
+	for e in _enemies_in_radius(center, radius):
+		e.take_damage(60 + int(e.max_hp * 0.12), "silent")
+		e.add_status(StatusIds.BURNING, 5.0)
+	_finish_reaction(a, b, center, "TORNADE DE FEU !", Color(1.0, 0.5, 0.1))
+
+
+# ── TEMPÊTE : Flaque d'Eau + Bourrasque ──────────────
+# Applique WET en masse + repousse (prépare l'électrocution).
+func _trigger_tempete(a, b) -> void:
+	var center: Vector2 = (a.global_position + b.global_position) * 0.5
+	var radius: float = a.radius + b.radius
+	for e in _enemies_in_radius(center, radius):
+		e.take_damage(20, "silent")
+		e.add_status(StatusIds.WET, 4.0)
+		if e.has_method("apply_knockback"):
+			e.apply_knockback(40.0)
+	_finish_reaction(a, b, center, "TEMPÊTE !", Color(0.4, 0.8, 1.0))
+
+
+# ── SURCHARGE : Champ Électrique + Zone de Feu ───────
+# Explosion plasma : gros burst + stun.
+func _trigger_surcharge(a, b) -> void:
+	var center: Vector2 = (a.global_position + b.global_position) * 0.5
+	var radius: float = maxf(a.radius, b.radius) + 30.0
+	var stun: float = 2.0 + RunBonuses.get_stun_duration_bonus()
+	for e in _enemies_in_radius(center, radius):
+		e.take_damage(120 + int(e.max_hp * 0.15), "silent")
+		e.apply_slow(0.0, stun)
+		e.add_status(StatusIds.STUNNED, stun)
+	_finish_reaction(a, b, center, "SURCHARGE !", Color(1.0, 0.3, 1.0))

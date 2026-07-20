@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="BonusData" format=3 uid="uid://bonus_ferrail01"]
 
 [ext_resource type="Script" uid="uid://cvmye0l22qsy1" path="res://scripts/data/bonus_data.gd" id="1_bonus"]
+[ext_resource type="Texture2D" path="res://assets/rewards/Bonus_Ferrailleur.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_bonus")
 rarity = "COMMON"
 title = "Ferrailleur"
-description = "+3 caps au début de chaque vague."
-caps_per_wave = 3
+description = "+2 caps au début de chaque vague."
+caps_per_wave = 2
+icon = ExtResource("2_icon")
 metadata/_custom_type_script = "uid://cvmye0l22qsy1"

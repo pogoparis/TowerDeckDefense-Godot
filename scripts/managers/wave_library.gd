@@ -41,16 +41,16 @@ static func _wave(groups: Array, boss: PackedScene = null, boss_delay := 3.0) ->
 
 static func _level2() -> Array[WaveData]:
 	var waves: Array[WaveData] = []
-	# V1 — intro : petite nuée
-	waves.append(_wave([_group(SIMPLE, 6, 1.2)]))
-	# V2 — nuée plus grosse + quelques explosifs
-	waves.append(_wave([_group(SIMPLE, 8, 0.9), _group(EXPLOSIVE, 2, 1.4)]))
-	# V3 — premiers tanks au milieu d'une nuée
-	waves.append(_wave([_group(SIMPLE, 6, 0.8), _group(TANK, 2, 2.0)]))
+	# V1 — intro : peu de mobs, vitesse modérée → 2 tours qui se complètent passent
+	waves.append(_wave([_group(SIMPLE, 6, 1.2, 0, 110.0)]))
+	# V2 — un peu plus, encore gérable aux tours seules
+	waves.append(_wave([_group(SIMPLE, 8, 1.0, 0, 110.0), _group(EXPLOSIVE, 2, 1.4)]))
+	# V3 — premiers tanks : les tours seules ne suffisent plus → phénomènes
+	waves.append(_wave([_group(SIMPLE, 8, 0.7, 0, 120.0), _group(TANK, 3, 1.8)]))
 	# V4 — explosifs + tanks
-	waves.append(_wave([_group(EXPLOSIVE, 5, 1.1), _group(TANK, 2, 2.5)]))
-	# V5 — vague finale + MiniBoss
-	waves.append(_wave([_group(SIMPLE, 8, 0.7), _group(TANK, 2, 2.0)], MINIBOSS))
+	waves.append(_wave([_group(EXPLOSIVE, 7, 1.0), _group(TANK, 3, 2.0)]))
+	# V5 — vague finale massive et rapide + MiniBoss
+	waves.append(_wave([_group(SIMPLE, 12, 0.5, 0, 140.0), _group(TANK, 4, 1.6)], MINIBOSS))
 	return waves
 
 
@@ -58,14 +58,14 @@ static func _level2() -> Array[WaveData]:
 
 static func _level3() -> Array[WaveData]:
 	var waves: Array[WaveData] = []
-	# V1
-	waves.append(_wave([_group(SIMPLE, 8, 1.0)]))
+	# V1 — intro (un peu plus que le niveau 2 mais reste gérable aux tours)
+	waves.append(_wave([_group(SIMPLE, 7, 1.2, 0, 100.0)]))
 	# V2
-	waves.append(_wave([_group(SIMPLE, 10, 0.8), _group(EXPLOSIVE, 3, 1.2)]))
+	waves.append(_wave([_group(SIMPLE, 10, 0.8, 0, 120.0), _group(EXPLOSIVE, 3, 1.2)]))
 	# V3
-	waves.append(_wave([_group(SIMPLE, 8, 0.7), _group(TANK, 3, 2.0)]))
+	waves.append(_wave([_group(SIMPLE, 10, 0.6, 0, 130.0), _group(TANK, 4, 1.6)]))
 	# V4
-	waves.append(_wave([_group(EXPLOSIVE, 6, 1.0), _group(TANK, 3, 2.2)]))
+	waves.append(_wave([_group(EXPLOSIVE, 9, 0.9), _group(TANK, 4, 1.8)]))
 	# V5 — finale + MiniBoss
-	waves.append(_wave([_group(SIMPLE, 10, 0.6), _group(TANK, 4, 1.8)], MINIBOSS))
+	waves.append(_wave([_group(SIMPLE, 14, 0.4, 0, 150.0), _group(TANK, 5, 1.4)], MINIBOSS))
 	return waves

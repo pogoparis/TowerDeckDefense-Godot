@@ -16,6 +16,7 @@ const CONTAMINATION_INTERVAL := 0.5
 var damage_timer := 0.0
 const ELECTRIC_DAMAGE_INTERVAL := 0.25
 const ELECTRIC_TICK_DAMAGE     := 5
+const FIRE_TICK_DAMAGE         := 8
 
 # Knockback (Wind Current uniquement)
 const WIND_KNOCKBACK_FORCE    := 55.0   # pixels reculés
@@ -93,6 +94,13 @@ func _process(delta):
 			_arc_timer = ARC_FLICKER
 			_regenerate_arcs()
 
+	# ── Dégâts Zone de Feu ────────────────────────────
+	if phenomenon_type == PhenomenonType.Type.FIRE_ZONE:
+		damage_timer -= delta
+		if damage_timer <= 0.0:
+			damage_timer = ELECTRIC_DAMAGE_INTERVAL
+			_apply_fire_damage()
+
 	# ── Knockback Wind Current ────────────────────────
 	if phenomenon_type == PhenomenonType.Type.WIND_CURRENT:
 		_wind_knockback_timer -= delta
@@ -147,6 +155,19 @@ func apply_contamination():
 # ══════════════════════════════════════════════════════
 # ELECTRIC FIELD — dégâts + texte flottant
 # ══════════════════════════════════════════════════════
+## Dégâts directs de la Zone de Feu (en plus du statut BURNING).
+func _apply_fire_damage():
+	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
+	if enemy_manager == null:
+		return
+	for enemy in enemy_manager.get_all_enemies():
+		if not is_instance_valid(enemy):
+			continue
+		if global_position.distance_to(enemy.global_position) > radius:
+			continue
+		enemy.take_damage(FIRE_TICK_DAMAGE, "tick")
+
+
 func _apply_electric_damage():
 	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
 	if enemy_manager == null:

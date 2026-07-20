@@ -39,6 +39,7 @@ func show_rewards():
 func select_reward(index: int):
 
 	var reward = reward_cards[index]
+	RewardDB.mark_taken(reward)
 	match reward.reward_type:
 
 		RewardData.RewardType.CARD:
