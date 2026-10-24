@@ -10,6 +10,9 @@ var wave_started := false
 var current_wave_index := 0
 var prep_running := false
 
+## Cartes débloquées par cette victoire (affichées sur l'écran de fin).
+var _unlocked_this_run: Array[String] = []
+
 # Vagues dont le tutoriel a déjà été montré (clé = index de vague).
 var _tutorials_shown := {}
 
@@ -136,14 +139,14 @@ func start_wave():
 	if not is_inside_tree():
 		return
 
-	# Bonus Ferrailleur : caps supplémentaires après la vague
-	var caps_bonus := RunBonuses.get_caps_per_wave()
+	# Revenus par vague : bonus de récompense + cartes ÉCONOMIE jouées.
+	var caps_bonus := RunBonuses.get_caps_per_wave() + RunDeck.caps_per_wave
 	if caps_bonus > 0:
 		Player.add_caps(caps_bonus)
 		FloatingTextService.spawn(
 			get_tree().current_scene,
 			Vector2(get_viewport().get_visible_rect().size / 2.0),
-			"+" + str(caps_bonus) + " caps (Ferrailleur)",
+			"+" + str(caps_bonus) + " caps",
 			Color(1.0, 0.85, 0.2),
 			2.0
 		)
@@ -190,6 +193,10 @@ func _record_level_result() -> void:
 	elif ratio >= 0.5:
 		stars = 2
 	Progress.complete_level(Progress.current_level_id, stars)
+	# Déblocages : annoncés sur l'écran de victoire. Un déblocage silencieux
+	# n'est pas une récompense — le joueur doit SAVOIR qu'il a gagné quelque
+	# chose de durable, sinon la victoire ne promet rien pour la suite.
+	_unlocked_this_run = Progress.unlock_for_level(Progress.current_level_id)
 
 
 ## Tutoriel : lance une vague et attend qu'elle soit nettoyée, SANS le flux
@@ -238,6 +245,7 @@ func spawn_wave_data(wave_data: WaveData) -> void:
 		if pf:
 			path.add_child(pf)
 			pf.progress = 0
+			_apply_wave_scaling(pf)   # le boss monte aussi avec les vagues
 			if top_hud:
 				top_hud.on_enemy_spawned()
 				top_hud.set_wave_status("⚠  MINIBOSS !")
@@ -282,10 +290,52 @@ func spawn_wave(
 					enemy.hp = hp_override
 					enemy.update_hp_bar()
 
+			# Montée en puissance de la vague (après l'override éventuel).
+			_apply_wave_scaling(pf)
+
 			if top_hud:
 				top_hud.on_enemy_spawned()
 
 		await get_tree().create_timer(interval).timeout
+
+
+## Croissance des PV ennemis par vague. Sans ça, les vagues n'augmentent qu'en
+## NOMBRE : une tour améliorée (×1.8 de DPS par palier) finit par one-shot les
+## mobs, et la tension disparaît. Ici chaque vague les rend plus coriaces —
+## c'est ce que fait BTD6 avec ses ballons de plus en plus résistants.
+## ⚙ C'est LE réglage à tourner si le jeu est trop dur / trop facile.
+## ⚠ Ce facteur se CUMULE à la montée des effectifs dans le plan de vagues.
+## À 1.18 les ennemis gagnaient ×6.2 en PV sur 12 vagues, et les effectifs
+## doublaient en parallèle : ×12 au total, contre ×8 côté joueur (plus de tours
+## + améliorations). Résultat, le niveau devenait infaisable dès la V9 quel que
+## soit le deck — 454 DPS requis pour un plafond de 289.
+## 1.10 → V4 ×1.33, V8 ×1.95, V12 ×2.85. La courbe reste tendue sur la fin
+## (V12 demande un peu plus que le plafond théorique : c'est une finale), mais
+## elle redevient jouable.
+@export var enemy_hp_growth := 1.10
+
+
+## Multiplicateur de PV de la vague courante (vague 1 = ×1.0).
+func _wave_hp_multiplier() -> float:
+	return pow(enemy_hp_growth, float(current_wave_index))
+
+
+## Applique la montée en PV de la vague à un ennemi déjà ajouté à l'arbre
+## (donc après son _ready, qui a fait hp = max_hp).
+func _apply_wave_scaling(pf: PathFollow2D) -> void:
+	if pf == null or pf.get_child_count() == 0:
+		return
+	var enemy := pf.get_child(0) as EnemyBase
+	if enemy == null:
+		return
+	var mult := _wave_hp_multiplier()
+	# Mémorisé même à 1.0 : les enfants d'une scission en héritent.
+	enemy.wave_scale = mult
+	if mult <= 1.0:
+		return
+	enemy.max_hp = int(round(enemy.max_hp * mult))
+	enemy.hp = enemy.max_hp
+	enemy.update_hp_bar()
 
 
 func _spawn_enemy_instance(enemy_scene: PackedScene) -> PathFollow2D:
@@ -325,7 +375,11 @@ func wait_for_wave_clear():
 	if not is_inside_tree():
 		return
 
-	Player.add_caps(3)
+	# Prime de fin de vague. Elle DOIT permettre de poser une tour de plus à
+	# chaque vague, sinon le joueur reste bloqué sur sa pose de départ et la
+	# partie n'a plus de courbe de progression (le "je construis ma machine"
+	# de BTD6). Vague 1 → 12 caps, vague 6 → 22, vague 12 → 34.
+	Player.add_caps(10 + 2 * current_wave_index)
 
 	card_manager.draw_until_full_hand()
 

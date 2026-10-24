@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/cards/Card_luciole512.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/towers/TowerLuciole.tscn" id="3_tower"]
+
+[resource]
+script = ExtResource("2_script")
+card_name = "Luciole"
+description = "LUMIÈRE. Projette un HALO : toutes les tours dans son rayon gagnent +25% de dégâts et tirent plus vite. Ses propres dégâts sont faibles — tout est dans le placement."
+card_texture = ExtResource("1_tex")
+mana_cost = 25
+tower_id = "TowerLuciole"
+tower_scene = ExtResource("3_tower")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

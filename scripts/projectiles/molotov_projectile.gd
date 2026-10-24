@@ -59,5 +59,5 @@ func _draw() -> void:
 
 
 func on_hit(hit_target):
-	hit_target.take_damage(damage)
+	hit_target.take_damage(damage, "normal", hit_element())
 	hit_target.apply_debuff(StatusIds.BURNING, burn_duration)

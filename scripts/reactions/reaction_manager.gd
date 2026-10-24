@@ -62,6 +62,16 @@ func update_cooldowns(delta):
 	for key in contam_expired:
 		_contam_cooldowns.erase(key)
 
+	# Cooldowns des réactions à effet (Cryogénisation, Tempête de Sable).
+	for dict in [_cryo_cooldowns, _sandstorm_cooldowns, _spores_cooldowns]:
+		var done := []
+		for id in dict.keys():
+			dict[id] -= delta
+			if dict[id] <= 0.0:
+				done.append(id)
+		for id in done:
+			dict.erase(id)
+
 
 func check_contamination_reactions():
 
@@ -72,28 +82,335 @@ func check_contamination_reactions():
 
 		check_wet_charged(enemy)
 
-		# Synergies passives entre éléments posés en tours (couples de statuts).
-		_check_contam(enemy, StatusIds.WET, StatusIds.BURNING, 8, "VAPEUR", Color(0.85, 0.92, 0.98))
-		_check_contam(enemy, StatusIds.BURNING, StatusIds.CHARGED, 8, "SURCHAUFFE", Color(1.0, 0.4, 1.0))
-		_check_contam(enemy, StatusIds.WINDMARK, StatusIds.BURNING, 7, "ATTISÉ", Color(1.0, 0.55, 0.1))
-		_check_contam(enemy, StatusIds.WINDMARK, StatusIds.CHARGED, 7, "DÉCHARGE", Color(0.5, 0.8, 1.0))
-		_check_contam(enemy, StatusIds.WET, StatusIds.WINDMARK, 6, "ÉCLABOUSSURE", Color(0.6, 0.85, 1.0))
+		# Réactions à effet : elles ont leur propre fonction parce qu'elles
+		# changent l'ÉTAT de l'ennemi, pas seulement ses PV.
+		check_vapeur(enemy)
+		check_surchauffe(enemy)
+		check_attise(enemy)
+		check_decharge(enemy)
+		check_eclaboussure(enemy)
+		check_cryogenisation(enemy)
+		check_sandstorm(enemy)
+		check_spores(enemy)
+
+		# ── Complément de la matrice CONTRÔLE × DÉGÂTS ────────────────
+		# La règle du jeu tient en une phrase : « un élément de contrôle plus
+		# un élément de dégâts font une réaction ». Elle n'était vraie qu'à
+		# moitié — la Glace n'en avait aucune, donc le Pingouin ralentissait
+		# sans que rien n'exploite ce ralentissement.
+		check_boue(enemy)
+		check_infusion(enemy)
+		check_choc_thermique(enemy)
+		check_supraconducteur(enemy)
+		check_brisure(enemy)
+		check_gangrene(enemy)
 
 
-## Réaction auto quand un ennemi porte deux statuts élémentaires (mix de tours).
-func _check_contam(enemy: EnemyBase, a: String, b: String, dmg: int, label: String, color: Color) -> void:
+## Autorise une réaction NOMMÉE sur cet ennemi, avec son propre cooldown.
+##
+## Toutes les réactions à effet suivent le même patron — vérifier deux statuts,
+## respecter un cooldown, afficher un texte. Ce helper évite d'en recopier la
+## mécanique à chaque nouvelle réaction : il ne reste plus que l'EFFET à écrire,
+## ce qui rend l'ajout d'une réaction quasi gratuit.
+func _try_react(
+	enemy: EnemyBase, a: String, b: String, id: String,
+	label: String, color: Color, cooldown: float
+) -> bool:
 	if not (enemy.has_status(a) and enemy.has_status(b)):
-		return
-	var key := str(enemy.get_instance_id(), "_", a, b)
+		return false
+
+	var key := str(enemy.get_instance_id(), "_", id)
 	if _contam_cooldowns.has(key):
-		return
-	_contam_cooldowns[key] = CONTAM_COOLDOWN
-	enemy.take_damage(dmg, "tick")
+		return false
+	_contam_cooldowns[key] = cooldown
+
 	FloatingTextService.spawn(
 		get_tree().current_scene,
-		enemy.global_position + Vector2(randf_range(-12, 12), -45),
-		label, color, 1.0
+		enemy.global_position + Vector2(randf_range(-12, 12), -50),
+		label, color, 1.2
 	)
+	return true
+
+
+# ══════════════════════════════════════════════════════
+#   LES CINQ PLUS ANCIENNES, REFONDUES
+# ══════════════════════════════════════════════════════
+#
+# Elles faisaient toutes la même chose : 6 à 8 dégâts et un texte flottant.
+# Une réaction qui fait « encore des dégâts » n'apprend RIEN sur les deux
+# éléments qui l'ont produite — et à côté des six nouvelles, qui ont chacune un
+# effet propre, elles passaient pour du bruit. Chacune a maintenant une
+# identité mécanique.
+
+# ── VAPEUR — 💧 Eau + 🔥 Feu ───────────────────────────────
+# L'eau qui bout AVEUGLE : le nuage brûle sur la durée et se voit de loin.
+# C'est du dégât ÉTALÉ, à l'opposé du Choc Thermique qui est un burst.
+func check_vapeur(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WET, StatusIds.BURNING, "vapeur",
+			"VAPEUR !", Color(0.85, 0.92, 0.98), 4.0):
+		return
+	enemy.take_damage(12, "tick", ElementType.Type.FIRE)
+	enemy.extend_status(StatusIds.BURNING, 6.0)
+	# L'eau s'évapore : c'est ce qui empêche la boucle infinie Eau↔Feu.
+	enemy.remove_status(StatusIds.WET)
+
+
+# ── SURCHAUFFE — 🔥 Feu + ⚡ Électricité ───────────────────
+# Deux éléments de DÉGÂTS ensemble : le seul cas où la réaction fait
+# simplement très mal. Elle EXPLOSE en zone — c'est la récompense du joueur
+# qui a tout misé sur l'offensive et n'a aucun contrôle.
+const SURCHAUFFE_RADIUS := 120.0
+
+func check_surchauffe(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.BURNING, StatusIds.CHARGED, "surchauffe",
+			"SURCHAUFFE !", Color(1.0, 0.4, 1.0), 5.0):
+		return
+	for e in _enemies_in_radius(enemy.global_position, SURCHAUFFE_RADIUS):
+		e.take_damage(26 if e == enemy else 14, "tick", ElementType.Type.FIRE)
+	Juice.shake(9.0, 0.18)
+
+
+# ── ATTISÉ — 🌪 Air + 🔥 Feu ───────────────────────────────
+# Le vent PROPAGE l'incendie : les voisins prennent feu. Le pendant "foule" du
+# Choc Thermique, qui lui est mono-cible.
+const ATTISE_RADIUS := 140.0
+
+func check_attise(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WINDMARK, StatusIds.BURNING, "attise",
+			"ATTISÉ !", Color(1.0, 0.55, 0.1), 5.0):
+		return
+	enemy.take_damage(10, "tick", ElementType.Type.FIRE)
+	for e in _enemies_in_radius(enemy.global_position, ATTISE_RADIUS):
+		if e != enemy:
+			e.add_status(StatusIds.BURNING, 4.0)
+	enemy.remove_status(StatusIds.WINDMARK)
+
+
+# ── DÉCHARGE — 🌪 Air + ⚡ Électricité ─────────────────────
+# L'air ionisé conduit : la décharge REJETTE l'ennemi en arrière sur le chemin.
+# Elle achète de la distance, pas des dégâts — c'est le rôle de l'Air.
+func check_decharge(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WINDMARK, StatusIds.CHARGED, "decharge",
+			"DÉCHARGE !", Color(0.5, 0.8, 1.0), 5.0):
+		return
+	enemy.take_damage(14, "tick", ElementType.Type.ELECTRIC)
+	enemy.apply_knockback(90.0)
+	enemy.add_status(StatusIds.STUNNED, 1.0)
+	enemy.apply_slow(0.0, 1.0)
+
+
+# ── ÉCLABOUSSURE — 💧 Eau + 🌪 Air ─────────────────────────
+# La bourrasque disperse l'eau : elle TREMPE tous les voisins. Aucun dégât —
+# c'est un multiplicateur d'installation, qui prépare Vapeur ou Électrocution
+# sur un groupe entier.
+const ECLABOUSSURE_RADIUS := 150.0
+
+func check_eclaboussure(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WET, StatusIds.WINDMARK, "eclaboussure",
+			"ÉCLABOUSSURE !", Color(0.6, 0.85, 1.0), 5.0):
+		return
+	for e in _enemies_in_radius(enemy.global_position, ECLABOUSSURE_RADIUS):
+		if e != enemy:
+			e.add_status(StatusIds.WET, 5.0)
+	enemy.remove_status(StatusIds.WINDMARK)
+
+
+# ══════════════════════════════════════════════════════
+#   MATRICE CONTRÔLE × DÉGÂTS — les six réactions manquantes
+# ══════════════════════════════════════════════════════
+#
+# Chacune a un EFFET distinct, jamais « encore des dégâts » : une réaction doit
+# apprendre quelque chose au joueur sur les deux éléments qui l'ont produite.
+
+# ── BOUE — 💧 Eau + 🪨 Terre ───────────────────────────────
+# La terre détrempée devient un bourbier : le sol lui-même ralentit.
+func check_boue(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WET, StatusIds.DUSTY, "boue",
+			"BOUE !", Color(0.62, 0.5, 0.32), 5.0):
+		return
+	enemy.apply_slow(0.35, 4.0)
+	enemy.take_damage(6, "tick", ElementType.Type.EARTH)
+
+
+# ── INFUSION — 💧 Eau + 🌿 Nature ──────────────────────────
+# L'eau dilue le poison dans l'organisme : le DoT du Panda fait mal d'un coup.
+# Frappe en % des PV max, donc c'est LA réponse aux très gros ennemis.
+func check_infusion(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.WET, StatusIds.POISONED, "infusion",
+			"INFUSION !", Color(0.5, 0.9, 0.55), 5.0):
+		return
+	enemy.take_damage(int(round(enemy.max_hp * 0.08)), "tick", ElementType.Type.NATURE)
+
+
+# ── CHOC THERMIQUE — ❄ Glace + 🔥 Feu ──────────────────────
+# Le chaud sur le gelé fait éclater : gros burst, mais le givre est consommé.
+# C'est un arbitrage — on échange son ralentissement contre des dégâts.
+func check_choc_thermique(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.CHILLED, StatusIds.BURNING, "choc",
+			"CHOC THERMIQUE !", Color(1.0, 0.7, 0.85), 6.0):
+		return
+	enemy.take_damage(45 + int(enemy.max_hp * 0.06), "silent", ElementType.Type.FIRE)
+	enemy.chill_multiplier = 1.0
+	enemy.chill_timer = 0.0
+	enemy.remove_status(StatusIds.CHILLED)
+	Juice.shake(8.0, 0.18)
+
+
+# ── SUPRACONDUCTEUR — ❄ Glace + ⚡ Électricité ─────────────
+# Le froid abaisse la résistance : la décharge se propage à tous les GELÉS
+# alentour. Récompense d'avoir gelé un groupe entier avant de le foudroyer.
+const SUPRA_RADIUS := 170.0
+
+func check_supraconducteur(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.CHILLED, StatusIds.CHARGED, "supra",
+			"SUPRACONDUCTEUR !", Color(0.6, 0.95, 1.0), 6.0):
+		return
+	enemy.take_damage(30, "silent", ElementType.Type.ELECTRIC)
+	for e in _enemies_in_radius(enemy.global_position, SUPRA_RADIUS):
+		if e == enemy or not e.has_status(StatusIds.CHILLED):
+			continue
+		e.take_damage(22, "tick", ElementType.Type.ELECTRIC)
+		e.add_status(StatusIds.CHARGED, 3.0)
+
+
+# ── BRISURE — ❄ Glace + 🪨 Terre ───────────────────────────
+# Le givre rend cassant, le rocher brise. Les dégâts montent avec la PROFONDEUR
+# du gel : geler longtemps avant de frapper est récompensé.
+func check_brisure(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.CHILLED, StatusIds.DUSTY, "brisure",
+			"BRISURE !", Color(0.8, 0.92, 1.0), 6.0):
+		return
+	var depth: float = 1.0 - enemy.chill_multiplier     # 0 → 0.6 au plancher
+	enemy.take_damage(35 + int(90.0 * depth), "silent", ElementType.Type.EARTH)
+	enemy.chill_multiplier = 1.0
+	enemy.chill_timer = 0.0
+	enemy.remove_status(StatusIds.CHILLED)
+	Juice.shake(11.0, 0.22)
+
+
+# ── GANGRÈNE — ❄ Glace + 🌿 Nature ─────────────────────────
+# Le froid ralentit le métabolisme : le poison s'installe pour bien plus
+# longtemps. Pas de dégâts immédiats — c'est de la DURÉE qu'on achète.
+func check_gangrene(enemy: EnemyBase) -> void:
+	if not _try_react(enemy, StatusIds.CHILLED, StatusIds.POISONED, "gangrene",
+			"GANGRÈNE !", Color(0.45, 0.75, 0.5), 8.0):
+		return
+	enemy.extend_status(StatusIds.POISONED, 12.0)
+
+
+# ── CRYOGÉNISATION — 💧 Eau + ❄ Glace ─────────────────────
+# L'eau sur un corps déjà givré prend en masse : l'ennemi se fige NET.
+# C'est la réponse du deck Roche aux ennemis rapides — plutôt que des dégâts,
+# elle achète du temps, ce qui vaut bien plus contre un Drone à 195 px/s.
+const CRYO_COOLDOWN := 6.0
+const CRYO_FREEZE_DURATION := 2.0
+const CRYO_DAMAGE := 14
+
+var _cryo_cooldowns := {}
+
+
+func check_cryogenisation(enemy: EnemyBase) -> void:
+	if not (enemy.has_status(StatusIds.WET) and enemy.has_status(StatusIds.CHILLED)):
+		return
+
+	var id := enemy.get_instance_id()
+	if _cryo_cooldowns.has(id):
+		return
+	_cryo_cooldowns[id] = CRYO_COOLDOWN
+
+	# Arrêt complet, pas un simple ralentissement : c'est ce qui rend la
+	# réaction spectaculaire et lisible sans lire un chiffre.
+	enemy.take_damage(CRYO_DAMAGE, "silent", ElementType.Type.ICE)
+	enemy.apply_slow(0.0, CRYO_FREEZE_DURATION)
+	enemy.add_status(StatusIds.STUNNED, CRYO_FREEZE_DURATION)
+	# La glace consomme l'humidité : sans ça la réaction se relancerait en
+	# boucle sur le même ennemi et le figerait en permanence.
+	enemy.remove_status(StatusIds.WET)
+
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(randf_range(-12, 12), -50),
+		"CRYOGÉNISATION !", Color(0.65, 0.95, 1.0), 1.25
+	)
+	Juice.shake(7.0, 0.15)
+
+
+# ── TEMPÊTE DE SABLE — 🪨 Terre + 🌪 Air ───────────────────
+# La bourrasque soulève la poussière de roche : ça mord sur une ZONE, pas sur
+# une cible. Le pendant "dégâts de masse" de la Cryogénisation, pour un deck
+# Roche qui manquait de réponse aux nuées.
+const SANDSTORM_COOLDOWN := 5.0
+const SANDSTORM_RADIUS := 130.0
+const SANDSTORM_DAMAGE := 16
+const SANDSTORM_SLOW := 0.6
+const SANDSTORM_SLOW_TIME := 2.5
+
+var _sandstorm_cooldowns := {}
+
+
+func check_sandstorm(enemy: EnemyBase) -> void:
+	if not (enemy.has_status(StatusIds.DUSTY) and enemy.has_status(StatusIds.WINDMARK)):
+		return
+
+	var id := enemy.get_instance_id()
+	if _sandstorm_cooldowns.has(id):
+		return
+	_sandstorm_cooldowns[id] = SANDSTORM_COOLDOWN
+
+	for e in _enemies_in_radius(enemy.global_position, SANDSTORM_RADIUS):
+		e.take_damage(SANDSTORM_DAMAGE, "tick", ElementType.Type.EARTH)
+		if e.slow_multiplier > SANDSTORM_SLOW:
+			e.apply_slow(SANDSTORM_SLOW, SANDSTORM_SLOW_TIME)
+
+	enemy.remove_status(StatusIds.DUSTY)
+
+	FloatingTextService.spawn(
+		get_tree().current_scene,
+		enemy.global_position + Vector2(randf_range(-12, 12), -50),
+		"TEMPÊTE DE SABLE !", Color(0.88, 0.75, 0.45), 1.25
+	)
+	Juice.shake(9.0, 0.2)
+
+
+# ── SPORES — 🌿 Nature + 🌪 Air ────────────────────────────
+# La bourrasque emporte les spores : le poison se PROPAGE aux voisins.
+# Le Panda seul ne peut empoisonner qu'une cible à la fois (son ciblage évite
+# même les cibles déjà infectées) ; avec du vent, il contamine un groupe.
+# C'est ce qui le fait passer de tueur de gros à menace de zone.
+const SPORES_COOLDOWN := 4.0
+const SPORES_RADIUS := 150.0
+const SPORES_DURATION := 4.0
+
+var _spores_cooldowns := {}
+
+
+func check_spores(enemy: EnemyBase) -> void:
+	if not (enemy.has_status(StatusIds.POISONED) and enemy.has_status(StatusIds.WINDMARK)):
+		return
+
+	var id := enemy.get_instance_id()
+	if _spores_cooldowns.has(id):
+		return
+	_spores_cooldowns[id] = SPORES_COOLDOWN
+
+	var spread := 0
+	for e in _enemies_in_radius(enemy.global_position, SPORES_RADIUS):
+		if e == enemy or e.has_status(StatusIds.POISONED):
+			continue
+		e.add_status(StatusIds.POISONED, SPORES_DURATION)
+		spread += 1
+
+	# La marque de vent est consommée : sans ça, un seul ennemi venté au milieu
+	# d'une nuée relancerait la propagation à chaque cooldown, et le poison
+	# deviendrait permanent sur toute la vague sans effort.
+	enemy.remove_status(StatusIds.WINDMARK)
+
+	if spread > 0:
+		FloatingTextService.spawn(
+			get_tree().current_scene,
+			enemy.global_position + Vector2(randf_range(-12, 12), -50),
+			"SPORES ! ×%d" % spread, Color(0.6, 1.0, 0.4), 1.2
+		)
 
 
 func check_wet_charged(enemy: EnemyBase):
@@ -267,7 +584,6 @@ func trigger_thunderstorm(electric: Phenomenon, wind: Phenomenon):
 
 func _strike_thunderstorm(center: Vector2, radius: float):
 	var enemies: Array = enemy_manager.get_all_enemies()
-	var hit: bool = false
 
 	for enemy in enemies:
 		if not is_instance_valid(enemy):
@@ -286,7 +602,6 @@ func _strike_thunderstorm(center: Vector2, radius: float):
 			Color(0.7, 0.9, 1.0),
 			1.4
 		)
-		hit = true
 
 	# Flash visuel même sans ennemi touché
 	_spawn_lightning_flash(center)

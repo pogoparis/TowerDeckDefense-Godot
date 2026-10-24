@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dun5t4u04p10o"]
+
+[ext_resource type="Script" path="res://scripts/towers/tower_vampire.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/ShadowProjectile.tscn" id="2_proj"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/shot_wind.wav" id="3_sfx"]
+[ext_resource type="Texture2D" path="res://assets/towers/vampire/VampireSUD.png" id="4_sud"]
+[ext_resource type="Texture2D" path="res://assets/towers/vampire/VampireEST.png" id="5_est"]
+[ext_resource type="Texture2D" path="res://assets/towers/vampire/VampireWEST.png" id="6_west"]
+[ext_resource type="Texture2D" path="res://assets/towers/vampire/VampireNORD.png" id="7_nord"]
+
+[node name="TowerVampire" type="Node2D"]
+z_index = 8
+script = ExtResource("1_script")
+element_type = 7
+is_signature = true
+charge_auto = true
+charge_max_base = 8
+charge_cooldown_time = 3.0
+projectile_scene = ExtResource("2_proj")
+shot_sound = ExtResource("3_sfx")
+shot_volume_db = -8.0
+base_damage = 6
+base_fire_rate = 1.1
+base_range = 200.0
+max_aim_degrees = 0.0
+display_height = 132.0
+tex_east = ExtResource("5_est")
+tex_south = ExtResource("4_sud")
+tex_west = ExtResource("6_west")
+tex_north = ExtResource("7_nord")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 8
+position = Vector2(0, -44)
+texture = ExtResource("4_sud")
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+position = Vector2(0, 30)

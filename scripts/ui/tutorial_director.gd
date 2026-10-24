@@ -14,12 +14,14 @@ class_name TutorialDirector
 ## Donc "colonne 4, ligne 3" en comptant à partir de 1 = Vector2i(3, 2).
 @export var tesla_tower_id := "TowerTesla"
 @export var water_tower_id := "TowerWaterCannon"
-@export var tesla_cell := Vector2i(3, 2)
-@export var water_cell := Vector2i(2, 2)
+## Re-calées après le passage de la grille en 17x8 cases de 96 px : ces cases
+## visent la même position à l'écran qu'avec l'ancienne grille 12x6 / 128 px.
+@export var tesla_cell := Vector2i(5, 3)
+@export var water_cell := Vector2i(3, 3)
 
 @export_group("Zone des phénomènes")
 ## Case-cible (centre) où le joueur doit lâcher les phénomènes.
-@export var phenomenon_cell := Vector2i(3, 1)
+@export var phenomenon_cell := Vector2i(5, 2)
 @export var phenomenon_radius := 150.0
 
 @export_group("PV des ennemis")
@@ -52,20 +54,20 @@ const TESLA_CARD := preload("res://resources/cards/tesla_coil_card.tres")
 var active := false
 var _level: Node = null
 
-# Verrouillage des actions (lu par le level avant build/consume).
+# Verrouillage des actions (lu par le level avant build).
 var _await_tower_id := ""
-var _await_consume_tower_id := ""
 
 # Surlignages visuels.
 var _highlight_cell_active := false
 var _highlight_cell := Vector2i.ZERO
 var _highlight_zone_active := false
 var _highlight_zone_center := Vector2.ZERO
+var _highlight_towers_active := false
 var _pulse := 0.0
 
 
 func _process(delta: float) -> void:
-	if _highlight_cell_active or _highlight_zone_active:
+	if _highlight_cell_active or _highlight_zone_active or _highlight_towers_active:
 		_pulse += delta
 		queue_redraw()
 
@@ -77,12 +79,6 @@ func can_build_card(card_data) -> bool:
 	return _await_tower_id != "" and card_data.tower_id == _await_tower_id
 
 
-func can_consume_card(card_data) -> bool:
-	if not active:
-		return true
-	return _await_consume_tower_id != "" and card_data.tower_id == _await_consume_tower_id
-
-
 # ── Déroulé complet du tutoriel ──────────────────────────────
 func run(level: Node) -> void:
 	active = true
@@ -92,7 +88,7 @@ func run(level: Node) -> void:
 	# Tutoriel guidé : 1 SEUL PV (zéro fuite tolérée) + caps dosés pile poil
 	# étape par étape → le joueur ne peut faire QUE ce qu'on lui demande.
 	Player.invulnerable = false
-	Player.set_base_hp(1)
+	Player.set_base_hp(20)
 
 	# Main de départ : 2 Tesla + 1 Eau (animée).
 	if not is_inside_tree(): return
@@ -106,11 +102,12 @@ func run(level: Node) -> void:
 	await _require_tower(
 		tesla_tower_id, tesla_cell,
 		"BIENVENUE !",
-		"⚠️ Ton squat n'a qu'UN SEUL PV : si un ennemi atteint la base, c'est PERDU !\n\nPose ta première défense : l'OURS ÉCLAIR — ses ARCS ÉLECTRIQUES sautent d'ennemi en ennemi.\n\nGlisse la carte sur la case qui clignote.",
+		"⚠️ Protège ton squat : chaque ennemi qui atteint la base te coûte des PV !\n\nPose ta première défense : l'OURS ÉCLAIR — ses ARCS ÉLECTRIQUES sautent d'ennemi en ennemi.\n\nGlisse la carte sur la case qui clignote.",
 		"⚡ Glisse l'OURS ÉCLAIR sur la case surlignée"
 	)
 	if not is_inside_tree(): return
-	await _run_simple_wave(4, 85.0, wave1_mob_hp)
+	_set_signature_charge_enabled(false)   # Charge verrouillée (pas de jauge) jusqu'à la vague 4
+	await _run_simple_wave(4, 85.0, wave1_mob_hp, 1.1)   # intervalle large = ennemis bien espacés
 	if not is_inside_tree(): return
 
 	# ÉTAPE 2 — Tour Eau imposée, puis vague.
@@ -127,59 +124,64 @@ func run(level: Node) -> void:
 	await _run_simple_wave(6, 130.0, wave2_mob_hp)
 	if not is_inside_tree(): return
 
-	# ÉTAPE 3 — Tanks : un phénomène imposé dans l'angle.
+	# ÉTAPE 3 — Les blindés : on ENSEIGNE et on FORCE l'amélioration de tour.
 	_set_wave_hud(3, 4)
-	_deal_tutorial_hand()   # 2 élec + 1 eau
+	_deal_tutorial_hand()
 	await _explain(
-		"LES TANKS ARRIVENT !",
-		"Tes tours seules ne suffiront pas.\n\nLâche un CHAMP ÉLECTRIQUE dans l'angle, à portée de tes deux tours : ça les détruira tous !"
+		"LES BLINDÉS ARRIVENT !",
+		"Des blindés lourds approchent — tes tours de base ne suffiront pas.\n\nTu viens de récupérer de la FERRAILLE 🔧 : AMÉLIORE une de tes tours pour la renforcer (plus de dégâts, plus de portée)."
+	)
+	if not is_inside_tree(): return
+	Player.add_caps(80)   # de quoi améliorer une tour
+	await _require_upgrade("🔧 Tape une de tes tours → bouton AMÉLIORER")
+	if not is_inside_tree(): return
+	await _explain(
+		"BIEN JOUÉ !",
+		"Ta tour est renforcée. Maintenant, tiens la ligne face aux blindés !"
 	)
 	if not is_inside_tree(): return
 	_level.wave_manager.wave_started = true
-	_level.wave_manager.spawn_wave_data(_make_wave(TANK_MOB, 3, 4.0, 80.0, null, tank_hp))
-	Player.set_caps(2)   # pile de quoi consommer un phénomène
-	await _require_consume(
-		tesla_tower_id, phenomenon_cell,
-		"",
-		"",
-		"⚡ Tape la carte OURS ÉCLAIR → CONSOMMER → clique dans la zone surlignée"
-	)
-	if not is_inside_tree(): return
+	_level.wave_manager.spawn_wave_data(_make_wave(TANK_MOB, 2, 4.0, 70.0, null, 90))
 	await _wait_wave_clear()
 	if not is_inside_tree(): return
 
-	# ÉTAPE 4 — Miniboss : deux phénomènes superposés (électrocution).
+	# ÉTAPE 4 — Miniboss : ENSEIGNE la CHARGE (déclencheur de la signature).
 	_set_wave_hud(4, 4)
-	_deal_tutorial_hand()   # 2 élec + 1 eau
+	_deal_tutorial_hand()
 	await _explain(
 		"LE MINIBOSS !",
-		"Il encaisse les tirs. SUPERPOSE une FLAQUE D'EAU et un CHAMP ÉLECTRIQUE au même endroit quand il approche de tes tours → ÉLECTROCUTION !"
+		"Il encaisse énormément de tirs.\n\nTon OURS ÉCLAIR a accumulé de la CHARGE en combattant. Quand sa jauge est PLEINE (jaune, elle brille), tape la tour puis DÉCLENCHE une tempête électrique dévastatrice !"
 	)
 	if not is_inside_tree(): return
+	# Ouvre la Charge (verrouillée depuis la vague 1) : la jauge APPARAÎT
+	# maintenant et se remplit en tirant sur les mobs d'escorte du boss.
+	_set_signature_charge_enabled(true)
 	_level.wave_manager.wave_started = true
-	_level.wave_manager.spawn_wave_data(_make_wave(SIMPLE_MOB, 2, 2.0, 120.0, MINI_BOSS))
-	_weaken_boss(tutorial_boss_hp)  # détaché : réduit les PV du boss à son arrivée
-	Player.set_caps(4)   # pile de quoi superposer flaque + champ → électrocution
+	# Escorte devant le boss → de quoi remplir la jauge avant qu'il arrive.
+	_level.wave_manager.spawn_wave_data(_make_wave(SIMPLE_MOB, 4, 1.4, 120.0, MINI_BOSS))
+	_weaken_boss(900)   # costaud : la Charge devient vraiment utile (pas de kill trivial)
+	_set_banner("Ton OURS ÉCLAIR se charge en tirant… surveille sa jauge !")
 
-	# N'affiche la consigne/zone QUE quand le miniboss approche de la zone.
-	await _wait_for_boss_near(phenomenon_cell, phenomenon_radius + 80.0)
+	# Attend que la jauge soit PLEINE (remplie sur les mobs d'escorte).
+	var charge_ready: bool = await _wait_signature_charge_ready()
 	if not is_inside_tree(): return
 
-	await _require_consume(
-		water_tower_id, phenomenon_cell,
-		"",
-		"",
-		"🌊 1/2 — Lâche la FLAQUE D'EAU près de tes tours"
-	)
-	if not is_inside_tree(): return
-	await _require_consume(
-		tesla_tower_id, phenomenon_cell,
-		"",
-		"",
-		"⚡ 2/2 — Lâche le CHAMP ÉLECTRIQUE au MÊME endroit !"
-	)
-	if not is_inside_tree(): return
-	await _wait_wave_clear()
+	if charge_ready:
+		_set_banner("")
+		# UNE seule alerte : le modal met l'arbre en pause → le jeu est stoppé.
+		await _explain(
+			"JAUGE PLEINE !",
+			"Ton OURS ÉCLAIR est chargé à bloc !\n\nFerme ce message, puis tape la tour et appuie sur DÉCLENCHER pour foudroyer le boss."
+		)
+		if not is_inside_tree(): return
+		# Après le modal, le jeu RESTE gelé jusqu'au déclenchement du joueur.
+		_freeze_gameplay(true)
+		await _require_charge_trigger("Tape l'OURS ÉCLAIR puis DÉCLENCHER")
+		# Déclenché → reprise du jeu : la tempête s'abat, le boss encaisse.
+		_freeze_gameplay(false)
+		if not is_inside_tree(): return
+
+	await _wait_boss_dead()
 	if not is_inside_tree(): return
 
 	# VICTOIRE
@@ -222,50 +224,181 @@ func _require_tower(tower_id: String, cell: Vector2i, title: String, body: Strin
 	queue_redraw()
 
 
-## Impose la consommation d'une carte précise dans une zone précise.
-func _require_consume(tower_id: String, cell: Vector2i, title: String, body: String, banner: String) -> void:
-	await _explain(title, body)
-	if not is_inside_tree(): return
-
-	var center: Vector2 = _level.grid.cell_to_world(cell)
-	_await_consume_tower_id = tower_id
-	_level.card_manager.forced_consume_active = true
-	_level.card_manager.forced_consume_center = center
-	_level.card_manager.forced_consume_radius = phenomenon_radius
-	_highlight_zone_active = true
-	_highlight_zone_center = center
+## Impose au joueur d'améliorer n'importe quelle tour (enseigne l'upgrade).
+## Attend qu'au moins une tour posée atteigne le niveau d'amélioration 1.
+func _require_upgrade(banner: String) -> void:
 	_set_banner(banner)
-	_highlight_card(tower_id)
-
-	var done := [false]
-	var cb := func(_c, _p): done[0] = true
-	_level.card_manager.consume_resolved.connect(cb)
-
-	while is_inside_tree() and not done[0]:
+	_highlight_towers_active = true
+	while is_inside_tree() and not _all_towers_upgraded():
 		await get_tree().process_frame
-
-	if _level.card_manager.consume_resolved.is_connected(cb):
-		_level.card_manager.consume_resolved.disconnect(cb)
-
-	_await_consume_tower_id = ""
-	_level.card_manager.forced_consume_active = false
-	_highlight_zone_active = false
+	_highlight_towers_active = false
 	_set_banner("")
-	_clear_card_highlight()
 	queue_redraw()
+
+
+## Vrai seulement quand TOUTES les tours posées ont été améliorées (niveau ≥ 1).
+func _all_towers_upgraded() -> bool:
+	var towers := get_tree().get_nodes_in_group("towers")
+	var found := false
+	for t in towers:
+		if not is_instance_valid(t) or not ("upgrade_level" in t):
+			continue
+		found = true
+		if t.upgrade_level < 1:
+			return false
+	return found
+
+
+## Retourne la 1re tour signature posée (celle qui porte une Charge), ou null.
+func _find_signature_tower() -> BaseTower:
+	for t in get_tree().get_nodes_in_group("towers"):
+		var bt := t as BaseTower
+		if bt != null and bt.is_signature:
+			return bt
+	return null
+
+
+## Active/désactive la Charge de la signature. Le tuto la garde VERROUILLÉE
+## (pas de jauge, pas d'accumulation) jusqu'à la vague 4, où elle se remplira
+## naturellement en tirant sur les mobs d'escorte du boss.
+func _set_signature_charge_enabled(v: bool) -> void:
+	var t := _find_signature_tower()
+	if t == null:
+		return
+	t.charge_enabled = v
+	if v:
+		t.charge_current = 0
+		t.charge_cooldown = 0.0
+	t.queue_redraw()
+
+
+## Vrai s'il reste un ennemi "boss" (gros PV) en jeu.
+func _boss_present() -> bool:
+	for e in _level.enemy_manager.get_all_enemies():
+		if not is_instance_valid(e):
+			continue
+		var eb := e as EnemyBase
+		if eb != null and eb.max_hp >= 200:
+			return true
+	return false
+
+
+## Vrai si un ennemi "boss" est à moins de [param dist] de la case (test ponctuel).
+func _boss_near(cell: Vector2i, dist: float) -> bool:
+	var target: Vector2 = _level.grid.cell_to_world(cell)
+	for e in _level.enemy_manager.get_all_enemies():
+		if not is_instance_valid(e):
+			continue
+		var eb := e as EnemyBase
+		if eb != null and eb.max_hp >= 200 \
+				and eb.global_position.distance_to(target) <= dist:
+			return true
+	return false
+
+
+## Demande au joueur de DÉCLENCHER la Charge de la signature.
+## Se débloque au déclenchement (cooldown démarré) OU si le boss meurt entre
+## temps (anti-soft-lock). Retourne true si le joueur a bien déclenché.
+func _require_charge_trigger(banner: String) -> bool:
+	_set_banner(banner)
+	var t := _find_signature_tower()
+	var triggered := false
+	var boss_seen := false
+	while is_inside_tree():
+		if t == null or not is_instance_valid(t):
+			t = _find_signature_tower()
+		if t != null and is_instance_valid(t) and t.charge_cooldown > 0.0:
+			triggered = true
+			break
+		# N'accepte "plus de boss" comme sortie QUE si le boss a déjà spawné
+		# (sinon on sortirait avant même son arrivée).
+		if _boss_present():
+			boss_seen = true
+		elif boss_seen:
+			break   # boss apparu puis mort → anti-soft-lock
+		await get_tree().process_frame
+	_set_banner("")
+	return triggered
+
+
+## Attend que la jauge de la signature soit PLEINE (remplie en tirant).
+## Retourne false si le boss est apparu puis mort avant (anti-soft-lock).
+func _wait_signature_charge_ready() -> bool:
+	var boss_seen := false
+	while is_inside_tree():
+		var t := _find_signature_tower()
+		if t != null and is_instance_valid(t) and t.is_charge_ready():
+			return true
+		if _boss_present():
+			boss_seen = true
+		elif boss_seen:
+			return false
+		await get_tree().process_frame
+	return false
+
+
+## Noeuds de gameplay gardés en PAUSABLE (ils se figent avec la pause).
+const _FREEZE_PAUSABLE := [
+	"World", "EnemyManager", "WaveManager", "PhenomenonManager",
+	"SynergyManager", "GridManager", "PlacementManager", "TowerManager", "CardManager"
+]
+
+## Gèle / dégèle le gameplay via une VRAIE pause de l'arbre, tout en gardant
+## actifs l'input (level), l'UI (bouton DÉCLENCHER + bannière) et ce director,
+## pour que le joueur puisse déclencher pile au bon moment.
+func _freeze_gameplay(frozen: bool) -> void:
+	if frozen:
+		# Restent actifs pendant la pause :
+		process_mode = Node.PROCESS_MODE_ALWAYS            # ce director (coroutine)
+		_level.process_mode = Node.PROCESS_MODE_ALWAYS     # _input → tap sur la tour
+		var ui := _level.get_node_or_null("UI")
+		if ui:
+			ui.process_mode = Node.PROCESS_MODE_ALWAYS     # bouton DÉCLENCHER + bannière
+		# Contre le cascade ALWAYS : le gameplay lourd reste figé par la pause.
+		for n in _FREEZE_PAUSABLE:
+			var node := _level.get_node_or_null(n)
+			if node:
+				node.process_mode = Node.PROCESS_MODE_PAUSABLE
+		get_tree().paused = true
+	else:
+		get_tree().paused = false
+		process_mode = Node.PROCESS_MODE_INHERIT
+		_level.process_mode = Node.PROCESS_MODE_INHERIT
+		var ui := _level.get_node_or_null("UI")
+		if ui:
+			ui.process_mode = Node.PROCESS_MODE_INHERIT
+		for n in _FREEZE_PAUSABLE:
+			var node := _level.get_node_or_null(n)
+			if node:
+				node.process_mode = Node.PROCESS_MODE_INHERIT
 
 
 # ── Vagues ───────────────────────────────────────────────────
 
-func _run_simple_wave(count: int, speed: float, hp := 0) -> void:
+func _run_simple_wave(count: int, speed: float, hp := 0, interval := -1.0) -> void:
+	var itv: float = interval if interval > 0.0 else tuto_spawn_interval
 	await _level.wave_manager.tutorial_spawn_and_wait(
-		_make_wave(SIMPLE_MOB, count, tuto_spawn_interval, speed, null, hp)
+		_make_wave(SIMPLE_MOB, count, itv, speed, null, hp)
 	)
 
 
 func _wait_wave_clear() -> void:
 	var em = _level.enemy_manager
 	while is_inside_tree() and em.get_all_enemies().size() > 0:
+		await get_tree().process_frame
+
+
+## Attend que le BOSS (gros PV) soit mort. Plus robuste que _wait_wave_clear
+## pour la vague finale : un mob d'escorte bloqué ne doit pas figer la Victoire.
+func _wait_boss_dead() -> void:
+	# Attend que le boss soit APPARU puis mort (ne renvoie pas la victoire tant
+	# que le boss n'a pas spawné, même si la liste d'ennemis est vide un instant).
+	var boss_seen := false
+	while is_inside_tree():
+		if _boss_present():
+			boss_seen = true
+		elif boss_seen:
+			return
 		await get_tree().process_frame
 
 
@@ -351,12 +484,11 @@ func _set_banner(text: String) -> void:
 
 func _clear_all_locks() -> void:
 	_await_tower_id = ""
-	_await_consume_tower_id = ""
 	_highlight_cell_active = false
 	_highlight_zone_active = false
+	_highlight_towers_active = false
 	if _level:
 		_level.placement.forced_cell_active = false
-		_level.card_manager.forced_consume_active = false
 	_set_banner("")
 	queue_redraw()
 
@@ -376,3 +508,15 @@ func _draw() -> void:
 	if _highlight_zone_active:
 		draw_circle(_highlight_zone_center, phenomenon_radius, Color(0.3, 0.7, 1.0, a * 0.25))
 		draw_arc(_highlight_zone_center, phenomenon_radius, 0.0, TAU, 56, Color(0.4, 0.9, 1.0, a), 6.0)
+
+	# Surbrillance des tours posées PAS ENCORE améliorées (étape « améliore »).
+	if _highlight_towers_active:
+		for t in get_tree().get_nodes_in_group("towers"):
+			if not is_instance_valid(t):
+				continue
+			if "upgrade_level" in t and t.upgrade_level >= 1:
+				continue  # déjà améliorée → plus de halo
+			var p: Vector2 = t.global_position - Vector2(0, 20)
+			var r := 72.0
+			draw_circle(p, r, Color(1.0, 0.85, 0.2, a * 0.18))
+			draw_arc(p, r, 0.0, TAU, 48, Color(1.0, 0.9, 0.25, a), 6.0)

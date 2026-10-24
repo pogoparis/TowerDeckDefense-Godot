@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/spell_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+effect = 2
+radius = 140.0
+element = 2
+duration = 7.0
+phenomenon = 1
+cast_label = "FLAQUE !"
+cast_color = Color(0.4, 0.7, 1, 1)
+shake = 4.0

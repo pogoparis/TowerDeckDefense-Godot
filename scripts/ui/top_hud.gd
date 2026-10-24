@@ -32,7 +32,6 @@ var _in_prep: bool = false
 @onready var enemy_label: Label = $Panel/VBox/StatsRow/EnemySection/EnemyCount
 @onready var base_hp_label: Label = $Panel/VBox/StatsRow/HPSection/HPCount
 @onready var caps_label: Label = $Panel/VBox/StatsRow/CapsSection/CapsCount
-@onready var ferraille_label: Label = $Panel/VBox/StatsRow/FerrailleSection/FerrailleCount
 @onready var speed_button: Button = $Panel/VBox/StatsRow/SpeedButton
 @onready var settings_button: Button = $Panel/VBox/StatsRow/SettingsButton
 @onready var wave_bar: ProgressBar = $Panel/VBox/WaveBar
@@ -41,6 +40,9 @@ var _in_prep: bool = false
 
 func _ready() -> void:
 	set_base_hp(max_base_hp)
+	# Icône du bouton Paramètres forcée par code (fiable même si l'éditeur garde
+	# le .tscn en cache lors d'une édition externe).
+	settings_button.icon = load("res://assets/icons/parametres256.png")
 
 
 func _process(_delta: float) -> void:
@@ -75,10 +77,6 @@ func set_base_hp(hp: int) -> void:
 
 func set_caps(amount: int) -> void:
 	caps_label.text = str(amount)
-
-
-func set_ferraille(amount: int) -> void:
-	ferraille_label.text = str(amount)
 
 
 ## Initialise la barre de vague : [param total] = nombre d'ennemis à spawner.

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_s"]
+[ext_resource type="Texture2D" path="res://assets/cards/Card_Citerne_perce_512.png" id="3_tex"]
+[ext_resource type="Resource" path="res://resources/spells/citerne_crevee.tres" id="2_spell"]
+
+[resource]
+script = ExtResource("1_s")
+card_name = "Citerne Crevée"
+description = "SORT 💧 EAU — Une citerne éventée répand une flaque 7 s : ralentit et applique TREMPÉ. Ne tue personne — elle ARME l'Électricité et le Feu."
+card_texture = ExtResource("3_tex")
+card_type = 1
+mana_cost = 20
+spell_data = ExtResource("2_spell")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

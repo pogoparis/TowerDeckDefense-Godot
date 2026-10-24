@@ -126,6 +126,28 @@ func _draw():
 
 
 	# =========================
+	# VISEE DE SORT
+	# =========================
+	# Sans ce retour, le joueur lance à l'aveugle et ne peut pas apprendre la
+	# portée de ses sorts. Violet franc : ni l'orange de la sélection, ni le
+	# vert/rouge de la pose de tour — c'est un troisième mode, il doit se lire
+	# comme tel du premier coup d'œil.
+	if level.placement.selected_spell != null:
+		var spell: SpellData = level.placement.selected_spell
+		var aim := to_local(get_global_mouse_position())
+		var pulse := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.008)
+
+		draw_circle(aim, spell.radius, Color(0.72, 0.35, 1.0, 0.16))
+		draw_arc(aim, spell.radius, 0, TAU, 64, Color(0.85, 0.55, 1.0, 0.85), 2.5)
+		# Anneau pulsant : signale que le jeu attend un clic.
+		draw_arc(aim, spell.radius * (0.90 + 0.06 * pulse), 0, TAU, 48,
+			Color(1.0, 0.8, 1.0, 0.35), 1.5)
+		# Croix de visée au centre, pour placer précisément.
+		draw_line(aim + Vector2(-14, 0), aim + Vector2(14, 0), Color(1, 1, 1, 0.8), 2.0)
+		draw_line(aim + Vector2(0, -14), aim + Vector2(0, 14), Color(1, 1, 1, 0.8), 2.0)
+
+
+	# =========================
 	# PORTEE TOUR SELECTIONNEE
 	# =========================
 	if level.tower_manager.selected_tower and level.tower_manager.selected_tower is BaseTower:

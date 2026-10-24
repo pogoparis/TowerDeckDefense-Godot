@@ -17,7 +17,9 @@ func _physics_process(delta):
 	if get_child_count() > 0:
 		var enemy = get_child(0)
 		if enemy is EnemyBase:
-			final_speed = enemy.speed * enemy.slow_multiplier
+			# speed_multiplier() et pas slow_multiplier : il combine le
+			# ralentissement classique ET le givre de la Glace.
+			final_speed = enemy.speed * enemy.speed_multiplier()
 
 	progress += final_speed * delta
 

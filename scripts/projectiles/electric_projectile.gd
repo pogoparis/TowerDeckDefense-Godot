@@ -62,7 +62,7 @@ func _draw():
 
 
 func on_hit(hit_target):
-	hit_target.take_damage(damage)
+	hit_target.take_damage(damage, "normal", hit_element())
 	hit_target.apply_debuff(StatusIds.CHARGED, 3.0)
 	_chain_lightning(hit_target)
 
@@ -84,7 +84,7 @@ func _chain_lightning(first_target) -> void:
 		if next == null:
 			break
 		dmg *= chain_falloff
-		next.take_damage(maxi(1, int(round(dmg))))
+		next.take_damage(maxi(1, int(round(dmg))), "normal", hit_element())
 		next.add_status(StatusIds.CHARGED, 3.0)   # chargé aussi, mais sans onomatopée
 		_spawn_arc(current.global_position, next.global_position)
 		already.append(next)

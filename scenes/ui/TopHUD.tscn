@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/ui/top_hud.gd" id="1_tophud"]
 [ext_resource type="Theme" path="res://resources/themes/junkriot_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/icons/reglages256.png" id="3_gear"]
+[ext_resource type="Texture2D" uid="uid://bl57mgxh3clkl" path="res://assets/icons/parametres256.png" id="3_gear"]
 [ext_resource type="Texture2D" path="res://assets/icons/flag256.png" id="4_flag"]
 [ext_resource type="Texture2D" path="res://assets/icons/TDM256.png" id="5_skull"]
 [ext_resource type="Texture2D" path="res://assets/icons/Coeur256.png" id="6_heart"]
@@ -112,24 +112,6 @@ layout_mode = 2
 theme_type_variation = &"HUDStatValue"
 text = "4"
 
-[node name="VSep4" type="VSeparator" parent="Panel/VBox/StatsRow"]
-layout_mode = 2
-modulate = Color(0.4, 0.4, 0.5, 0.6)
-
-[node name="FerrailleSection" type="HBoxContainer" parent="Panel/VBox/StatsRow"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="FerrailleIcon" type="Label" parent="Panel/VBox/StatsRow/FerrailleSection"]
-layout_mode = 2
-theme_type_variation = &"HUDStatTitle"
-text = "FERRAILLE"
-
-[node name="FerrailleCount" type="Label" parent="Panel/VBox/StatsRow/FerrailleSection"]
-layout_mode = 2
-theme_type_variation = &"HUDStatValue"
-text = "0"
-
 [node name="VSepF" type="VSeparator" parent="Panel/VBox/StatsRow"]
 layout_mode = 2
 modulate = Color(0.4, 0.4, 0.5, 0.6)
@@ -144,11 +126,14 @@ layout_mode = 2
 modulate = Color(0.4, 0.4, 0.5, 0.6)
 
 [node name="SettingsButton" type="Button" parent="Panel/VBox/StatsRow"]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 theme_type_variation = &"HUDButton"
 tooltip_text = "Paramètres (Échap)"
 icon = ExtResource("3_gear")
 expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 1
 
 [node name="WaveBar" type="ProgressBar" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 8)

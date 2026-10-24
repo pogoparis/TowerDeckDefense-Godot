@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StartingDeckData" format=3]
+
+[ext_resource type="Script" uid="uid://cturi3aifg006" path="res://scripts/cards/starting_deck_data.gd" id="1_s"]
+[ext_resource type="Resource" path="res://resources/cards/gardien_card.tres" id="c0"]
+[ext_resource type="Resource" path="res://resources/cards/ice_punk_card.tres" id="c1"]
+[ext_resource type="Resource" path="res://resources/cards/luciole_card.tres" id="c2"]
+[ext_resource type="Resource" path="res://resources/cards/spell_azote.tres" id="c3"]
+[ext_resource type="Resource" path="res://resources/cards/spell_plein_phare.tres" id="c4"]
+[ext_resource type="Resource" path="res://resources/cards/spell_frappe_ferraille.tres" id="c5"]
+[ext_resource type="Resource" path="res://resources/cards/spell_court_circuit.tres" id="c6"]
+
+[resource]
+script = ExtResource("1_s")
+deck_name = "Roche"
+cards = [ExtResource("c0"), ExtResource("c0"), ExtResource("c1"), ExtResource("c1"), ExtResource("c2"), ExtResource("c2"), ExtResource("c3"), ExtResource("c4"), ExtResource("c5"), ExtResource("c6")]
+metadata/_custom_type_script = "uid://cturi3aifg006"

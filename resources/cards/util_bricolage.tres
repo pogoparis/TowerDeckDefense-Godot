@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+card_name = "Bricolage"
+description = "AMÉLIORATION — Vise une tour : elle monte d'un niveau GRATUITEMENT. 20 Caps au lieu de 35 ou 80 — à garder pour le palier le plus cher."
+card_type = 2
+mana_cost = 20
+free_upgrade = true
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

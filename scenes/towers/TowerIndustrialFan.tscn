@@ -18,7 +18,7 @@ family = 2
 tower_tags = Array[String](["ghost", "support"])
 element_type = 5
 max_aim_degrees = 0.0
-display_height = 130.0
+display_height = 116.0
 tex_east = ExtResource("o_e")
 tex_south = ExtResource("o_s")
 tex_west = ExtResource("o_w")
@@ -28,6 +28,7 @@ tex_north = ExtResource("o_n")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1611473854]
 z_index = 8
+position = Vector2(0, -35)
 texture = ExtResource("o_s")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1493701353]

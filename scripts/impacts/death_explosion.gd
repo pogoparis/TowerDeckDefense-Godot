@@ -67,14 +67,14 @@ func _spawn_shockwave():
 	add_child(ring)
 	ring.scale = Vector2(0.1, 0.1)
 
-	var draw := Node2D.new()
-	ring.add_child(draw)
+	var draw_node := Node2D.new()
+	ring.add_child(draw_node)
 	var ring_radius := 90.0 * size
 	var ring_color := Color(1.0, 0.8, 0.4, 0.7)
-	draw.draw.connect(func():
-		draw.draw_arc(Vector2.ZERO, ring_radius, 0.0, TAU, 64, ring_color, 6.0)
+	draw_node.draw.connect(func():
+		draw_node.draw_arc(Vector2.ZERO, ring_radius, 0.0, TAU, 64, ring_color, 6.0)
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := create_tween()
 	tween.set_parallel(true)

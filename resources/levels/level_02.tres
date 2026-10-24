@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_ld")
 level_id = 2
-display_name = "Presse à Déchets"
+display_name = "La Casse aux Tanks"
 scene_path = "res://scenes/ui/level.tscn"
 map_position = Vector2(0.327, 0.78)

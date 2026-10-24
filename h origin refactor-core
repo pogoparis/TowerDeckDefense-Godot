@@ -1,0 +1,423 @@
+ assets/cards/Card_Citerne_perce_512.png            | Bin [31m0[m -> [32m710456[m bytes
+ assets/cards/Card_Orage_Punk_512.png               | Bin [31m0[m -> [32m728912[m bytes
+ assets/cards/Card_Panda_signature512.png           | Bin [31m0[m -> [32m704300[m bytes
+ assets/cards/Card_Pingouin_punk512.png             | Bin [31m0[m -> [32m694043[m bytes
+ assets/cards/Card_Sort8nueDeSpore_512.png          | Bin [31m0[m -> [32m724816[m bytes
+ assets/cards/Card_Sort_Azote_liquide_512.png       | Bin [31m0[m -> [32m726864[m bytes
+ assets/cards/Card_Sort_Bourrasque_512.png          | Bin [31m0[m -> [32m694043[m bytes
+ assets/cards/Card_Sort_Frappe_Ferrraille_512.png   | Bin [31m0[m -> [32m728912[m bytes
+ assets/cards/Card_Sort_Marque_collective_512.png   | Bin [31m0[m -> [32m728912[m bytes
+ assets/cards/Card_Sort_PleinPhare_512.png          | Bin [31m0[m -> [32m724816[m bytes
+ assets/cards/Card_Sort_pluie_de_feu_512.png        | Bin [31m0[m -> [32m724816[m bytes
+ assets/cards/Card_Vampire_512.png                  | Bin [31m0[m -> [32m716612[m bytes
+ assets/cards/Card_Vampire_TR.png                   | Bin [31m0[m -> [32m6048585[m bytes
+ assets/cards/Card_court_circuit_512.png            | Bin [31m0[m -> [32m708408[m bytes
+ assets/cards/Card_luciole512.png                   | Bin [31m0[m -> [32m5586296[m bytes
+ assets/cards/Gardien_Rocheux512.png                | Bin [31m0[m -> [32m694043[m bytes
+ assets/cards/Vampire_Card_512.png                  | Bin [31m0[m -> [32m700199[m bytes
+ .../Drone_Fournaise_Est_cartoon+.png               | Bin [31m0[m -> [32m1053341[m bytes
+ .../Drone_Fournaise_Est_cartoon_512.png            | Bin [31m0[m -> [32m796614[m bytes
+ .../Drone_Fournaise_Nord_cartoon+.png              | Bin [31m0[m -> [32m1087920[m bytes
+ .../Drone_Fournaise_Nord_cartoon_512.png           | Bin [31m0[m -> [32m772002[m bytes
+ .../Drone_Fournaise_Ouest_cartoon+.png             | Bin [31m0[m -> [32m1061742[m bytes
+ .../Drone_Fournaise_Ouest_cartoon_512.png          | Bin [31m0[m -> [32m810967[m bytes
+ .../Drone_Fournaise_Sud_cartoon+.png               | Bin [31m0[m -> [32m1093858[m bytes
+ .../Drone_Fournaise_Sud_cartoon_512.png            | Bin [31m0[m -> [32m784302[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Est.png        | Bin [31m0[m -> [32m1237413[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Est_512.png    | Bin [31m0[m -> [32m788410[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Nord.png       | Bin [31m0[m -> [32m1095726[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Nord_512.png   | Bin [31m0[m -> [32m810967[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Ouest.png      | Bin [31m0[m -> [32m1114198[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Ouest_512.png  | Bin [31m0[m -> [32m776098[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Sud.png        | Bin [31m0[m -> [32m1182613[m bytes
+ .../Drone Fournaise/Drone_Fournaise_Sud_512.png    | Bin [31m0[m -> [32m759685[m bytes
+ .../_backup/Drone_Fournaise_Est.png                | Bin [31m0[m -> [32m1121762[m bytes
+ .../_backup/Drone_Fournaise_Nord.png               | Bin [31m0[m -> [32m1095726[m bytes
+ .../_backup/Drone_Fournaise_Ouest.png              | Bin [31m0[m -> [32m1114198[m bytes
+ .../_backup/Drone_Fournaise_Sud.png                | Bin [31m0[m -> [32m1182613[m bytes
+ .../Drone Fournaise/_realiste/fournaise_est.png    | Bin [31m0[m -> [32m163261[m bytes
+ .../Drone Fournaise/_realiste/fournaise_nord.png   | Bin [31m0[m -> [32m163433[m bytes
+ .../Drone Fournaise/_realiste/fournaise_ouest.png  | Bin [31m0[m -> [32m162270[m bytes
+ .../Drone Fournaise/_realiste/fournaise_sud.png    | Bin [31m0[m -> [32m170801[m bytes
+ assets/ennemies/Drone Fournaise/fournaise_est.png  | Bin [31m0[m -> [32m149344[m bytes
+ assets/ennemies/Drone Fournaise/fournaise_nord.png | Bin [31m0[m -> [32m152189[m bytes
+ .../ennemies/Drone Fournaise/fournaise_ouest.png   | Bin [31m0[m -> [32m162908[m bytes
+ assets/ennemies/Drone Fournaise/fournaise_sud.png  | Bin [31m0[m -> [32m161216[m bytes
+ assets/ennemies/DroneFantome/Drone_Fantome_Est.png | Bin [31m0[m -> [32m1177205[m bytes
+ .../ennemies/DroneFantome/Drone_Fantome_Nord.png   | Bin [31m0[m -> [32m1626344[m bytes
+ .../ennemies/DroneFantome/Drone_Fantome_Ouest.png  | Bin [31m0[m -> [32m1178673[m bytes
+ assets/ennemies/DroneFantome/Drone_Fantome_Sud.png | Bin [31m0[m -> [32m1626344[m bytes
+ assets/ennemies/DroneFantome/fantome_est.png       | Bin [31m0[m -> [32m194330[m bytes
+ assets/ennemies/DroneFantome/fantome_nord.png      | Bin [31m0[m -> [32m209150[m bytes
+ assets/ennemies/DroneFantome/fantome_ouest.png     | Bin [31m0[m -> [32m195458[m bytes
+ assets/ennemies/DroneFantome/fantome_sud.png       | Bin [31m0[m -> [32m213667[m bytes
+ assets/ennemies/DroneJauneEast256.png              | Bin [31m0[m -> [32m221993[m bytes
+ assets/ennemies/DroneJauneNord256.png              | Bin [31m0[m -> [32m221993[m bytes
+ assets/ennemies/DroneJauneSud256.png               | Bin [31m0[m -> [32m236346[m bytes
+ assets/ennemies/DroneJauneWest256.png              | Bin [31m0[m -> [32m219933[m bytes
+ assets/ennemies/DronePunk.png                      | Bin [31m0[m -> [32m1515683[m bytes
+ assets/ennemies/DronePunk/drone_punk_est.png       | Bin [31m0[m -> [32m179767[m bytes
+ assets/ennemies/DronePunk/drone_punk_nord.png      | Bin [31m0[m -> [32m200594[m bytes
+ assets/ennemies/DronePunk/drone_punk_ouest.png     | Bin [31m0[m -> [32m175608[m bytes
+ assets/ennemies/DronePunk/drone_punk_sud.png       | Bin [31m0[m -> [32m215587[m bytes
+ assets/icons/parametres256.png                     | Bin [31m0[m -> [32m252744[m bytes
+ assets/maps/Ruines.png                             | Bin [31m0[m -> [32m2861548[m bytes
+ assets/status/EarthIcon64.png                      | Bin [31m0[m -> [32m3491[m bytes
+ assets/status/IceIcon64.png                        | Bin [31m0[m -> [32m5421[m bytes
+ assets/towers/Panda Punk/PandaBambouDroit.png      | Bin [31m0[m -> [32m1357027[m bytes
+ assets/towers/Panda Punk/PandaVenere.png           | Bin [31m0[m -> [32m2530361[m bytes
+ assets/towers/Pingouin/_backup/PingoinEst.png      | Bin [31m0[m -> [32m925515[m bytes
+ assets/towers/Pingouin/_backup/PingoinNord.png     | Bin [31m0[m -> [32m681905[m bytes
+ assets/towers/Pingouin/_backup/PingoinOuest.png    | Bin [31m0[m -> [32m834495[m bytes
+ assets/towers/Pingouin/_backup/PingoinSud.png      | Bin [31m0[m -> [32m733992[m bytes
+ assets/towers/Pingouin/pingouin_est.png            | Bin [31m0[m -> [32m202419[m bytes
+ assets/towers/Pingouin/pingouin_nord.png           | Bin [31m0[m -> [32m180443[m bytes
+ assets/towers/Pingouin/pingouin_ouest.png          | Bin [31m0[m -> [32m196241[m bytes
+ assets/towers/Pingouin/pingouin_sud.png            | Bin [31m0[m -> [32m201198[m bytes
+ assets/towers/grenouille/Grenouille.png            | Bin [31m0[m -> [32m1980708[m bytes
+ assets/towers/grenouille/GrenouilleEST.png         | Bin [31m0[m -> [32m500695[m bytes
+ assets/towers/grenouille/GrenouilleNORD.png        | Bin [31m0[m -> [32m388282[m bytes
+ assets/towers/grenouille/GrenouilleSUD.png         | Bin [31m0[m -> [32m406718[m bytes
+ assets/towers/grenouille/GrenouilleWEST.png        | Bin [31m0[m -> [32m443598[m bytes
+ assets/towers/luciolles/Luciolle.png               | Bin [31m0[m -> [32m1962944[m bytes
+ .../towers/luciolles/_backup/luciolleclaireEST.png | Bin [31m0[m -> [32m313515[m bytes
+ .../luciolles/_backup/luciolleclaireNORD.png       | Bin [31m0[m -> [32m307098[m bytes
+ .../towers/luciolles/_backup/luciolleclaireSUD.png | Bin [31m0[m -> [32m308556[m bytes
+ .../luciolles/_backup/luciolleclaireWEST.png       | Bin [31m0[m -> [32m306518[m bytes
+ assets/towers/luciolles/luciolleclaire.png         | Bin [31m0[m -> [32m1688878[m bytes
+ assets/towers/luciolles/luciolleclaireEST.png      | Bin [31m0[m -> [32m172097[m bytes
+ assets/towers/luciolles/luciolleclaireNORD.png     | Bin [31m0[m -> [32m161775[m bytes
+ assets/towers/luciolles/luciolleclaireSUD.png      | Bin [31m0[m -> [32m173302[m bytes
+ assets/towers/luciolles/luciolleclaireWEST.png     | Bin [31m0[m -> [32m167507[m bytes
+ assets/towers/luciolles/luciollesclaires.png       | Bin [31m0[m -> [32m2036514[m bytes
+ assets/towers/panda/panda_est.png                  | Bin [31m0[m -> [32m156775[m bytes
+ assets/towers/panda/panda_nord.png                 | Bin [31m0[m -> [32m171279[m bytes
+ assets/towers/panda/panda_ouest.png                | Bin [31m0[m -> [32m149386[m bytes
+ assets/towers/panda/panda_sud.png                  | Bin [31m0[m -> [32m187086[m bytes
+ .../punk/Chouette_Air/CHouette_Est_369x384.png     | Bin [31m565254[m -> [32m270962[m bytes
+ .../punk/Chouette_Air/CHouette_Nord_368x383.png    | Bin [31m565254[m -> [32m280055[m bytes
+ .../punk/Chouette_Air/CHouette_West_369x384.png    | Bin [31m565254[m -> [32m251864[m bytes
+ .../punk/Chouette_Air/Chouette_Sud_368x383.png     | Bin [31m565254[m -> [32m321920[m bytes
+ assets/towers/punk/PinkPunk/punk_rose_est.png      | Bin [31m404407[m -> [32m177489[m bytes
+ assets/towers/punk/PinkPunk/punk_rose_nord.png     | Bin [31m404407[m -> [32m166035[m bytes
+ assets/towers/punk/PinkPunk/punk_rose_ouest.png    | Bin [31m404407[m -> [32m179152[m bytes
+ assets/towers/punk/PinkPunk/punk_rose_sud.png      | Bin [31m808255[m -> [32m180355[m bytes
+ assets/towers/punk/Punk ice_facing_E.png           | Bin [31m182531[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_N.png           | Bin [31m176747[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_NE.png          | Bin [31m174111[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_NW.png          | Bin [31m181759[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_S.png           | Bin [31m154425[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_SE.png          | Bin [31m174582[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_SW.png          | Bin [31m164827[m -> [32m0[m bytes
+ assets/towers/punk/Punk ice_facing_W.png           | Bin [31m177493[m -> [32m0[m bytes
+ .../punk/Punk_Explo/Punk_Explo_Est_438X426.png     | Bin [31m748179[m -> [32m220085[m bytes
+ .../punk/Punk_Explo/Punk_Explo_Nord_306x424.png    | Bin [31m520430[m -> [32m165356[m bytes
+ .../punk/Punk_Explo/Punk_Explo_Sud_306x424.png     | Bin [31m520430[m -> [32m202172[m bytes
+ .../punk/Punk_Explo/Punk_Explo_West_438X426.png    | Bin [31m751380[m -> [32m218646[m bytes
+ assets/towers/punk/RatBomb/rat_bombe_est.png       | Bin [31m903744[m -> [32m317016[m bytes
+ assets/towers/punk/RatBomb/rat_bombe_nord.png      | Bin [31m903744[m -> [32m304079[m bytes
+ assets/towers/punk/RatBomb/rat_bombe_sud.png       | Bin [31m903744[m -> [32m322220[m bytes
+ assets/towers/punk/RatBomb/rat_bombe_west.png      | Bin [31m903744[m -> [32m285410[m bytes
+ assets/towers/punk/Requin/Requin_370X500_nord.png  | Bin [31m285839[m -> [32m175834[m bytes
+ assets/towers/punk/Requin/Requin_370X500_sud.png   | Bin [31m320637[m -> [32m194543[m bytes
+ assets/towers/punk/Requin/Requin_460X500_est.png   | Bin [31m400994[m -> [32m240991[m bytes
+ assets/towers/punk/Requin/Requin_470X500_west.png  | Bin [31m342576[m -> [32m211979[m bytes
+ .../towers/punk/ThunderBear/ours_thunder_est.png   | Bin [31m538707[m -> [32m237147[m bytes
+ .../towers/punk/ThunderBear/ours_thunder_nord.png  | Bin [31m538707[m -> [32m242073[m bytes
+ .../towers/punk/ThunderBear/ours_thunder_sud.png   | Bin [31m538707[m -> [32m240093[m bytes
+ .../towers/punk/ThunderBear/ours_thunder_west.png  | Bin [31m538707[m -> [32m236623[m bytes
+ .../_backup/Chouette_Air/CHouette_Est_369x384.png  | Bin [31m0[m -> [32m565254[m bytes
+ .../_backup/Chouette_Air/CHouette_Nord_368x383.png | Bin [31m0[m -> [32m565254[m bytes
+ .../_backup/Chouette_Air/CHouette_West_369x384.png | Bin [31m0[m -> [32m565254[m bytes
+ .../_backup/Chouette_Air/Chouette_Sud_368x383.png  | Bin [31m0[m -> [32m565254[m bytes
+ .../towers/punk/_backup/PinkPunk/punk_rose_est.png | Bin [31m0[m -> [32m404407[m bytes
+ .../punk/_backup/PinkPunk/punk_rose_nord.png       | Bin [31m0[m -> [32m404407[m bytes
+ .../punk/_backup/PinkPunk/punk_rose_ouest.png      | Bin [31m0[m -> [32m404407[m bytes
+ .../towers/punk/_backup/PinkPunk/punk_rose_sud.png | Bin [31m0[m -> [32m808255[m bytes
+ .../_backup/Punk_Explo/Punk_Explo_Est_438X426.png  | Bin [31m0[m -> [32m748179[m bytes
+ .../_backup/Punk_Explo/Punk_Explo_Nord_306x424.png | Bin [31m0[m -> [32m520430[m bytes
+ .../_backup/Punk_Explo/Punk_Explo_Sud_306x424.png  | Bin [31m0[m -> [32m520430[m bytes
+ .../_backup/Punk_Explo/Punk_Explo_West_438X426.png | Bin [31m0[m -> [32m751380[m bytes
+ .../towers/punk/_backup/RatBomb/rat_bombe_est.png  | Bin [31m0[m -> [32m903744[m bytes
+ .../towers/punk/_backup/RatBomb/rat_bombe_nord.png | Bin [31m0[m -> [32m903744[m bytes
+ .../towers/punk/_backup/RatBomb/rat_bombe_sud.png  | Bin [31m0[m -> [32m903744[m bytes
+ .../towers/punk/_backup/RatBomb/rat_bombe_west.png | Bin [31m0[m -> [32m903744[m bytes
+ .../punk/_backup/Requin/Requin_370X500_nord.png    | Bin [31m0[m -> [32m285839[m bytes
+ .../punk/_backup/Requin/Requin_370X500_sud.png     | Bin [31m0[m -> [32m320637[m bytes
+ .../punk/_backup/Requin/Requin_460X500_est.png     | Bin [31m0[m -> [32m400994[m bytes
+ .../punk/_backup/Requin/Requin_470X500_west.png    | Bin [31m0[m -> [32m342576[m bytes
+ .../punk/_backup/ThunderBear/ours_thunder_est.png  | Bin [31m0[m -> [32m538707[m bytes
+ .../punk/_backup/ThunderBear/ours_thunder_nord.png | Bin [31m0[m -> [32m538707[m bytes
+ .../punk/_backup/ThunderBear/ours_thunder_sud.png  | Bin [31m0[m -> [32m538707[m bytes
+ .../punk/_backup/ThunderBear/ours_thunder_west.png | Bin [31m0[m -> [32m538707[m bytes
+ assets/towers/terre/Pierre1ok.png                  | Bin [31m0[m -> [32m1252002[m bytes
+ assets/towers/terre/PierreOK.png                   | Bin [31m0[m -> [32m1995305[m bytes
+ assets/towers/terre/TerreEST.png                   | Bin [31m0[m -> [32m169261[m bytes
+ assets/towers/terre/TerreNORD.png                  | Bin [31m0[m -> [32m168715[m bytes
+ assets/towers/terre/TerreSUD.png                   | Bin [31m0[m -> [32m170366[m bytes
+ assets/towers/terre/TerreWEST.png                  | Bin [31m0[m -> [32m167479[m bytes
+ assets/towers/terre/_backup/TerreEST.png           | Bin [31m0[m -> [32m351495[m bytes
+ assets/towers/terre/_backup/TerreNORD.png          | Bin [31m0[m -> [32m332278[m bytes
+ assets/towers/terre/_backup/TerreSUD.png           | Bin [31m0[m -> [32m333706[m bytes
+ assets/towers/terre/_backup/TerreWEST.png          | Bin [31m0[m -> [32m346381[m bytes
+ assets/towers/thunder/thunder_facing_E.png         | Bin [31m220211[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_N.png         | Bin [31m217060[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_NE.png        | Bin [31m221720[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_NW.png        | Bin [31m220378[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_S.png         | Bin [31m198644[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_SE.png        | Bin [31m220772[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_SW.png        | Bin [31m222662[m -> [32m0[m bytes
+ assets/towers/thunder/thunder_facing_W.png         | Bin [31m223279[m -> [32m0[m bytes
+ assets/towers/toxic_punk/PunkToxicEST.png          | Bin [31m0[m -> [32m384132[m bytes
+ assets/towers/toxic_punk/PunkToxicNORD.png         | Bin [31m0[m -> [32m334759[m bytes
+ assets/towers/toxic_punk/PunkToxicSUD.png          | Bin [31m0[m -> [32m355969[m bytes
+ assets/towers/toxic_punk/PunkToxicWEST.png         | Bin [31m0[m -> [32m390560[m bytes
+ assets/towers/toxic_punk/ToxicPunkPoubelle.png     | Bin [31m0[m -> [32m1840891[m bytes
+ assets/towers/toxic_punk/toxicPoubelle.png         | Bin [31m0[m -> [32m1364629[m bytes
+ assets/towers/toxic_punk/toxicPunk.png             | Bin [31m0[m -> [32m1287481[m bytes
+ assets/towers/vampire/ChauveSouris.png             | Bin [31m0[m -> [32m1844416[m bytes
+ assets/towers/vampire/VampireEST.png               | Bin [31m0[m -> [32m187337[m bytes
+ assets/towers/vampire/VampireNORD.png              | Bin [31m0[m -> [32m149972[m bytes
+ assets/towers/vampire/VampireSUD.png               | Bin [31m0[m -> [32m182840[m bytes
+ assets/towers/vampire/VampireWEST.png              | Bin [31m0[m -> [32m178852[m bytes
+ assets/towers/vampire/_backup/VampireEST.png       | Bin [31m0[m -> [32m274258[m bytes
+ assets/towers/vampire/_backup/VampireNORD.png      | Bin [31m0[m -> [32m261057[m bytes
+ assets/towers/vampire/_backup/VampireSUD.png       | Bin [31m0[m -> [32m286348[m bytes
+ assets/towers/vampire/_backup/VampireWEST.png      | Bin [31m0[m -> [32m275200[m bytes
+ docs/JUNKRIOT_CONTENU_V1.md                        | 394 [32m+++++++++++++[m
+ docs/JUNKRIOT_GDD_v2.1.md.pdf                      | Bin [31m0[m -> [32m714128[m bytes
+ docs/JUNKRIOT_GDD_v3.0.md                          | 571 [32m++++++++++++++++++[m
+ docs/JUNKRIOT_RECOMPENSES.md                       | 232 [32m++++++++[m
+ ...kriot \342\200\224 Game Design Document v2.pdf" | Bin [31m0[m -> [32m461062[m bytes
+ docs/apercu_fantome.png                            | Bin [31m0[m -> [32m100300[m bytes
+ docs/apercu_fond_lvl2.png                          | Bin [31m0[m -> [32m2647870[m bytes
+ docs/apercu_mobs.png                               | Bin [31m0[m -> [32m193950[m bytes
+ docs/apercu_ruines.png                             | Bin [31m0[m -> [32m3556996[m bytes
+ docs/archive/JUNKRIOT_GDD_v2.3_OBSOLETE.md         | 642 [32m++++++++++++++++++++[m
+ docs/rewards/Bonus_Canon_A_Eau_Modifie.png         | Bin [31m0[m -> [32m6135765[m bytes
+ docs/rewards/Bonus_Canon_Long.png                  | Bin [31m0[m -> [32m6107847[m bytes
+ docs/rewards/Bonus_Court_Circuit.png               | Bin [31m0[m -> [32m6301216[m bytes
+ docs/rewards/Bonus_Ferrailleur.png                 | Bin [31m0[m -> [32m5798725[m bytes
+ docs/rewards/Bonus_Mechanisme_Huile.png            | Bin [31m0[m -> [32m6160254[m bytes
+ docs/rewards/Bonus_Persistance.png                 | Bin [31m0[m -> [32m6160081[m bytes
+ docs/rewards/Bonus_Zone_Etendue.png                | Bin [31m0[m -> [32m6145697[m bytes
+ docs/rewards/Icone_Boost_Tour.png                  | Bin [31m0[m -> [32m237345[m bytes
+ docs/rewards/Munition_Renforcee.png                | Bin [31m0[m -> [32m6033249[m bytes
+ docs/rewards/Phenomene_icone_256.png               | Bin [31m0[m -> [32m166514[m bytes
+ docs/rewards/Reaction_icone_256.png                | Bin [31m0[m -> [32m256862[m bytes
+ docs/rewards/icone_monnaie_256.png                 | Bin [31m0[m -> [32m255831[m bytes
+ resources/cards/fire_card.tres                     |  18 [31m-[m
+ resources/cards/fire_punk_card.tres                |   5 [32m+[m[31m-[m
+ resources/cards/gardien_card.tres                  |  15 [32m+[m
+ resources/cards/ice_punk_card.tres                 |  13 [32m+[m[31m-[m
+ resources/cards/industrial_fan_card.tres           |   7 [32m+[m[31m-[m
+ resources/cards/luciole_card.tres                  |  15 [32m+[m
+ resources/cards/panda_card.tres                    |  15 [32m+[m
+ resources/cards/spell_azote.tres                   |  15 [32m+[m
+ resources/cards/spell_bourrasque.tres              |  15 [32m+[m
+ resources/cards/spell_citerne_crevee.tres          |  15 [32m+[m
+ resources/cards/spell_cocktail_molotov.tres        |  15 [32m+[m
+ resources/cards/spell_court_circuit.tres           |  15 [32m+[m
+ resources/cards/spell_frappe_ferraille.tres        |  15 [32m+[m
+ resources/cards/spell_marque_collective.tres       |  15 [32m+[m
+ resources/cards/spell_nuee_spores.tres             |  15 [32m+[m
+ resources/cards/spell_orage_punk.tres              |  15 [32m+[m
+ resources/cards/spell_plein_phare.tres             |  15 [32m+[m
+ resources/cards/tesla_coil_card.tres               |   8 [32m+[m[31m-[m
+ resources/cards/util_atelier.tres                  |  13 [32m+[m
+ resources/cards/util_bricolage.tres                |  12 [32m+[m
+ resources/cards/util_contrebande.tres              |  12 [32m+[m
+ resources/cards/util_decharge_sauvage.tres         |  13 [32m+[m
+ resources/cards/util_pillage.tres                  |  12 [32m+[m
+ resources/cards/util_plan_b.tres                   |  13 [32m+[m
+ resources/cards/util_reconnaissance.tres           |  12 [32m+[m
+ resources/cards/util_recyclage.tres                |  12 [32m+[m
+ resources/cards/vampire_card.tres                  |  15 [32m+[m
+ resources/cards/vega_card.tres                     |  15 [31m-[m
+ resources/cards/water_cannon_card.tres             |   7 [32m+[m[31m-[m
+ resources/decks/deck_brasier.tres                  |  17 [32m+[m
+ resources/decks/deck_orage.tres                    |  16 [32m+[m
+ resources/decks/deck_roche.tres                    |  16 [32m+[m
+ resources/decks/ironclad_starter.tres              |   5 [32m+[m[31m-[m
+ resources/levels/level_02.tres                     |   2 [32m+[m[31m-[m
+ resources/levels/level_03.tres                     |   2 [32m+[m[31m-[m
+ resources/levels/level_04.tres                     |  10 [32m+[m
+ resources/levels/level_05.tres                     |  10 [32m+[m
+ resources/levels/level_atelier.tres                |  10 [32m+[m
+ resources/maps/map_level1.tres                     |   2 [32m+[m[31m-[m
+ resources/spells/azote.tres                        |  14 [32m+[m
+ resources/spells/bourrasque.tres                   |  14 [32m+[m
+ resources/spells/citerne_crevee.tres               |  14 [32m+[m
+ resources/spells/cocktail_molotov.tres             |  14 [32m+[m
+ resources/spells/court_circuit.tres                |  14 [32m+[m
+ resources/spells/frappe_ferraille.tres             |  13 [32m+[m
+ resources/spells/marque_collective.tres            |  14 [32m+[m
+ resources/spells/nuee_spores.tres                  |  14 [32m+[m
+ resources/spells/orage_punk.tres                   |  14 [32m+[m
+ resources/spells/plein_phare.tres                  |  15 [32m+[m
+ resources/themes/junkriot_theme.tres               |  21 [32m+[m[31m-[m
+ scenes/enemies/DroneMob.tscn                       |  63 [32m++[m
+ scenes/enemies/DronePunkMob.tscn                   |  69 [32m+++[m
+ scenes/enemies/ExplosiveMob.tscn                   |   5 [32m+[m[31m-[m
+ scenes/enemies/FurnaceDrone.tscn                   |  64 [32m++[m
+ scenes/enemies/MiniBoss.tscn                       |   8 [32m+[m[31m-[m
+ scenes/enemies/PhantomDrone.tscn                   |  66 [32m+++[m
+ scenes/enemies/Repairer.tscn                       |  51 [32m++[m
+ scenes/enemies/SimpleMob.tscn                      |   3 [32m+[m[31m-[m
+ scenes/enemies/TankMob.tscn                        |   6 [32m+[m[31m-[m
+ scenes/enemies/Zeppelin.tscn                       |  49 [32m++[m
+ scenes/paths/chemin_niveau_3.tscn                  |  24 [32m+[m
+ scenes/projectiles/IceProjectile.tscn              |   6 [32m+[m
+ scenes/projectiles/LightProjectile.tscn            |   6 [32m+[m
+ scenes/projectiles/NatureProjectile.tscn           |   6 [32m+[m
+ scenes/projectiles/RockProjectile.tscn             |   6 [32m+[m
+ scenes/projectiles/ShadowProjectile.tscn           |   6 [32m+[m
+ scenes/tools/AuditLevel.tscn                       |   6 [32m+[m
+ scenes/tools/SmokeAtelier.tscn                     |   6 [32m+[m
+ scenes/tools/SmokeLevel.tscn                       |   6 [32m+[m
+ scenes/tools/SmokeMain.tscn                        |   6 [32m+[m
+ scenes/tools/SmokeMobs.tscn                        |   6 [32m+[m
+ scenes/tools/SmokeOffre.tscn                       |   6 [32m+[m
+ scenes/tools/SmokeReward.tscn                      |   6 [32m+[m
+ scenes/tools/SmokeTooltip.tscn                     |   6 [32m+[m
+ scenes/tools/SmokeUpgrade.tscn                     |   6 [32m+[m
+ scenes/towers/TowerFire.tscn                       |  29 [31m-[m
+ scenes/towers/TowerFirePunk.tscn                   |   6 [32m+[m[31m-[m
+ scenes/towers/TowerGardien.tscn                    |  37 [32m++[m
+ scenes/towers/TowerIcePunk.tscn                    |  24 [32m+[m[31m-[m
+ scenes/towers/TowerIndustrialFan.tscn              |   3 [32m+[m[31m-[m
+ scenes/towers/TowerLuciole.tscn                    |  37 [32m++[m
+ scenes/towers/TowerPanda.tscn                      |  37 [32m++[m
+ scenes/towers/TowerTeslaCoil.tscn                  |   6 [32m+[m[31m-[m
+ scenes/towers/TowerVampire.tscn                    |  40 [32m++[m
+ scenes/towers/TowerVega.tscn                       |  48 [31m--[m
+ scenes/towers/TowerWaterCannon.tscn                |   4 [32m+[m[31m-[m
+ scenes/ui/DeckSelect.tscn                          |  62 [32m++[m
+ scenes/ui/TopHUD.tscn                              |  23 [32m+[m[31m-[m
+ scenes/ui/WorldMap.tscn                            |   7 [32m+[m[31m-[m
+ scenes/ui/card_tooltip.tscn                        |  12 [32m+[m[31m-[m
+ scenes/ui/level.tscn                               |  11 [32m+[m[31m-[m
+ scripts/cards/card_manager.gd                      | 277 [32m++++[m[31m-----[m
+ scripts/cards/card_reward_manager.gd               | 119 [32m++[m[31m--[m
+ scripts/cards/run_deck.gd                          |  16 [32m+[m
+ scripts/core/level.gd                              | 381 [32m++++++++[m[31m----[m
+ scripts/core/path_follow_2d.gd                     |   4 [32m+[m[31m-[m
+ scripts/core/world_draw.gd                         |  22 [32m+[m
+ scripts/data/card_data.gd                          |  92 [32m++[m[31m-[m
+ scripts/data/element_type.gd                       |  50 [32m+[m[31m-[m
+ scripts/data/phenomenon_type.gd                    |   4 [32m+[m[31m-[m
+ scripts/data/player_data.gd                        |  39 [32m+[m[31m-[m
+ scripts/data/reward_data.gd                        |  12 [32m+[m[31m-[m
+ scripts/data/reward_database.gd                    | 324 [32m+++++++++[m[31m--[m
+ scripts/data/spell_data.gd                         |  60 [32m++[m
+ scripts/data/spell_data.gd.uid                     |   1 [32m+[m
+ scripts/data/status_ids.gd                         |  12 [32m+[m
+ scripts/data/synergy_ids.gd                        |   1 [31m-[m
+ scripts/enemies/boss_mob.gd                        | 115 [32m++++[m
+ scripts/enemies/boss_mob.gd.uid                    |   1 [32m+[m
+ scripts/enemies/drone_mob.gd                       |  82 [32m+++[m
+ scripts/enemies/drone_mob.gd.uid                   |   1 [32m+[m
+ scripts/enemies/enemy_base.gd                      | 260 [32m++++++++[m[31m-[m
+ scripts/enemies/furnace_drone.gd                   |  92 [32m+++[m
+ scripts/enemies/furnace_drone.gd.uid               |   1 [32m+[m
+ scripts/enemies/phantom_drone.gd                   | 133 [32m+++++[m
+ scripts/enemies/phantom_drone.gd.uid               |   1 [32m+[m
+ scripts/enemies/placeholder_art.gd                 |  59 [32m++[m
+ scripts/enemies/placeholder_art.gd.uid             |   1 [32m+[m
+ scripts/enemies/repairer_mob.gd                    | 137 [32m+++++[m
+ scripts/enemies/repairer_mob.gd.uid                |   1 [32m+[m
+ scripts/enemies/zeppelin_mob.gd                    |  86 [32m+++[m
+ scripts/enemies/zeppelin_mob.gd.uid                |   1 [32m+[m
+ scripts/impacts/death_explosion.gd                 |  10 [32m+[m[31m-[m
+ scripts/impacts/onomatopoeia_pop.gd                |  59 [32m+[m[31m-[m
+ scripts/managers/grid_manager.gd                   |  46 [32m+[m[31m-[m
+ scripts/managers/placement_manager.gd              | 278 [32m++++++++[m[31m-[m
+ scripts/managers/progress_manager.gd               |  82 [32m++[m[31m-[m
+ scripts/managers/synergy_manager.gd                |  86 [31m---[m
+ scripts/managers/wave_library.gd                   | 456 [32m+++++++++++++[m[31m--[m
+ scripts/managers/wave_manager.gd                   |  62 [32m+[m[31m-[m
+ scripts/phenomena/phenomenon.gd                    | 102 [32m+++[m[31m-[m
+ scripts/projectiles/base_projectile.gd             |  10 [32m+[m
+ scripts/projectiles/basic_projectile.gd            |   2 [32m+[m[31m-[m
+ scripts/projectiles/electric_projectile.gd         |   4 [32m+[m[31m-[m
+ scripts/projectiles/fire_projectile.gd             |   2 [32m+[m[31m-[m
+ scripts/projectiles/ice_projectile.gd              |  48 [32m++[m
+ scripts/projectiles/ice_projectile.gd.uid          |   1 [32m+[m
+ scripts/projectiles/light_projectile.gd            |  25 [32m+[m
+ scripts/projectiles/light_projectile.gd.uid        |   1 [32m+[m
+ scripts/projectiles/molotov_projectile.gd          |   2 [32m+[m[31m-[m
+ scripts/projectiles/nature_projectile.gd           |  44 [32m++[m
+ scripts/projectiles/nature_projectile.gd.uid       |   1 [32m+[m
+ scripts/projectiles/projectile_tower.gd            |   5 [32m+[m
+ scripts/projectiles/rock_projectile.gd             |  33 [32m++[m
+ scripts/projectiles/rock_projectile.gd.uid         |   1 [32m+[m
+ scripts/projectiles/shadow_projectile.gd           |  37 [32m++[m
+ scripts/projectiles/shadow_projectile.gd.uid       |   1 [32m+[m
+ scripts/projectiles/water_projectile.gd            |  11 [32m+[m[31m-[m
+ scripts/projectiles/wind_projectile.gd             |   2 [32m+[m[31m-[m
+ scripts/reactions/electrocution_zone.gd            |  14 [32m+[m[31m-[m
+ scripts/reactions/reaction_manager.gd              | 349 [32m++++++++++[m[31m-[m
+ scripts/resources/card_tooltip.gd                  |  83 [32m++[m[31m-[m
+ scripts/resources/synergy_definition.gd            |  10 [31m-[m
+ scripts/resources/synergy_definition.gd.uid        |   1 [31m-[m
+ scripts/resources/synergy_library.gd               | 135 [32m+++[m[31m--[m
+ scripts/status/status_icon_container.gd            |   9 [32m+[m
+ scripts/towers/base_tower.gd                       | 484 [32m++++++++++++++[m[31m-[m
+ scripts/towers/tower_fire.gd                       |  15 [32m+[m[31m-[m
+ scripts/towers/tower_gardien.gd                    |  48 [32m++[m
+ scripts/towers/tower_gardien.gd.uid                |   1 [32m+[m
+ scripts/towers/tower_industrial_fan.gd             |   1 [31m-[m
+ scripts/towers/tower_luciole.gd                    |  84 [32m+++[m
+ scripts/towers/tower_luciole.gd.uid                |   1 [32m+[m
+ scripts/towers/tower_panda.gd                      |  62 [32m++[m
+ scripts/towers/tower_panda.gd.uid                  |   1 [32m+[m
+ scripts/towers/tower_tesla_coil.gd                 |  15 [32m+[m[31m-[m
+ scripts/towers/tower_vampire.gd                    |  51 [32m++[m
+ scripts/towers/tower_vampire.gd.uid                |   1 [32m+[m
+ scripts/towers/tower_vega.gd                       |  58 [31m--[m
+ scripts/towers/tower_vega.gd.uid                   |   1 [31m-[m
+ scripts/towers/tower_water_cannon.gd               |   5 [32m+[m[31m-[m
+ scripts/ui/atelier_panel.gd                        | 269 [32m+++++++++[m
+ scripts/ui/atelier_panel.gd.uid                    |   1 [32m+[m
+ scripts/ui/card_action_panel.gd                    |  38 [32m+[m[31m-[m
+ scripts/ui/danger_overlay.gd                       |  87 [32m+++[m
+ scripts/ui/danger_overlay.gd.uid                   |   1 [32m+[m
+ scripts/ui/deck_select.gd                          | 648 [32m+++++++++++++++++++++[m
+ scripts/ui/deck_select.gd.uid                      |   1 [32m+[m
+ scripts/ui/game_over_screen.gd                     |  85 [32m+++[m
+ scripts/ui/level_pin.gd                            |  16 [32m+[m[31m-[m
+ scripts/ui/reward_card.gd                          | 172 [32m+++++[m[31m-[m
+ scripts/ui/top_hud.gd                              |   8 [32m+[m[31m-[m
+ scripts/ui/tower_card.gd                           | 195 [32m++++++[m[31m-[m
+ scripts/ui/tutorial_director.gd                    | 302 [32m+++++++[m[31m---[m
+ scripts/ui/world_map.gd                            |  16 [32m+[m[31m-[m
+ scripts_tools/analyze_towers.py                    |  34 [32m++[m
+ scripts_tools/audit_level.gd                       | 177 [32m++++++[m
+ scripts_tools/audit_level.gd.uid                   |   1 [32m+[m
+ scripts_tools/check_icon.gd                        |  17 [32m+[m
+ scripts_tools/check_icon.gd.uid                    |   1 [32m+[m
+ scripts_tools/mirror_view.py                       |  67 [32m+++[m
+ scripts_tools/normalize_tower_dir.py               |  84 [32m+++[m
+ scripts_tools/normalize_towers.py                  |  96 [32m+++[m
+ scripts_tools/normalize_vampire.py                 |  59 [32m++[m
+ scripts_tools/path_editor_guides.gd                |  62 [32m++[m
+ scripts_tools/path_editor_guides.gd.uid            |   1 [32m+[m
+ scripts_tools/preview_background.py                | 178 [32m++++++[m
+ scripts_tools/smoke_atelier.gd                     |  46 [32m++[m
+ scripts_tools/smoke_atelier.gd.uid                 |   1 [32m+[m
+ scripts_tools/smoke_level.gd                       |  37 [32m++[m
+ scripts_tools/smoke_level.gd.uid                   |   1 [32m+[m
+ scripts_tools/smoke_main.gd                        |  55 [32m++[m
+ scripts_tools/smoke_main.gd.uid                    |   1 [32m+[m
+ scripts_tools/smoke_mobs.gd                        |  94 [32m+++[m
+ scripts_tools/smoke_mobs.gd.uid                    |   1 [32m+[m
+ scripts_tools/smoke_offre.gd                       |  42 [32m++[m
+ scripts_tools/smoke_offre.gd.uid                   |   1 [32m+[m
+ scripts_tools/smoke_reward.gd                      |  58 [32m++[m
+ scripts_tools/smoke_reward.gd.uid                  |   1 [32m+[m
+ scripts_tools/smoke_tooltip.gd                     |  29 [32m+[m
+ scripts_tools/smoke_tooltip.gd.uid                 |   1 [32m+[m
+ scripts_tools/smoke_upgrade.gd                     |  97 [32m+++[m
+ scripts_tools/smoke_upgrade.gd.uid                 |   1 [32m+[m
+ scripts_tools/sync_gdd.py                          | 265 [32m+++++++++[m
+ 422 files changed, 10824 insertions(+), 1098 deletions(-)

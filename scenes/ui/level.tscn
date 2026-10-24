@@ -31,7 +31,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_5xgho"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 207, -1, 0, 0, 0, 0, 206, 265, 0, 0, 0, 0, 746, 272, 0, 0, 0, 0, 745, 400, 0, 0, 0, 0, 1254, 407, 0, 0, 0, 0, 1255, 272, 0, 0, 0, 0, 1617, 275)
+"points": PackedVector2Array(0, 0, 0, 0, 178, 23, 0, 0, 0, 0, 178, 311, 0, 0, 0, 0, 754, 311, 0, 0, 0, 0, 754, 407, 0, 0, 0, 0, 1234, 407, 0, 0, 0, 0, 1234, 311, 0, 0, 0, 0, 1618, 311)
 }
 point_count = 7
 
@@ -51,8 +51,7 @@ curve = SubResource("Curve2D_5xgho")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="World/Path2D" unique_id=1273408496]
 z_index = 2
-position = Vector2(207, -1)
-rotation = 0.013028579
+position = Vector2(178, 23)
 rotates = false
 loop = false
 
@@ -99,7 +98,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -265.0
+offset_top = -190.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -115,7 +114,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -390.0
-offset_top = -250.0
+offset_top = -234.0
 offset_right = 390.0
 offset_bottom = -10.0
 grow_horizontal = 2
@@ -219,7 +218,7 @@ anchor_bottom = 1.0
 offset_left = -300.0
 offset_top = -400.0
 offset_right = 400.0
-offset_bottom = -220.0
+offset_bottom = -312.0
 grow_horizontal = 2
 grow_vertical = 0
 

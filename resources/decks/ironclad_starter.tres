@@ -6,9 +6,12 @@
 [ext_resource type="Resource" uid="uid://cfirepunkcard1" path="res://resources/cards/fire_punk_card.tres" id="7_firp0"]
 [ext_resource type="Resource" uid="uid://cjuu8xpxy48c5" path="res://resources/cards/water_cannon_card.tres" id="8_requin"]
 [ext_resource type="Resource" uid="uid://beuo2iiyajb35" path="res://resources/cards/industrial_fan_card.tres" id="9_chouet"]
+[ext_resource type="Resource" path="res://resources/cards/vampire_card.tres" id="10_vamp"]
+[ext_resource type="Resource" path="res://resources/cards/luciole_card.tres" id="11_luci"]
+[ext_resource type="Resource" path="res://resources/cards/gardien_card.tres" id="12_gard"]
 
 [resource]
 script = ExtResource("2_50f57")
 deck_name = "Ironclad Starter"
-cards = [ExtResource("6_icep0"), ExtResource("6_icep0"), ExtResource("8_requin"), ExtResource("8_requin"), ExtResource("8_requin"), ExtResource("7_firp0"), ExtResource("7_firp0"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("9_chouet"), ExtResource("9_chouet")]
+cards = [ExtResource("6_icep0"), ExtResource("6_icep0"), ExtResource("8_requin"), ExtResource("8_requin"), ExtResource("8_requin"), ExtResource("7_firp0"), ExtResource("7_firp0"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("3_h8hp6"), ExtResource("9_chouet"), ExtResource("9_chouet"), ExtResource("10_vamp"), ExtResource("10_vamp"), ExtResource("11_luci"), ExtResource("11_luci"), ExtResource("12_gard"), ExtResource("12_gard")]
 metadata/_custom_type_script = "uid://cturi3aifg006"

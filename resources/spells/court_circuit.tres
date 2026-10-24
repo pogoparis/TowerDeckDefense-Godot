@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/spell_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+effect = 1
+radius = 150.0
+damage = 10
+element = 3
+duration = 3.0
+cast_label = "COURT-CIRCUIT !"
+cast_color = Color(0.6, 0.9, 1, 1)
+shake = 8.0

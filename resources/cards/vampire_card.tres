@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://d8oxg8ja38lg"]
+
+[ext_resource type="Texture2D" path="res://assets/cards/Card_Vampire_512.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/towers/TowerVampire.tscn" id="3_tower"]
+
+[resource]
+script = ExtResource("2_script")
+card_name = "Vampire"
+description = "Signature OMBRE. Ses toiles appliquent la MARQUE D'OMBRE : l'ennemi marqué encaisse +40% de dégâts de toutes les sources. Charge : Nuée de chauves-souris."
+card_texture = ExtResource("1_tex")
+mana_cost = 30
+tower_id = "TowerVampire"
+tower_scene = ExtResource("3_tower")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

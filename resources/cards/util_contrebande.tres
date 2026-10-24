@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+card_name = "Contrebande"
+description = "ÉCONOMIE — +18 Caps à CHAQUE fin de vague, pour le reste de la partie. Jouée vague 2 elle rapporte 180 Caps ; jouée vague 11, 18. Sa valeur, c'est le MOMENT."
+card_type = 4
+mana_cost = 45
+caps_per_wave = 18
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

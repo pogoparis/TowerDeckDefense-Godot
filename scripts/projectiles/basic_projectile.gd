@@ -10,4 +10,4 @@ func _draw() -> void:
 
 
 func on_hit(hit_target) -> void:
-	hit_target.take_damage(damage)
+	hit_target.take_damage(damage, "normal", hit_element())

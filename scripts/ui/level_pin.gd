@@ -25,12 +25,26 @@ func setup(level: LevelData) -> void:
 	var unlocked: bool = Progress.is_unlocked(level.level_id)
 	var stars: int = Progress.get_stars(level.level_id)
 
+	# Le nom du lieu porte déjà l'identité de menace ("La Casse aux Tanks").
+	# On y ajoute l'ÉLÉMENT CLÉ du niveau : le joueur doit pouvoir anticiper son
+	# deck AVANT l'écran de choix, sinon la décision arrive trop tard dans sa
+	# réflexion. Sur un niveau verrouillé, on ne divulgue rien.
 	name_label.text = level.display_name
+	if unlocked:
+		var keys := WaveLibrary.get_key_elements(level.level_id)
+		if not keys.is_empty():
+			var element: ElementType.Type = keys[0]["element"]
+			name_label.text += "\n%s %s" % [
+				ElementType.icon(element), ElementType.label(element)
+			]
+
 	stars_label.text = "%d/3" % stars if stars > 0 else ""
 	stars_label.visible = stars > 0
 
 	if unlocked:
-		button.text = str(level.level_id)
+		# L'atelier n'a pas de rang dans l'aventure : afficher « 99 » le ferait
+		# lire comme un niveau très lointain au lieu d'un outil.
+		button.text = "⚒" if level.level_id == AtelierPanel.LEVEL_ID else str(level.level_id)
 		button.disabled = false
 		modulate = Color.WHITE
 	else:

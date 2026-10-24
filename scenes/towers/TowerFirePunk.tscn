@@ -11,13 +11,15 @@
 [node name="TowerFirePunk" type="Node2D"]
 z_index = 8
 script = ExtResource("1_script")
+element_type = 1
+is_signature = true
 projectile_scene = ExtResource("2_proj")
 shot_sound = ExtResource("3_sfx")
 base_damage = 7
 base_fire_rate = 1.0
 base_range = 210.0
 max_aim_degrees = 0.0
-display_height = 150.0
+display_height = 132.0
 tex_east = ExtResource("5_est")
 tex_south = ExtResource("4_sud")
 tex_west = ExtResource("6_west")
@@ -27,7 +29,7 @@ tex_north = ExtResource("7_nord")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 8
-position = Vector2(0, -15)
+position = Vector2(0, -44)
 texture = ExtResource("4_sud")
 
 [node name="ShootPoint" type="Marker2D" parent="."]

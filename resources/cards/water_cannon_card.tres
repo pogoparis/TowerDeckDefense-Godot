@@ -6,13 +6,10 @@
 
 [resource]
 script = ExtResource("2_0y8in")
-card_name = "Requin"
+card_name = "Requin Cracheur"
 description = "Le requin punk arrose les ennemis : applique WET et ralentit. Cible en priorite les zones electriques."
 card_texture = ExtResource("1_725cy")
-mana_cost = 2
+mana_cost = 25
 tower_id = "TowerWaterCannon"
 tower_scene = ExtResource("3_u0dlg")
-consume_phenomenon_type = 1
-consume_radius = 150.0
-consume_duration = 7.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"

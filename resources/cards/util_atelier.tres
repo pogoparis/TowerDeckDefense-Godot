@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+card_name = "Atelier Mobile"
+description = "AMÉLIORATION — Améliore une tour gratuitement ET pioche 1 carte. Plus chère que le Bricolage, mais elle ne coûte pas un tour de main."
+card_type = 2
+mana_cost = 45
+free_upgrade = true
+draw_cards = 1
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

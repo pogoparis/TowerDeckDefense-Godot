@@ -38,8 +38,17 @@ func get_icon_info(status_id: String) -> Dictionary:
 			return { texture = load("res://assets/status/WindIcon64.png"),     color = Color(0.6, 0.8, 1.0) }
 		StatusIds.BURNING:
 			return { texture = load("res://assets/status/FireIcon64.png"),     color = Color.WHITE }
+		StatusIds.POISONED:
+			return { texture = load("res://assets/status/NatureIcon64.png"),   color = Color(0.55, 1.0, 0.35) }
 		StatusIds.ROOTED:
 			return { texture = load("res://assets/status/NatureIcon64.png"),   color = Color.WHITE }
 		StatusIds.WINDMARK:
 			return { texture = load("res://assets/status/WindIcon64.png"),     color = Color.WHITE }
+		StatusIds.CHILLED:
+			return { texture = load("res://assets/status/IceIcon64.png"),      color = Color.WHITE }
+		StatusIds.DUSTY:
+			# ⚠ Surtout pas l'icône Nature : la feuille appartient à l'élément
+			# Nature (le Panda). Un statut Terre affiché avec une feuille ferait
+			# lire au joueur une interaction qui n'existe pas.
+			return { texture = load("res://assets/status/EarthIcon64.png"),    color = Color.WHITE }
 	return { texture = null, color = Color.WHITE }

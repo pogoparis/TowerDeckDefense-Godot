@@ -34,6 +34,11 @@ func _on_timer_timeout():
 
 func fire_projectile(target: Node2D):
 
+	# Charge : chaque tir sur un ennemi remplit la jauge (tours signatures).
+	# Fait ici (au tir) → uniforme pour TOUS les projectiles, même ceux qui
+	# redéfinissent _process (Molotov, etc.). No-op si pas signature/en cooldown.
+	add_charge(1)
+
 	face_target(target.global_position)
 	play_fire_frame()
 	Audio.play_sfx(shot_sound, shot_volume_db, 0.12)

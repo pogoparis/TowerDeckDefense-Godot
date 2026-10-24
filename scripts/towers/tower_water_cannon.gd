@@ -2,11 +2,10 @@ extends ProjectileTower
 class_name TowerWaterCannon
 
 func _ready():
-	element_type = ElementType.Type.WATER
 	super._ready()
 
 
-func find_target() -> Node2D:
+func _find_target_special() -> Node2D:
 	if not enemy_manager:
 		return null
 
@@ -74,7 +73,7 @@ func find_target() -> Node2D:
 		return best
 
 	# ── Priorité 3 : fallback — le plus avancé en portée (même WET) ──
-	return super.find_target()
+	return null
 
 
 func _get_phenomenon_manager() -> PhenomenonManager:

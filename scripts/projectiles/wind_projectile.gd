@@ -66,7 +66,7 @@ func _draw():
 
 
 func on_hit(hit_target):
-	hit_target.take_damage(damage)
+	hit_target.take_damage(damage, "normal", hit_element())
 	if hit_target is EnemyBase:
 		# PAF ! seulement quand l'ennemi prend WINDMARK (pas s'il l'a déjà).
 		hit_target.apply_debuff(StatusIds.WINDMARK, 1.5, "paf")

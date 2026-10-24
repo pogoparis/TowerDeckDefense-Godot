@@ -82,8 +82,11 @@ animations = [{
 z_index = 8
 scale = Vector2(0.4, 0.4)
 script = ExtResource("1_ssm5u")
+weak_to = 1
+resists = 3
 explosion_chain_scene = ExtResource("5_exchain")
-max_hp = 100
+max_hp = 70
+cap_reward = 3
 speed = 180.0
 death_explosion_scene = ExtResource("2_m4lua")
 

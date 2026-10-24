@@ -2,11 +2,20 @@ extends ProjectileTower
 class_name TowerTeslaCoil
 
 func _ready():
-	element_type = ElementType.Type.ELECTRIC
 	super._ready()
 
 
-func find_target() -> Node2D:
+## Effet de Charge — Tempête électrique : un champ électrique massif au pied de
+## la tour (réutilise le moteur de zones : dégâts + CHARGED + stun des WET).
+func _charge_effect() -> void:
+	var pm := get_phenomenon_manager()
+	if pm == null:
+		return
+	pm.spawn_phenomenon(PhenomenonType.Type.ELECTRIC_FIELD, global_position, 150.0, 7.0)
+	Audio.play_sfx(preload("res://assets/audio/sfx/tesla.wav"), 0.0)
+
+
+func _find_target_special() -> Node2D:
 	if not enemy_manager:
 		return null
 
@@ -22,4 +31,4 @@ func find_target() -> Node2D:
 			return enemy
 
 	# Fallback : n'importe quel ennemi en portée (tous déjà stun)
-	return super.find_target()
+	return null

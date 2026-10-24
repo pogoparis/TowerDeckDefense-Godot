@@ -53,8 +53,57 @@ func show_defeat() -> void:
 	big_label.text = defeat_text
 	big_label.add_theme_color_override("font_color", defeat_color)
 	big_label.add_theme_color_override("font_shadow_color", defeat_shadow_color)
+	sub_label.text = _defeat_debrief()
 	Audio.play_sfx(preload("res://assets/audio/sfx/defeat.wav"))
 	_show()
+
+
+## Débriefing de défaite.
+##
+## Une défaite qui dit seulement « DÉFAITE » décourage ; une défaite qui dit
+## POURQUOI enseigne, et donne envie de relancer avec une idée en tête. On
+## affiche la vague atteinte, le nombre de fuites, et — le plus important — la
+## comparaison entre ce que le niveau demandait et ce que le deck couvrait.
+func _defeat_debrief() -> String:
+	var lines: Array[String] = []
+	lines.append("Vague %d  ·  %d fuite%s" % [
+		Player.current_wave, Player.leaks, "s" if Player.leaks > 1 else ""
+	])
+
+	var keys := WaveLibrary.get_key_elements(Progress.current_level_id)
+	if not keys.is_empty():
+		var el: ElementType.Type = keys[0]["element"]
+		var share := int(round(float(keys[0]["share"]) * 100.0))
+		lines.append("Ce niveau demandait %s %s (%d %% de ses PV)" % [
+			ElementType.icon(el), ElementType.label(el), share
+		])
+
+		var deck := Progress.selected_deck
+		if deck != null:
+			var coverage := WaveLibrary.get_deck_coverage(
+				Progress.current_level_id, _deck_elements(deck)
+			)
+			lines.append("Ton deck en couvrait %d %%" % int(round(coverage * 100.0)))
+
+	return "\n".join(lines)
+
+
+func _deck_elements(deck: StartingDeckData) -> Dictionary:
+	var seen := {}
+	for card in deck.cards:
+		if card == null:
+			continue
+		var element := ElementType.Type.NONE
+		if card.spell_data != null:
+			element = card.spell_data.element
+		elif card.tower_scene != null:
+			var probe = card.tower_scene.instantiate()
+			if probe is BaseTower:
+				element = probe.element_type
+			probe.free()
+		if element != ElementType.Type.NONE:
+			seen[element] = true
+	return seen
 
 
 func show_victory() -> void:
@@ -62,8 +111,44 @@ func show_victory() -> void:
 	big_label.text = victory_text
 	big_label.add_theme_color_override("font_color", victory_color)
 	big_label.add_theme_color_override("font_shadow_color", victory_shadow_color)
+	sub_label.text = _victory_debrief()
 	Audio.play_sfx(preload("res://assets/audio/sfx/victory.wav"))
 	_show()
+
+
+## Récapitulatif de victoire : étoiles obtenues et cartes débloquées.
+## Une victoire doit PROMETTRE quelque chose pour la partie suivante, sinon
+## il n'y a aucune raison d'enchaîner sur le niveau d'après.
+func _victory_debrief() -> String:
+	var lines: Array[String] = []
+
+	var stars := Progress.get_stars(Progress.current_level_id)
+	lines.append("★".repeat(stars) + "☆".repeat(3 - stars))
+
+	var unlocked := _unlocked_names()
+	if not unlocked.is_empty():
+		lines.append("")
+		lines.append("NOUVELLES CARTES DÉBLOQUÉES")
+		lines.append(" · ".join(unlocked))
+		lines.append("Elles apparaîtront dans tes prochaines récompenses.")
+
+	lines.append("")
+	lines.append("Clique pour continuer")
+	return "
+".join(lines)
+
+
+## Noms lisibles des cartes que la victoire vient de débloquer.
+func _unlocked_names() -> Array[String]:
+	var out: Array[String] = []
+	var wm = get_tree().current_scene.get("wave_manager")
+	if wm == null:
+		return out
+	for card_id in wm._unlocked_this_run:
+		var card = load("res://resources/cards/%s.tres" % card_id)
+		if card is CardData:
+			out.append(card.card_name)
+	return out
 
 
 func _show() -> void:

@@ -68,16 +68,7 @@ func _draw_ellipse(center: Vector2, rx: float, ry: float, color: Color):
 
 
 func on_hit(hit_target):
-	var final_damage: int = damage
-
-	if (
-		source_tower != null
-		and source_tower.laser_guide_active
-		and hit_target.has_status(SynergyIds.VEGA_MARK)
-	):
-		final_damage = int(final_damage * 1.5)
-
-	hit_target.take_damage(final_damage)
+	hit_target.take_damage(damage, "normal", hit_element())
 	hit_target.apply_debuff(StatusIds.WET, 3.0 + RunBonuses.get_wet_duration_bonus())
 
 	# Léger ralentissement — sans écraser un ralentissement plus fort (stun, etc.).

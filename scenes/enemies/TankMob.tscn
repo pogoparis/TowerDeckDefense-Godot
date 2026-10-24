@@ -49,9 +49,11 @@ animations = [{
 [node name="TankMob" type="Node2D" groups=["enemies", "level"]]
 z_index = 10
 script = ExtResource("1_tankmob")
-max_hp = 600
+weak_to = 9
+resists = 1
+max_hp = 220
+cap_reward = 5
 speed = 60.0
-scrap_reward = 3
 leak_damage = 3
 death_explosion_scene = ExtResource("2_rikg4")
 death_boom_scale = 1.8

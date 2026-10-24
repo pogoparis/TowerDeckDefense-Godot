@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b322u4yhirm3y"]
+
+[ext_resource type="Texture2D" path="res://assets/cards/Card_Panda_signature512.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/towers/TowerPanda.tscn" id="3_tower"]
+
+[resource]
+script = ExtResource("2_script")
+card_name = "Panda Punk"
+description = "Signature NATURE. Ses éclats de bambou EMPOISONNENT : dégâts continus en pourcentage des PV max — dérisoires sur la piétaille, redoutables sur les gros. Charge : Bosquet de ronces, qui IMMOBILISE tout ce qui le traverse."
+card_texture = ExtResource("1_tex")
+mana_cost = 35
+tower_id = "TowerPanda"
+tower_scene = ExtResource("3_tower")
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

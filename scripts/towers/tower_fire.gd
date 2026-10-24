@@ -2,13 +2,22 @@ extends ProjectileTower
 class_name TowerFire
 
 func _ready():
-	element_type = ElementType.Type.FIRE
 	super._ready()
+
+
+## Effet de Charge — Bombardement napalm : une grande zone de feu au sol
+## (réutilise le moteur de zones : dégâts par tick + statut BURNING).
+func _charge_effect() -> void:
+	var pm = get_phenomenon_manager()
+	if pm == null:
+		return
+	pm.spawn_phenomenon(PhenomenonType.Type.FIRE_ZONE, global_position, 170.0, 8.0)
+	Audio.play_sfx(preload("res://assets/audio/sfx/shot_fire.wav"), 0.0)
 
 
 ## Cible en priorité l'ennemi le plus avancé qui ne brûle pas encore
 ## (évite de gaspiller des tirs sur une cible déjà en feu).
-func find_target() -> Node2D:
+func _find_target_special() -> Node2D:
 	if not enemy_manager:
 		return null
 
@@ -30,4 +39,4 @@ func find_target() -> Node2D:
 		return best
 
 	# Fallback : le plus avancé en portée (même déjà en feu).
-	return super.find_target()
+	return null

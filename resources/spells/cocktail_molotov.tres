@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/spell_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+effect = 2
+radius = 145.0
+element = 1
+duration = 7.0
+phenomenon = 3
+cast_label = "MOLOTOV !"
+cast_color = Color(1, 0.55, 0.15, 1)
+shake = 9.0

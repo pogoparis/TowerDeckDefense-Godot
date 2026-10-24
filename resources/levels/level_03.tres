@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_ld")
 level_id = 3
-display_name = "Zone Toxique"
+display_name = "Le Nid de Drones"
 scene_path = "res://scenes/ui/level.tscn"
 map_position = Vector2(0.48, 0.83)

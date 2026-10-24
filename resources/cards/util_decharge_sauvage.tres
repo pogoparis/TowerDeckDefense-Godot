@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" format=3]
+
+[ext_resource type="Script" uid="uid://d4npbntb8m6tb" path="res://scripts/data/card_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+card_name = "Décharge Sauvage"
+description = "ÉCONOMIE — +55 Caps et pioche 1 carte. Le compromis : moins de Caps que le Recyclage, mais ça fait tourner le deck."
+card_type = 4
+mana_cost = 20
+instant_caps = 55
+draw_cards = 1
+metadata/_custom_type_script = "uid://d4npbntb8m6tb"

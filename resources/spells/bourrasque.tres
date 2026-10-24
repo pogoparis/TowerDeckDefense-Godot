@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/spell_data.gd" id="1_s"]
+
+[resource]
+script = ExtResource("1_s")
+effect = 2
+radius = 150.0
+element = 5
+duration = 6.0
+phenomenon = 5
+cast_label = "BOURRASQUE !"
+cast_color = Color(0.75, 0.92, 1, 1)
+shake = 5.0

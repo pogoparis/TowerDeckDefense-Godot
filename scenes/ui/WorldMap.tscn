@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b_worldmap"]
+[gd_scene load_steps=10 format=3 uid="uid://b_worldmap"]
 
 [ext_resource type="Script" path="res://scripts/ui/world_map.gd" id="1_wm"]
 [ext_resource type="Theme" path="res://resources/themes/junkriot_theme.tres" id="2_theme"]
@@ -6,6 +6,9 @@
 [ext_resource type="Resource" path="res://resources/levels/level_01.tres" id="4_lvl1"]
 [ext_resource type="Resource" path="res://resources/levels/level_02.tres" id="5_lvl2"]
 [ext_resource type="Resource" path="res://resources/levels/level_03.tres" id="6_lvl3"]
+[ext_resource type="Resource" path="res://resources/levels/level_04.tres" id="7_lvl4"]
+[ext_resource type="Resource" path="res://resources/levels/level_05.tres" id="9_lvl5"]
+[ext_resource type="Resource" path="res://resources/levels/level_atelier.tres" id="8_atelier"]
 
 [node name="WorldMap" type="Control"]
 layout_mode = 3
@@ -14,7 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource("2_theme")
 script = ExtResource("1_wm")
-levels = [ExtResource("4_lvl1"), ExtResource("5_lvl2"), ExtResource("6_lvl3")]
+levels = [ExtResource("4_lvl1"), ExtResource("5_lvl2"), ExtResource("6_lvl3"), ExtResource("7_lvl4"), ExtResource("9_lvl5"), ExtResource("8_atelier")]
 
 [node name="PlaceholderBg" type="ColorRect" parent="."]
 layout_mode = 1

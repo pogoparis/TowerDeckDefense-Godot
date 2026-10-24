@@ -10,6 +10,16 @@ var homing_strength := 0.0
 @export var hit_distance := 12.0
 @export var impact_scene: PackedScene
 
+
+## Élément porté par ce tir : celui de la tour qui l'a lancé. Centralisé ici
+## pour que chaque projectile n'ait pas à le recopier — et pour qu'ajouter un
+## élément à une tour suffise à faire jouer les faiblesses des ennemis.
+func hit_element() -> ElementType.Type:
+	if source_tower != null and is_instance_valid(source_tower):
+		return source_tower.element_type
+	return ElementType.Type.NONE
+
+
 func _process(delta):
 
 	if not is_instance_valid(target):

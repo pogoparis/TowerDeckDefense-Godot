@@ -17,6 +17,11 @@ var damage_timer := 0.0
 const ELECTRIC_DAMAGE_INTERVAL := 0.25
 const ELECTRIC_TICK_DAMAGE     := 5
 const FIRE_TICK_DAMAGE         := 8
+## Drain de la Nuée d'ombre (plus faible que le feu : sa force est la MARQUE).
+const SHADOW_TICK_DAMAGE       := 4
+## Pluie de pierre : impacts lourds mais espacés (anti-blindés).
+const STONE_TICK_DAMAGE        := 14
+const STONE_RAIN_INTERVAL      := 0.5
 
 # Knockback (Wind Current uniquement)
 const WIND_KNOCKBACK_FORCE    := 55.0   # pixels reculés
@@ -101,6 +106,20 @@ func _process(delta):
 			damage_timer = ELECTRIC_DAMAGE_INTERVAL
 			_apply_fire_damage()
 
+	# ── Pluie de pierre : impacts lourds et espacés ────
+	if phenomenon_type == PhenomenonType.Type.STONE_RAIN:
+		damage_timer -= delta
+		if damage_timer <= 0.0:
+			damage_timer = STONE_RAIN_INTERVAL
+			_apply_stone_rain()
+
+	# ── Nuée d'ombre : draine la vie des ennemis dans la zone ──
+	if phenomenon_type == PhenomenonType.Type.SHADOW_ZONE:
+		damage_timer -= delta
+		if damage_timer <= 0.0:
+			damage_timer = ELECTRIC_DAMAGE_INTERVAL
+			_apply_shadow_drain()
+
 	# ── Knockback Wind Current ────────────────────────
 	if phenomenon_type == PhenomenonType.Type.WIND_CURRENT:
 		_wind_knockback_timer -= delta
@@ -124,6 +143,7 @@ func get_status_id() -> String:
 		PhenomenonType.Type.FIRE_ZONE:      return StatusIds.BURNING
 		PhenomenonType.Type.THORN_PATCH:    return StatusIds.ROOTED
 		PhenomenonType.Type.WIND_CURRENT:   return StatusIds.WINDMARK
+		PhenomenonType.Type.SHADOW_ZONE:    return StatusIds.MARKED
 	return ""
 
 
@@ -165,7 +185,36 @@ func _apply_fire_damage():
 			continue
 		if global_position.distance_to(enemy.global_position) > radius:
 			continue
-		enemy.take_damage(FIRE_TICK_DAMAGE, "tick")
+		enemy.take_damage(FIRE_TICK_DAMAGE, "tick", ElementType.Type.FIRE)
+
+
+## Pluie de pierre : gros impacts espacés. Pas de statut — la Terre, c'est du
+## dégât brut qui écrase les blindés.
+func _apply_stone_rain():
+	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
+	if enemy_manager == null:
+		return
+	for enemy in enemy_manager.get_all_enemies():
+		if not is_instance_valid(enemy):
+			continue
+		if global_position.distance_to(enemy.global_position) > radius:
+			continue
+		enemy.take_damage(STONE_TICK_DAMAGE, "tick", ElementType.Type.EARTH)
+	Juice.shake(5.0, 0.15)
+
+
+## Nuée d'ombre : dégâts continus. Les ennemis y sont aussi MARQUÉS (via la
+## contamination), donc ils encaissent encore plus — c'est l'effet signature Ombre.
+func _apply_shadow_drain():
+	var enemy_manager := get_tree().get_first_node_in_group("enemy_manager")
+	if enemy_manager == null:
+		return
+	for enemy in enemy_manager.get_all_enemies():
+		if not is_instance_valid(enemy):
+			continue
+		if global_position.distance_to(enemy.global_position) > radius:
+			continue
+		enemy.take_damage(SHADOW_TICK_DAMAGE, "tick", ElementType.Type.SHADOW)
 
 
 func _apply_electric_damage():
@@ -177,7 +226,7 @@ func _apply_electric_damage():
 			continue
 		if global_position.distance_to(enemy.global_position) > radius:
 			continue
-		enemy.take_damage(ELECTRIC_TICK_DAMAGE, "tick")
+		enemy.take_damage(ELECTRIC_TICK_DAMAGE, "tick", ElementType.Type.ELECTRIC)
 
 		# Si l'ennemi est WET : stun 2 secondes + texte spécial (affiché une seule fois)
 		if enemy.has_status(StatusIds.WET):
@@ -277,6 +326,53 @@ func _draw():
 			draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 48,
 				Color(0.5, 1.0, 1.0, 0.85), 3.0)
 
+		PhenomenonType.Type.STONE_RAIN:
+			var rain_life: float = lerp(1.0, 0.4, t)
+			# Zone d'impact poussiéreuse.
+			draw_circle(Vector2.ZERO, radius, Color(0.45, 0.30, 0.16, 0.20 * rain_life))
+			draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 48,
+				Color(0.75, 0.50, 0.25, 0.8 * rain_life), 3.0)
+			# Pierres qui tombent : chacune a sa phase, chute puis impact.
+			var rock_count := 9
+			for i in rock_count:
+				var phase: float = fmod(age * 1.6 + i * 0.37, 1.0)
+				var a: float = (TAU / rock_count) * i + i * 1.7
+				var rr: float = radius * (0.25 + fmod(i * 0.29, 0.65))
+				var gx: float = cos(a) * rr
+				var gy: float = sin(a) * rr
+				var fall_y: float = gy - lerp(radius * 1.1, 0.0, phase)
+				var rsize: float = lerp(9.0, 5.0, phase)
+				if phase < 0.92:
+					# Ombre au sol qui grandit à l'approche + la pierre en chute.
+					draw_circle(Vector2(gx, gy), rsize * (0.4 + phase * 0.7),
+						Color(0, 0, 0, 0.25 * rain_life))
+					draw_circle(Vector2(gx, fall_y), rsize, Color(0.42, 0.28, 0.16, rain_life))
+					draw_circle(Vector2(gx, fall_y - rsize * 0.3), rsize * 0.5,
+						Color(0.62, 0.45, 0.28, rain_life))
+				else:
+					# Éclat d'impact.
+					draw_arc(Vector2(gx, gy), rsize * 2.2, 0.0, TAU, 12,
+						Color(0.85, 0.70, 0.45, rain_life), 2.0)
+
+		PhenomenonType.Type.SHADOW_ZONE:
+			var life: float = lerp(1.0, 0.35, t)
+			# Nappe d'ombre violacée qui absorbe la lumière.
+			draw_circle(Vector2.ZERO, radius, Color(0.10, 0.02, 0.16, 0.55 * life))
+			draw_circle(Vector2.ZERO, radius * 0.55, Color(0.22, 0.02, 0.20, 0.45 * life))
+			draw_arc(Vector2.ZERO, radius * pulse, 0.0, TAU, 56,
+				Color(0.85, 0.15, 0.35, 0.9 * life), 3.0)
+			# Chauves-souris qui tournoient autour de la nuée.
+			var bat_count := 7
+			for i in bat_count:
+				var a: float = (TAU / bat_count) * i + age * 2.6
+				var rr: float = radius * (0.55 + sin(age * 3.0 + i) * 0.22)
+				var c := Vector2(cos(a) * rr, sin(a) * rr)
+				var wing := 7.0 + sin(age * 12.0 + i * 2.0) * 3.5
+				# Corps + ailes stylisées (petit "M" de chauve-souris).
+				draw_line(c + Vector2(-wing, -2), c, Color(0.05, 0.0, 0.08, 0.95 * life), 2.5)
+				draw_line(c, c + Vector2(wing, -2), Color(0.05, 0.0, 0.08, 0.95 * life), 2.5)
+				draw_circle(c, 2.0, Color(0.9, 0.1, 0.25, 0.95 * life))
+
 
 # ══════════════════════════════════════════════════════
 # WIND CURRENT — repousse les ennemis dans la zone
@@ -342,7 +438,7 @@ func _trigger_cross_electrocution(enemy: Node2D):
 	var stun: float = CROSS_STUN_DURATION + RunBonuses.get_stun_duration_bonus()
 	var dmg: int    = int(CROSS_SHOCK_DAMAGE * RunBonuses.get_electrocution_damage_mult())
 
-	enemy.take_damage(dmg, "silent")
+	enemy.take_damage(dmg, "silent", ElementType.Type.ELECTRIC)
 	enemy.apply_slow(0.0, stun)
 	enemy.add_status(StatusIds.STUNNED, stun)
 

@@ -162,14 +162,14 @@ func _spawn_entry_flash():
 	flash.global_position = global_position
 	flash.z_index = 50
 
-	var draw := Node2D.new()
-	flash.add_child(draw)
-	draw.draw.connect(func():
-		draw.draw_circle(Vector2.ZERO, radius * 1.3, Color(0.9, 1.0, 0.5, 0.85))
-		draw.draw_circle(Vector2.ZERO, radius * 0.8,  Color(1.0, 1.0, 0.8, 0.95))
-		draw.draw_circle(Vector2.ZERO, radius * 0.3,  Color(1.0, 1.0, 1.0, 1.0))
+	var draw_node := Node2D.new()
+	flash.add_child(draw_node)
+	draw_node.draw.connect(func():
+		draw_node.draw_circle(Vector2.ZERO, radius * 1.3, Color(0.9, 1.0, 0.5, 0.85))
+		draw_node.draw_circle(Vector2.ZERO, radius * 0.8,  Color(1.0, 1.0, 0.8, 0.95))
+		draw_node.draw_circle(Vector2.ZERO, radius * 0.3,  Color(1.0, 1.0, 1.0, 1.0))
 	)
-	draw.queue_redraw()
+	draw_node.queue_redraw()
 
 	var tween := flash.create_tween()
 	tween.set_parallel(true)

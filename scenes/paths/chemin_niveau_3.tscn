@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bn1yy7jlym6ou"]
+
+[ext_resource type="Script" uid="uid://batwcdipbxtc3" path="res://scripts_tools/path_editor_guides.gd" id="1_guides"]
+[ext_resource type="Texture2D" uid="uid://c2tp6i05cillw" path="res://assets/maps/Ruines.png" id="2_fond"]
+
+[sub_resource type="Curve2D" id="Curve2D_ruines"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -43, 543, 0, 0, 0, 0, 356, 546, 0, 0, 0, 0, 357, 413, 0, 0, 0, 0, 669, 410, 0, 0, 0, 0, 672, 611, 0, 0, 0, 0, 1120, 619, 0, 0, 0, 0, 1120, 545, 0, 0, 0, 0, 1650, 552)
+}
+point_count = 8
+
+[node name="CheminRuines" type="Node2D" unique_id=1881130994]
+
+[node name="Fond" type="Sprite2D" parent="." unique_id=465268477]
+modulate = Color(1, 1, 1, 0.85)
+position = Vector2(960, 540)
+scale = Vector2(1.148325, 1.148325)
+texture = ExtResource("2_fond")
+
+[node name="Reperes" type="Node2D" parent="." unique_id=852001460]
+script = ExtResource("1_guides")
+
+[node name="Chemin" type="Path2D" parent="." unique_id=1777205898]
+curve = SubResource("Curve2D_ruines")

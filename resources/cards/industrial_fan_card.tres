@@ -6,13 +6,10 @@
 
 [resource]
 script = ExtResource("2_xsd1k")
-card_name = "Chouette"
+card_name = "Souffle-Chouette"
 description = "La chouette souffle l'air : ralentit et applique WINDMARK. En CONSUME, crée une bourrasque qui repousse."
 card_texture = ExtResource("1_23fxp")
-mana_cost = 2
+mana_cost = 20
 tower_id = "TowerIndustrialFan"
 tower_scene = ExtResource("3_0wbu5")
-consume_phenomenon_type = 5
-consume_radius = 150.0
-consume_duration = 8.0
 metadata/_custom_type_script = "uid://d4npbntb8m6tb"
